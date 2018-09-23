@@ -1,5 +1,78 @@
+<h3>Teacher Form</h3>
 
-<h3>Create Teacher</h3>
-<button (click)="createTeacher()" type="button" class="btn btn-primary">
-    Submit
-</button>
+<form class="form-horizontal" (ngSubmit)="onSubmit()" #teacherForm="ngForm">
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="name">Name:</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="name"
+				placeholder="Enter name" required minlength="4"
+				[(ngModel)]="teacher.name" name="name" #name="ngModel">
+
+		</div>
+
+		<div *ngIf="name.invalid && (name.dirty || name.touched)"
+			class="alert alert-danger">
+
+			<div *ngIf="name.errors.required">Name is required.</div>
+			<div *ngIf="name.errors.minlength">Name must be at least 4
+				characters long.</div>
+
+		</div>
+
+
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="email">Email:</label>
+		<div class="col-sm-10">
+			<input type="email" class="form-control" id="email"
+				placeholder="Enter email" name="email" [(ngModel)]="teacher.email">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="phone">Phone:</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="phone"
+				placeholder="Enter phone" name="phone" [(ngModel)]="teacher.phone">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="address1">Address
+			1:</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="address1"
+				placeholder="Enter address 1" name="address1"
+				[(ngModel)]="teacher.address1">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="address2">Address
+			2:</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="address2"
+				placeholder="Enter address 2" name="address2"
+				[(ngModel)]="teacher.address2">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<div class="checkbox">
+				<label><input type="checkbox" name="Active" checked
+					[(ngModel)]="teacher.isActive"> Active</label>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" [disabled]="!teacherForm.form.valid"
+				class="btn btn-primary">Submit</button>
+		</div>
+	</div>
+
+
+</form>

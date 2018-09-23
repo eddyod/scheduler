@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {APIService} from '../api.service';
+import {Teacher} from '../teacher';
 
 @Component({
   selector: 'app-teacher-create',
@@ -8,22 +9,15 @@ import {APIService} from '../api.service';
 })
 export class TeacherCreateComponent implements OnInit {
 
+  teacher = new Teacher();
   constructor(private apiService: APIService) {}
 
   ngOnInit() {
   }
 
-  createTeacher() {
+  onSubmit() {
 
-    const teacher = {
-      address1: 'Home N 333 Apartment 300',
-      createdBy: 1,
-      email: 'abbess@email.com',
-      name: 'Blow, Joe',
-      isActive: true,
-      phone: '00121212101'
-    };
-    this.apiService.createTeacher(teacher).subscribe((response) => {
+    this.apiService.createTeacher(this.teacher).subscribe((response) => {
       console.log(response);
     });
   }
