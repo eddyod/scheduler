@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {APIService} from '../api.service';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {School} from '../school';
+
 
 @Component({
   selector: 'app-school-create',
@@ -7,7 +11,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchoolCreateComponent implements OnInit {
 
-  constructor() { }
+  title = 'Add School';
+  memberFrm: FormGroup;
+
+  constructor(private apiService: APIService, private formBuilder: FormBuilder) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.memberFrm = this.formBuilder.group({
+      name: ['', Validators.required],
+      phone: ['', Validators.required]
+    });
+  }
+
+  addMember(school) {
+    this.apiService.createSchool(school);
+  }
 
   ngOnInit() {
   }

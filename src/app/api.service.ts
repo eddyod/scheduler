@@ -18,4 +18,17 @@ export class APIService {
     return this.httpClient.post(this.API_URL + '/teachers/', teacher);
   }
 
+  // schools
+  getSchools() {
+    return this.httpClient.get(this.API_URL + '/schools');
+  }
+
+  createSchool(school) {
+    return this.httpClient.post(this.API_URL + '/schools/', school);
+  }
+
+  deleteSchool(id: number) {
+    return this.httpClient.delete(this.API_URL + '/schools/' + id);
+  }
+
 }

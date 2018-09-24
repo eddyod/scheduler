@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {APIService} from '../api.service';
+import {Teacher} from '../teacher';
+
 
 @Component({
   selector: 'app-teacher-list',
@@ -9,11 +12,23 @@ import {APIService} from '../api.service';
 export class TeacherListComponent implements OnInit {
 
   private teachers: Array<object> = [];
+  selectedTeacher: Teacher;
 
-  constructor(private apiService: APIService) {}
+
+  constructor(private apiService: APIService, private router: Router) {}
 
   ngOnInit() {
     this.getTeachers();
+  }
+
+  onSelect(teacher: Teacher): void {
+    this.selectedTeacher = teacher;
+  }
+
+  editTeacher(teacher: Teacher): void {
+    localStorage.removeItem('editTeacherId');
+    localStorage.setItem('id', teacher.id.toString());
+    this.router.navigate(['create-teacher']);
   }
 
   public getTeachers() {
