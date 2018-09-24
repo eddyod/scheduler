@@ -1,5 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {School} from './school';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,12 @@ export class APIService {
 
   API_URL = 'http://localhost:8000';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
+
+  // teachers
+  getTeacherById(id: number) {
+    return this.httpClient.get(this.API_URL + '/teacher/' + id + '/');
+  }
 
   getTeachers() {
     return this.httpClient.get(this.API_URL + '/teachers');
@@ -19,12 +25,22 @@ export class APIService {
   }
 
   // schools
+  getSchoolById(id: number) {
+    return this.httpClient.get(this.API_URL + '/schools/' + id + '/');
+  }
+
   getSchools() {
-    return this.httpClient.get(this.API_URL + '/schools');
+    return this.httpClient.get(this.API_URL + '/schools/');
   }
 
   createSchool(school) {
     return this.httpClient.post(this.API_URL + '/schools/', school);
+  }
+
+  updateSchool(school: School) {
+    console.log('updateSchool school.id is ' + school.name)
+    //return this.httpClient.put(this.API_URL + '/schools/' + school.id, school );
+    return this.httpClient.put(`${this.API_URL}/schools/${school.id}`, school );
   }
 
   deleteSchool(id: number) {

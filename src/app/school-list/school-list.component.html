@@ -8,7 +8,7 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th class="hidden">Id</th>
+				<th>Id</th>
 				<th>Name</th>
 				<th>Email</th>
 				<th>Action</th>
@@ -16,12 +16,12 @@
 		</thead>
 		<tbody>
 			<tr *ngFor="let school of schools">
-				<td class="hidden"></td>
-				<td></td>
-				<td></td>
+				<td>{{school.id}}</td>
+				<td>{{school.name}}</td>
+				<td>{{school.email}}</td>
 				<td><button class="btn btn-danger" (click)="deleteSchool(school)">
 						Delete</button>
-					<button class="btn btn-danger" (click)="editSchool(school)"
+					<button class="btn btn-primary" (click)="editSchool(school)"
 						style="margin-left: 20px;">Edit</button></td>
 			</tr>
 		</tbody>

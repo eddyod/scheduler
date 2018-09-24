@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {APIService} from '../api.service';
 import {Teacher} from '../teacher';
 
@@ -15,11 +15,9 @@ export class TeacherCreateComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit() {
-
+  onSave() {
     this.apiService.createTeacher(this.teacher).subscribe((response) => {
       console.log(response);
     });
   }
 }
-

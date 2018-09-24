@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {APIService} from '../api.service';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {School} from '../school';
+import { Component, OnInit } from '@angular/core';
+import { APIService } from '../api.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { School } from '../school';
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -12,24 +13,55 @@ import {School} from '../school';
 export class SchoolCreateComponent implements OnInit {
 
   title = 'Add School';
-  memberFrm: FormGroup;
+  btnvisibility: boolean = true;
+  addForm: FormGroup;
+  empformlabel: string = 'Add School';
+  empformbtn: string = 'Save';
 
-  constructor(private apiService: APIService, private formBuilder: FormBuilder) {
-    this.createForm();
-  }
-
-  createForm() {
-    this.memberFrm = this.formBuilder.group({
-      name: ['', Validators.required],
-      phone: ['', Validators.required]
-    });
-  }
-
-  addMember(school) {
-    this.apiService.createSchool(school);
-  }
+  constructor(
+    private apiService: APIService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+
+    this.addForm = this.formBuilder.group({
+      id: [],
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.maxLength(50)]],
+    });
+
+    let id = localStorage.getItem('id');
+    if (+id > 0) {
+      this.apiService.getSchoolById(+id).subscribe(data => {
+        this.addForm.patchValue(data);
+      })
+      this.btnvisibility = false;
+      this.empformlabel = 'Edit School';
+      this.empformbtn = 'Update';
+    }
+
+  }
+
+  onSave() {
+    console.log('Create fire');
+    this.apiService.createSchool(this.addForm.value)
+      .subscribe(data => {
+        this.router.navigate(['schools']);
+      },
+        error => {
+          alert(error);
+        });
+  }
+  onUpdate() {
+    console.log('Update fire');
+    this.apiService.updateSchool(this.addForm.value).subscribe(data => {
+      this.router.navigate(['schools']);
+    },
+      error => {
+        alert(error);
+      });
   }
 
 }

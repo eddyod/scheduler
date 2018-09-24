@@ -1,33 +1,31 @@
 <p>school-create works!</p>
+<div class="col-md-6">
+	<h2 class="text-center">{{empformlabel}}</h2>
+	<form [formGroup]="addForm" novalidate class="form">
+		<div class="form-group">
+			<label for="id">Id:</label>
+			<input type="number" formControlName="id" placeholder="Id" name="id" class="form-control" id="id">
+		</div>
 
-<div class="card">
-	<div class="card-body">
-		<form [formGroup]="memberFrm" novalidate>
-			<div class="form-group">
-				<label class="col-md-4">Name</label> 
-				<input type="text" class="form-control" formControlName="name" #name />
+		<div class="form-group">
+			<label for="empName">Name:</label>
+			<input formControlName="name" placeholder="Name" name="name" class="form-control" id="name">
+			<div class="alert  alert-danger" *ngIf="addForm.get('name').hasError('required') && addForm.get('name').touched">
+				Name is required
 			</div>
-			<div
-				*ngIf="memberFrm.controls['name'].invalid && (memberFrm.controls['name'].dirty || memberFrm.controls['name'].touched)"
-				class="alert alert-danger">
-				<div *ngIf="memberFrm.controls['name'].errors.required">Name
-					is required.</div>
+		</div>
+
+		<div class="form-group">
+			<label for="empSalary">Email:</label>
+			<input formControlName="email" placeholder="Email" name="email" class="form-control" id="email">
+			<div class="alert  alert-danger" *ngIf="addForm.get('email').hasError('maxlength') && addForm.get('email').touched">
+				Email is required.
 			</div>
-			<div class="form-group">
-				<label class="col-md-4">Phone</label> <input type="text"
-					class="form-control" formControlName="phone" #phone />
-			</div>
-			<div
-				*ngIf="memberFrm.controls['phone'].invalid && (memberFrm.controls['phone'].dirty || memberFrm.controls['phone'].touched)"
-				class="alert alert-danger">
-				<div *ngIf="memberFrm.controls['phone'].errors.required">Age
-					is required.</div>
-			</div>
-			<div class="form-group">
-				<button (click)="addMember(name.value, age.value)"
-					[disabled]="memberFrm.pristine || memberFrm.invalid"
-					class="btn btn-success">Add</button>
-			</div>
-		</form>
-	</div>
+		</div>
+
+		<button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="btnvisibility" (click)="onSave()">Save</button>
+		<button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="!btnvisibility" (click)="onUpdate()">Update</button>
+
+		<p>Form value: {{ addForm.value | json }}</p>
+	</form>
 </div>

@@ -34,7 +34,7 @@ export class SchoolListComponent implements OnInit {
 
   editSchool(school: School): void {
     localStorage.removeItem('editSchoolId');
-    localStorage.setItem('editSchoolId', school.id.toString());
+    localStorage.setItem('id', school.id.toString());
     this.router.navigate(['create-school']);
   }
 
