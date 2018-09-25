@@ -7,17 +7,17 @@ import {School} from './school';
 })
 export class APIService {
 
-  API_URL = 'http://localhost:8000';
+  API_URL = 'http://www.mephistosoftware.com/rester';
 
   constructor(private httpClient: HttpClient) { }
 
   // teachers
   getTeacherById(id: number) {
-    return this.httpClient.get(this.API_URL + '/teacher/' + id + '/');
+    return this.httpClient.get(this.API_URL + '/teachers/' + id);
   }
 
   getTeachers() {
-    return this.httpClient.get(this.API_URL + '/teachers');
+    return this.httpClient.get(this.API_URL + '/teachers/');
   }
 
   createTeacher(teacher) {
