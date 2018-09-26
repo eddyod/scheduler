@@ -21,15 +21,9 @@
 			<td>{{ teacher.email }}</td>
 			<td>{{ teacher.address1 }}</td>
 			<td>{{ teacher.isActive }}</td>
-			<td><button class="btn btn-primary" (click)="editTeacher(teacher)" style="margin-left: 20px;"> Edit</button></td>
+			<td>
+				<button class="btn btn-primary" (click)="editTeacher(teacher)" style="margin-left: 20px;"> Edit</button>
+			</td>
 		</tr>
 	</table>
-	<div>
-
-		<li *ngFor="let teacher of teachers"
-  [class.selected]="teacher === selectedTeacher"
-  (click)="onSelect(teacher)">
-  <span class="badge">{{teacher.id}}</span> {{teacher.name}}
-</li>
-
-	</div>
+</div>

@@ -19,10 +19,10 @@
 				<td>{{school.id}}</td>
 				<td>{{school.name}}</td>
 				<td>{{school.email}}</td>
-				<td><button class="btn btn-danger" (click)="deleteSchool(school)">
-						Delete</button>
-					<button class="btn btn-primary" (click)="editSchool(school)"
-						style="margin-left: 20px;">Edit</button></td>
+				<td>
+					<button class="btn btn-primary" (click)="editSchool(school)" style="margin-left: 20px;">Edit</button>
+					<button class="btn btn-danger" (click)="deleteSchool(school)">Delete</button>
+				</td>
 			</tr>
 		</tbody>
 	</table>

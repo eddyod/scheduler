@@ -33,12 +33,13 @@ export class SchoolListComponent implements OnInit {
   }
 
   editSchool(school: School): void {
-    localStorage.removeItem('editSchoolId');
+    localStorage.removeItem('id');
     localStorage.setItem('id', school.id.toString());
     this.router.navigate(['create-school']);
   }
 
   addSchool(): void {
+    localStorage.removeItem('id');
     this.router.navigate(['create-school']);
   }
 

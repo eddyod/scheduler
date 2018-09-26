@@ -17,7 +17,7 @@ export class APIService {
   }
 
   getTeachers() {
-    return this.httpClient.get(this.API_URL + '/teachers/');
+    return this.httpClient.get(this.API_URL + '/teachers');
   }
 
   createTeacher(teacher) {
@@ -26,7 +26,7 @@ export class APIService {
 
   // schools
   getSchoolById(id: number) {
-    return this.httpClient.get(this.API_URL + '/schools/' + id + '/');
+    return this.httpClient.get(this.API_URL + '/schools/' + id);
   }
 
   getSchools() {
@@ -34,13 +34,13 @@ export class APIService {
   }
 
   createSchool(school) {
+    console.log('updateSchool school.name is ' + school.name);
     return this.httpClient.post(this.API_URL + '/schools/', school);
   }
 
   updateSchool(school: School) {
-    console.log('updateSchool school.id is ' + school.name)
-    //return this.httpClient.put(this.API_URL + '/schools/' + school.id, school );
-    return this.httpClient.put(`${this.API_URL}/schools/${school.id}`, school );
+    console.log('updateSchool school.id is ' + school.name);
+    return this.httpClient.patch(this.API_URL + '/schools/' + school.id, school );
   }
 
   deleteSchool(id: number) {

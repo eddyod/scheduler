@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { APIService } from '../api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { School } from '../school';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,10 +13,10 @@ import { Router } from "@angular/router";
 export class SchoolCreateComponent implements OnInit {
 
   title = 'Add School';
-  btnvisibility: boolean = true;
+  displayButton = true;
   addForm: FormGroup;
-  empformlabel: string = 'Add School';
-  empformbtn: string = 'Save';
+  schoolFormLabel = 'Add School';
+  schoolButton = 'Save';
 
   constructor(
     private apiService: APIService,
@@ -36,10 +36,10 @@ export class SchoolCreateComponent implements OnInit {
     if (+id > 0) {
       this.apiService.getSchoolById(+id).subscribe(data => {
         this.addForm.patchValue(data);
-      })
-      this.btnvisibility = false;
-      this.empformlabel = 'Edit School';
-      this.empformbtn = 'Update';
+      });
+      this.displayButton = false;
+      this.schoolFormLabel = 'Edit School';
+      this.schoolButton = 'Update';
     }
 
   }
