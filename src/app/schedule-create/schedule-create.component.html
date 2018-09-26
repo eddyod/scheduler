@@ -1,3 +1,49 @@
-<p>
-  schedule-create works!
-</p>
+<div class="col-md-6">
+  <h2 class="text-center">{{scheduleFormLabel}}</h2>
+  <form [formGroup]="addForm" novalidate class="form">
+
+    <div class="form-group">
+      <label for="idStartTime">Start time:</label>
+      <input formControlName="startTime" placeholder="Start class time" name="startTime" class="form-control" id="idStartTime">
+      <div class="alert  alert-danger" *ngIf="addForm.get('startTime').hasError('required') && addForm.get('startTime').touched">
+        Start time is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="idEndTime">End time:</label>
+      <input formControlName="endTime" placeholder="End class time" name="endTime" class="form-control" id="idEndTime">
+      <div class="alert  alert-danger" *ngIf="addForm.get('endTime').hasError('required') && addForm.get('endTime').touched">
+        End time is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="idSchool">School</label>
+      <select formControlName="school_id" class="form-control" id="idSchool" name="school_id" required>
+            <option *ngFor="let school of schools" [value]="school.id">{{school.name}}</option>
+          </select>
+    </div>
+
+    <div class="form-group">
+      <label for="idTeacher">Teacher</label>
+      <select formControlName="teacher_id" class="form-control" id="idTeacher" name="teacher_id" required>
+                <option *ngFor="let teacher of teachers" [value]="teacher.id">{{teacher.name}}</option>
+              </select>
+    </div>
+
+    <div class="form-group">
+      <label for="idUser">Created By:</label>
+      <input formControlName="createdBy" placeholder="End class time" name="createdBy" class="form-control" id="idUser">
+      <div class="alert  alert-danger" *ngIf="addForm.get('createdBy').hasError('required') && addForm.get('createdBy').touched">
+        Created by user is required
+      </div>
+    </div>
+
+
+    <button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="displayButton" (click)="onSave()">Save</button>
+    <button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="!displayButton" (click)="onUpdate()">Update</button>
+
+    <p>Form value: {{ addForm.value | json }}</p>
+  </form>
+</div>

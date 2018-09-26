@@ -21,7 +21,6 @@ export class SchoolListComponent implements OnInit {
   public getSchools() {
     this.apiService.getSchools().subscribe((data: Array<object>) => {
       this.schools = data;
-      console.log(data);
     });
   }
 
@@ -30,6 +29,7 @@ export class SchoolListComponent implements OnInit {
       .subscribe(data => {
         this.schools = this.schools.filter(u => u !== school);
       });
+      this.router.navigate(['schools']);
   }
 
   editSchool(school: School): void {

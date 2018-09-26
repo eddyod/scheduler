@@ -30,6 +30,7 @@ export class SchoolCreateComponent implements OnInit {
       id: [],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.maxLength(50)]],
+      phone: ['', Validators.required],
     });
 
     let id = localStorage.getItem('id');

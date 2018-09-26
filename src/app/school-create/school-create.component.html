@@ -1,27 +1,35 @@
-<p>school-create works!</p>
+
 <div class="col-md-6">
-	<h2 class="text-center">{{schoolFormLabel}}</h2>
-	<form [formGroup]="addForm" novalidate class="form">
+  <h2 class="text-center">{{schoolFormLabel}}</h2>
+  <form [formGroup]="addForm" novalidate class="form">
 
-		<div class="form-group">
-			<label for="empName">Name:</label>
-			<input formControlName="name" placeholder="Name" name="name" class="form-control" id="name">
-			<div class="alert  alert-danger" *ngIf="addForm.get('name').hasError('required') && addForm.get('name').touched">
-				Name is required
-			</div>
-		</div>
+    <div class="form-group">
+      <label for="idName">Name:</label>
+      <input formControlName="name" placeholder="Name" name="name" class="form-control" id="idName">
+      <div class="alert  alert-danger" *ngIf="addForm.get('name').hasError('required') && addForm.get('name').touched">
+        Name is required
+      </div>
+    </div>
 
-		<div class="form-group">
-			<label for="empSalary">Email:</label>
-			<input formControlName="email" placeholder="Email" name="email" class="form-control" id="email">
-			<div class="alert  alert-danger" *ngIf="addForm.get('email').hasError('maxlength') && addForm.get('email').touched">
-				Email is required.
-			</div>
-		</div>
+    <div class="form-group">
+      <label for="idEmail">Email:</label>
+      <input formControlName="email" placeholder="Email" name="email" class="form-control" id="idEmail">
+      <div class="alert  alert-danger" *ngIf="addForm.get('email').hasError('maxlength') && addForm.get('email').touched">
+        Email is required.
+      </div>
+    </div>
 
-		<button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="displayButton" (click)="onSave()">Save</button>
-		<button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="!displayButton" (click)="onUpdate()">Update</button>
+    <div class="form-group">
+      <label for="idPhone">Phone:</label>
+      <input formControlName="phone" placeholder="Phone" name="phone" class="form-control" id="idPhone">
+      <div class="alert  alert-danger" *ngIf="addForm.get('phone').hasError('maxlength') && addForm.get('phone').touched">
+        Phone is required.
+      </div>
+    </div>
 
-		<p>Form value: {{ addForm.value | json }}</p>
-	</form>
+    <button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="displayButton" (click)="onSave()">Save</button>
+    <button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="!displayButton" (click)="onUpdate()">Update</button>
+
+    <p>Form value: {{ addForm.value | json }}</p>
+  </form>
 </div>

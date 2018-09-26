@@ -1,6 +1,8 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {APIService} from '../api.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {Teacher} from '../teacher';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-teacher-create',
@@ -9,15 +11,58 @@ import {Teacher} from '../teacher';
 })
 export class TeacherCreateComponent implements OnInit {
 
-  teacher = new Teacher();
-  constructor(private apiService: APIService) {}
+    title = 'Add Teacher';
+    displayButton = true;
+    addForm: FormGroup;
+    teacherFormLabel = 'Add Teacher';
+    teacherButton = 'Save';
 
-  ngOnInit() {
-  }
+    constructor(
+      private apiService: APIService,
+      private formBuilder: FormBuilder,
+      private router: Router
+    ) { }
 
-  onSave() {
-    this.apiService.createTeacher(this.teacher).subscribe((response) => {
-      console.log(response);
-    });
-  }
+    ngOnInit() {
+
+      this.addForm = this.formBuilder.group({
+        id: [],
+        name: ['', Validators.required],
+        email: ['', [Validators.required, Validators.maxLength(50)]],
+        phone: ['', Validators.required],
+      });
+
+      let id = localStorage.getItem('id');
+      if (+id > 0) {
+        this.apiService.getTeacherById(+id).subscribe(data => {
+          this.addForm.patchValue(data);
+        });
+        this.displayButton = false;
+        this.teacherFormLabel = 'Edit Teacher';
+        this.teacherButton = 'Update';
+      }
+
+    }
+
+    onSave() {
+      console.log('Create fire');
+      this.apiService.createTeacher(this.addForm.value)
+        .subscribe(data => {
+          this.router.navigate(['teachers']);
+        },
+          error => {
+            alert(error);
+          });
+    }
+    onUpdate() {
+      console.log('Update fire');
+      this.apiService.updateTeacher(this.addForm.value).subscribe(data => {
+        this.router.navigate(['teachers']);
+      },
+        error => {
+          alert(error);
+        });
+    }
+
+
 }

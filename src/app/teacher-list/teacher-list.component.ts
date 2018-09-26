@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {APIService} from '../api.service';
-import {Teacher} from '../teacher';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { APIService } from '../api.service';
+import { Teacher } from '../teacher';
 
 
 @Component({
@@ -12,30 +12,39 @@ import {Teacher} from '../teacher';
 export class TeacherListComponent implements OnInit {
 
   private teachers: Array<object> = [];
-  selectedTeacher: Teacher;
 
 
-  constructor(private apiService: APIService, private router: Router) {}
+  constructor(private apiService: APIService, private router: Router) { }
 
   ngOnInit() {
     this.getTeachers();
   }
 
-  onSelect(teacher: Teacher): void {
-    this.selectedTeacher = teacher;
-  }
-
-  editTeacher(teacher: Teacher): void {
-    localStorage.removeItem('editTeacherId');
-    localStorage.setItem('id', teacher.id.toString());
-    this.router.navigate(['create-teacher']);
-  }
 
   public getTeachers() {
     this.apiService.getTeachers().subscribe((data: Array<object>) => {
       this.teachers = data;
-      console.log(data);
     });
   }
+
+  deleteTeacher(teacher: Teacher): void {
+    this.apiService.deleteTeacher(teacher.id)
+      .subscribe(data => {
+        this.teachers = this.teachers.filter(u => u !== teacher);
+      });
+    this.router.navigate(['teachers']);
+  }
+
+  editTeacher(teacher: Teacher): void {
+    localStorage.removeItem('id');
+    localStorage.setItem('id', teacher.id.toString());
+    this.router.navigate(['create-teacher']);
+  }
+
+  addTeacher(): void {
+    localStorage.removeItem('id');
+    this.router.navigate(['create-teacher']);
+  }
+
 
 }

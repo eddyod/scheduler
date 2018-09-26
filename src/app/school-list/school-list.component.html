@@ -1,29 +1,32 @@
 <div class="row">
-	<a [routerLink]="'/create-school'"> Create a school </a>
+  <div class="col-md-12">
+    <h3>Schools</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let school of schools">
+          <td>{{school.id}}</td>
+          <td>{{school.name}}</td>
+          <td>{{school.email}}</td>
+          <td>
+            <button class="btn btn-primary" (click)="editSchool(school)">Edit</button>
+            <button class="btn btn-danger" (click)="deleteSchool(school)" style="margin-left: 20px;">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<div class="col-md-6">
-	<h2>School Details</h2>
-	<button class="btn btn-danger" (click)="addSchool()">Add School</button>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Name</th>
-				<th>Email</th>
-				<th>Action</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let school of schools">
-				<td>{{school.id}}</td>
-				<td>{{school.name}}</td>
-				<td>{{school.email}}</td>
-				<td>
-					<button class="btn btn-primary" (click)="editSchool(school)" style="margin-left: 20px;">Edit</button>
-					<button class="btn btn-danger" (click)="deleteSchool(school)">Delete</button>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+<div class="row">
+  <div class="col-md-6">
+    <button class="btn btn-danger" (click)="addSchool()">Add School</button>
+  </div>
 </div>

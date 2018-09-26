@@ -1,3 +1,35 @@
 <div class="row">
-<a [routerLink]="'/create-schedule'"> Schedule a class </a>
+  <div class="col-md-12">
+    <h3>Schedules</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Teacher</th>
+          <th>School</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let schedule of schedules">
+          <td>{{schedule.id}}</td>
+          <td>{{schedule.startTime}}</td>
+          <td>{{schedule.endTime}}</td>
+          <td>{{schedule.teacher.name}}</td>
+          <td>{{schedule.school.name}}</td>
+          <td>
+            <button class="btn btn-primary" (click)="editSchedule(schedule)">Edit</button>
+            <button class="btn btn-danger" (click)="deleteSchedule(schedule)" style="margin-left: 20px;">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <button class="btn btn-danger" (click)="addSchedule()">Add Schedule</button>
+  </div>
 </div>

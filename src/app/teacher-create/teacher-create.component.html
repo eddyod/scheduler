@@ -1,78 +1,35 @@
-<h3>Teacher Form</h3>
 
-<form class="form-horizontal" (ngSubmit)="onSave()" #teacherForm="ngForm">
+<div class="col-md-6">
+  <h2 class="text-center">{{teacherFormLabel}}</h2>
+  <form [formGroup]="addForm" novalidate class="form">
 
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="name">Name:</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="name"
-				placeholder="Enter name" required minlength="4"
-				[(ngModel)]="teacher.name" name="name" #name="ngModel">
+    <div class="form-group">
+      <label for="idName">Name:</label>
+      <input formControlName="name" placeholder="Name" name="name" class="form-control" id="idName">
+      <div class="alert  alert-danger" *ngIf="addForm.get('name').hasError('required') && addForm.get('name').touched">
+        Name is required
+      </div>
+    </div>
 
-		</div>
+    <div class="form-group">
+      <label for="idEmail">Email:</label>
+      <input formControlName="email" placeholder="Email" name="email" class="form-control" id="idEmail">
+      <div class="alert  alert-danger" *ngIf="addForm.get('email').hasError('maxlength') && addForm.get('email').touched">
+        Email is required.
+      </div>
+    </div>
 
-		<div *ngIf="name.invalid && (name.dirty || name.touched)"
-			class="alert alert-danger">
+    <div class="form-group">
+      <label for="idPhone">Phone:</label>
+      <input formControlName="phone" placeholder="Phone" name="phone" class="form-control" id="idPhone">
+      <div class="alert  alert-danger" *ngIf="addForm.get('phone').hasError('maxlength') && addForm.get('phone').touched">
+        Phone is required.
+      </div>
+    </div>
 
-			<div *ngIf="name.errors.required">Name is required.</div>
-			<div *ngIf="name.errors.minlength">Name must be at least 4
-				characters long.</div>
+    <button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="displayButton" (click)="onSave()">Save</button>
+    <button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="!displayButton" (click)="onUpdate()">Update</button>
 
-		</div>
-
-
-	</div>
-
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="email">Email:</label>
-		<div class="col-sm-10">
-			<input type="email" class="form-control" id="email"
-				placeholder="Enter email" name="email" [(ngModel)]="teacher.email">
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="phone">Phone:</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="phone"
-				placeholder="Enter phone" name="phone" [(ngModel)]="teacher.phone">
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="address1">Address
-			1:</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="address1"
-				placeholder="Enter address 1" name="address1"
-				[(ngModel)]="teacher.address1">
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="address2">Address
-			2:</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="address2"
-				placeholder="Enter address 2" name="address2"
-				[(ngModel)]="teacher.address2">
-		</div>
-	</div>
-
-	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<div class="checkbox">
-				<label><input type="checkbox" name="Active" checked
-					[(ngModel)]="teacher.isActive"> Active</label>
-			</div>
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<button type="submit" [disabled]="!teacherForm.form.valid"
-				class="btn btn-primary">Submit</button>
-		</div>
-	</div>
-
-
-</form>
+    <p>Form value: {{ addForm.value | json }}</p>
+  </form>
+</div>
