@@ -7,6 +7,7 @@ import {SchoolListComponent} from './school-list/school-list.component';
 import {SchoolCreateComponent} from './school-create/school-create.component';
 import {ScheduleListComponent} from './schedule-list/schedule-list.component';
 import {ScheduleCreateComponent} from './schedule-create/schedule-create.component';
+import {MycalComponent} from './mycal/mycal.component';
 
 
 const routes: Routes = [
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'create-school',
     component: SchoolCreateComponent
+  },
+  {
+    path: 'mycal',
+    component: MycalComponent
   },
 ];
 

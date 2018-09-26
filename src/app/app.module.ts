@@ -13,6 +13,11 @@ import {SchoolCreateComponent} from './school-create/school-create.component';
 import {ScheduleListComponent} from './schedule-list/schedule-list.component';
 import {ScheduleCreateComponent} from './schedule-create/schedule-create.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { MycalComponent } from './mycal/mycal.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,14 +26,20 @@ import {ScheduleCreateComponent} from './schedule-create/schedule-create.compone
     SchoolListComponent,
     SchoolCreateComponent,
     ScheduleListComponent,
-    ScheduleCreateComponent
+    ScheduleCreateComponent,
+    MycalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
