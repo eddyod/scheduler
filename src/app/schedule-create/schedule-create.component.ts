@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from '../api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Schedule } from '../schedule';
+import { ScheduleEvent } from '../scheduleEvent';
 import { Router } from '@angular/router';
 
 
@@ -32,14 +32,14 @@ export class ScheduleCreateComponent implements OnInit {
 
     this.addForm = this.formBuilder.group({
       id: [],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
+      start: ['', Validators.required],
+      end: ['', Validators.required],
       school_id: ['', Validators.required],
       teacher_id: ['', Validators.required],
       createdBy: ['', Validators.required],
     });
 
-    let id = localStorage.getItem('id');
+    const id = localStorage.getItem('id');
     if (+id > 0) {
       this.apiService.getScheduleById(+id).subscribe(data => {
         this.addForm.patchValue(data);
@@ -49,8 +49,9 @@ export class ScheduleCreateComponent implements OnInit {
       this.displayButton = false;
       this.scheduleFormLabel = 'Edit Schedule';
       this.scheduleButton = 'Update';
-
     }
+
+
 
     this.apiService.getSchools().subscribe((data: Array<object>) => {
       this.schools = data;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {APIService} from '../api.service';
-import {Schedule} from '../schedule';
+import {ScheduleEvent} from '../scheduleEvent';
 
 @Component({
   selector: 'app-schedule-list',
@@ -24,7 +24,7 @@ export class ScheduleListComponent implements OnInit {
       });
     }
 
-    deleteSchedule(schedule: Schedule): void {
+    deleteSchedule(schedule: ScheduleEvent): void {
       this.apiService.deleteSchedule(schedule.id)
         .subscribe(data => {
           this.schedules = this.schedules.filter(u => u !== schedule);
@@ -32,7 +32,7 @@ export class ScheduleListComponent implements OnInit {
         this.router.navigate(['schedules']);
     }
 
-    editSchedule(schedule: Schedule): void {
+    editSchedule(schedule: ScheduleEvent): void {
       localStorage.removeItem('id');
       localStorage.setItem('id', schedule.id.toString());
       localStorage.setItem('school_id', schedule.school.id.toString());

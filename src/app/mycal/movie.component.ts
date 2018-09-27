@@ -32,6 +32,12 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+interface Film {
+  id: number;
+  title: string;
+  release_date: string;
+}
+
 const timezoneOffset = new Date().getTimezoneOffset();
 const hoursOffset = String(Math.floor(Math.abs(timezoneOffset / 60))).padStart(
   2,
@@ -65,37 +71,17 @@ const colors: any = {
   styleUrls: ['./mycal.component.css']
 })
 export class MycalComponent implements OnInit {
-  API_URL = 'http://www.mephistosoftware.com/rester';
+
   view: string = 'month';
   viewDate: Date = new Date();
-  //events$: Observable<Array<CalendarEvent<{ scheduleEvent: ScheduleEvent }>>>;
-  //events$: Observable<Array<ScheduleEvent>>;
-  events$: Observable<ScheduleEvent[]>;
+  events$: Observable<Array<CalendarEvent<{ film: Film }>>>;
   activeDayIsOpen: boolean = false;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.loadEvents();
+    this.fetchEvents();
   }
-
-  loadEvents() {
-    this.events$ = this.http.get<ScheduleEvent[]>('http://www.mephistosoftware.com/rester/schedules')
-      .map(res => {
-        return res.map(event => {
-          return {
-            title: event.id,
-            start: new Date(event.start),
-            color: { primary: event.color, secondary: "#D1E8FF" },
-            meta: {
-              event
-            },
-            allDay: true
-          };
-        });
-      });
-  }
-
 
   fetchEvents(): void {
 
@@ -111,7 +97,7 @@ export class MycalComponent implements OnInit {
       day: endOfDay
     }[this.view];
 
-    const paramsfull = new HttpParams()
+    const params = new HttpParams()
       .set(
         'primary_release_date.gte',
         format(getStart(this.viewDate), 'YYYY-MM-DD')
@@ -122,25 +108,17 @@ export class MycalComponent implements OnInit {
       )
       .set('api_key', '0ec33936a68018857d727958dca1424f');
 
-    const params = new HttpParams();
-
     this.events$ = this.http
-      .get('http://www.mephistosoftware.com/rester/schedules')
+      .get('https://api.themoviedb.org/3/discover/movie', { params })
       .pipe(
-        map(({ results }: { results: ScheduleEvent[] }) => {
-          return results.map((scheduleEvent: ScheduleEvent) => {
+        map(({ results }: { results: Film[] }) => {
+          return results.map((film: Film) => {
             return {
-              id: scheduleEvent.id,
-              title: 'junk',
-              school_id: scheduleEvent.school_id,
-              teacher_id: scheduleEvent.teacher_id,
-              school: scheduleEvent.school,
-              teacher: scheduleEvent.teacher,
-              createdOn: scheduleEvent.createdOn,
-              start: new Date(scheduleEvent.start + timezoneOffsetString),
+              title: film.title,
+              start: new Date(film.release_date + timezoneOffsetString),
               color: colors.yellow,
               meta: {
-                scheduleEvent
+                film
               }
             };
           });
@@ -153,7 +131,7 @@ export class MycalComponent implements OnInit {
     events
   }: {
       date: Date;
-      events: Array<CalendarEvent<{ scheduleEvent: ScheduleEvent }>>;
+      events: Array<CalendarEvent<{ film: Film }>>;
     }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -168,9 +146,9 @@ export class MycalComponent implements OnInit {
     }
   }
 
-  eventClicked(event: CalendarEvent<{ scheduleEvent: ScheduleEvent }>): void {
+  eventClicked(event: CalendarEvent<{ film: Film }>): void {
     window.open(
-      `http://www.mephistosoftware.com/rester/schedules/${event.meta.scheduleEvent.id}`,
+      `https://www.themoviedb.org/movie/${event.meta.film.id}`,
       '_blank'
     );
   }

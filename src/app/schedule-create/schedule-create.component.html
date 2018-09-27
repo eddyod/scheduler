@@ -3,17 +3,17 @@
   <form [formGroup]="addForm" novalidate class="form">
 
     <div class="form-group">
-      <label for="idStartTime">Start time:</label>
-      <input formControlName="startTime" placeholder="Start class time" name="startTime" class="form-control" id="idStartTime">
-      <div class="alert  alert-danger" *ngIf="addForm.get('startTime').hasError('required') && addForm.get('startTime').touched">
+      <label for="idStart">Start time:</label>
+      <input formControlName="start" placeholder="Start class time" name="start" class="form-control" id="idStart">
+      <div class="alert  alert-danger" *ngIf="addForm.get('start').hasError('required') && addForm.get('start').touched">
         Start time is required
       </div>
     </div>
 
     <div class="form-group">
-      <label for="idEndTime">End time:</label>
-      <input formControlName="endTime" placeholder="End class time" name="endTime" class="form-control" id="idEndTime">
-      <div class="alert  alert-danger" *ngIf="addForm.get('endTime').hasError('required') && addForm.get('endTime').touched">
+      <label for="idEnd">End time:</label>
+      <input formControlName="end" placeholder="End class time" name="end" class="form-control" id="idEnd">
+      <div class="alert  alert-danger" *ngIf="addForm.get('end').hasError('required') && addForm.get('end').touched">
         End time is required
       </div>
     </div>
