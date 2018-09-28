@@ -17,8 +17,8 @@ import {
   endOfDay,
   format
 } from 'date-fns';
-import { Subject } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Subject} from 'rxjs';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -26,11 +26,11 @@ import {
   CalendarView
 } from 'angular-calendar';
 
-import { ScheduleEvent } from '../scheduleEvent';
-import { APIService } from '../api.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {ScheduleEvent} from '../scheduleEvent';
+import {APIService} from '../api.service';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 const timezoneOffset = new Date().getTimezoneOffset();
 const hoursOffset = String(Math.floor(Math.abs(timezoneOffset / 60))).padStart(
@@ -65,37 +65,60 @@ const colors: any = {
   styleUrls: ['./mycal.component.css']
 })
 export class MycalComponent implements OnInit {
-  API_URL = 'http://www.mephistosoftware.com/rester';
-  view: string = 'month';
-  viewDate: Date = new Date();
-  //events$: Observable<Array<CalendarEvent<{ scheduleEvent: ScheduleEvent }>>>;
-  //events$: Observable<Array<ScheduleEvent>>;
-  events$: Observable<ScheduleEvent[]>;
-  activeDayIsOpen: boolean = false;
+  API_URL = 'http://www.mephistosoftware.com/rester/schedules';
+  view = 'month';
+  viewDate = new Date();
+  // events$: Observable<Array<CalendarEvent<{ scheduleEvent: ScheduleEvent }>>>;
+  events$: Observable<Array<ScheduleEvent>>;
+  // events$: Observable<ScheduleEvent[]>;
+  // events$: Array<object> = [];
+  activeDayIsOpen = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.loadEvents();
+    console.log(this.events$);
   }
 
+
+  /*
   loadEvents() {
-    this.events$ = this.http.get<ScheduleEvent[]>('http://www.mephistosoftware.com/rester/schedules')
-      .map(res => {
-        return res.map(event => {
-          return {
-            title: event.id,
-            start: new Date(event.start),
-            color: { primary: event.color, secondary: "#D1E8FF" },
-            meta: {
-              event
-            },
-            allDay: true
-          };
-        });
+    this.http.get<ScheduleEvent[]>(this.API_URL)
+      .subscribe((news: ScheduleEvent[]) => {
+        this.events$ = news;
+      }, (err) => {
+        console.log(err);
       });
   }
+   */
 
+
+
+  loadEvents() {
+    this.events$ = this.http.get<ScheduleEvent[]>(this.API_URL)
+      .pipe(
+      map(res => {
+        console.log(res);
+        return res.map(scheduleEvent => {
+          return {
+            id: scheduleEvent.id,
+            title: 'junk',
+            school_id: scheduleEvent.school_id,
+            teacher_id: scheduleEvent.teacher_id,
+            school: scheduleEvent.school,
+            teacher: scheduleEvent.teacher,
+            createdOn: scheduleEvent.createdOn,
+            start: new Date(scheduleEvent.start + timezoneOffsetString),
+            color: colors.yellow,
+            meta: {
+              scheduleEvent
+            }
+          };
+        });
+      })
+      );
+  }
 
   fetchEvents(): void {
 
@@ -113,39 +136,41 @@ export class MycalComponent implements OnInit {
 
     const paramsfull = new HttpParams()
       .set(
-        'primary_release_date.gte',
-        format(getStart(this.viewDate), 'YYYY-MM-DD')
+      'primary_release_date.gte',
+      format(getStart(this.viewDate), 'YYYY-MM-DD')
       )
       .set(
-        'primary_release_date.lte',
-        format(getEnd(this.viewDate), 'YYYY-MM-DD')
+      'primary_release_date.lte',
+      format(getEnd(this.viewDate), 'YYYY-MM-DD')
       )
       .set('api_key', '0ec33936a68018857d727958dca1424f');
 
     const params = new HttpParams();
 
+    /*
     this.events$ = this.http
       .get('http://www.mephistosoftware.com/rester/schedules')
       .pipe(
-        map(({ results }: { results: ScheduleEvent[] }) => {
-          return results.map((scheduleEvent: ScheduleEvent) => {
-            return {
-              id: scheduleEvent.id,
-              title: 'junk',
-              school_id: scheduleEvent.school_id,
-              teacher_id: scheduleEvent.teacher_id,
-              school: scheduleEvent.school,
-              teacher: scheduleEvent.teacher,
-              createdOn: scheduleEvent.createdOn,
-              start: new Date(scheduleEvent.start + timezoneOffsetString),
-              color: colors.yellow,
-              meta: {
-                scheduleEvent
-              }
-            };
-          });
-        })
+      map(({results}: {results: ScheduleEvent[]}) => {
+        return results.map((scheduleEvent: ScheduleEvent) => {
+          return {
+            id: scheduleEvent.id,
+            title: 'junk',
+            school_id: scheduleEvent.school_id,
+            teacher_id: scheduleEvent.teacher_id,
+            school: scheduleEvent.school,
+            teacher: scheduleEvent.teacher,
+            createdOn: scheduleEvent.createdOn,
+            start: new Date(scheduleEvent.start + timezoneOffsetString),
+            color: colors.yellow,
+            meta: {
+              scheduleEvent
+            }
+          };
+        });
+      })
       );
+     */
   }
 
   dayClicked({
@@ -153,7 +178,7 @@ export class MycalComponent implements OnInit {
     events
   }: {
       date: Date;
-      events: Array<CalendarEvent<{ scheduleEvent: ScheduleEvent }>>;
+      events: Array<CalendarEvent<{scheduleEvent: ScheduleEvent}>>;
     }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -168,7 +193,7 @@ export class MycalComponent implements OnInit {
     }
   }
 
-  eventClicked(event: CalendarEvent<{ scheduleEvent: ScheduleEvent }>): void {
+  eventClicked(event: CalendarEvent<{scheduleEvent: ScheduleEvent}>): void {
     window.open(
       `http://www.mephistosoftware.com/rester/schedules/${event.meta.scheduleEvent.id}`,
       '_blank'
