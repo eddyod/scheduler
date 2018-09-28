@@ -20,6 +20,7 @@ import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {MycalComponent} from './mycal/mycal.component';
+import { MovieComponent } from './movie/movie.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {MycalComponent} from './mycal/mycal.component';
     SchoolCreateComponent,
     ScheduleListComponent,
     ScheduleCreateComponent,
-    MycalComponent
+    MycalComponent,
+    MovieComponent
   ],
   imports: [
     BrowserModule,

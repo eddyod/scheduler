@@ -65,17 +65,20 @@ const colors: any = {
 
 
 @Component({
-  selector: 'app-mycal',
+  selector: 'app-movie',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './mycal.component.html',
-  styleUrls: ['./mycal.component.css']
+  templateUrl: './movie.component.html',
+  styleUrls: ['./movie.component.css']
 })
-export class MycalComponent implements OnInit {
+export class MovieComponent implements OnInit {
 
-  view: string = 'month';
   viewDate: Date = new Date();
   events$: Observable<Array<CalendarEvent<{ film: Film }>>>;
   activeDayIsOpen: boolean = false;
+
+  view: CalendarView = CalendarView.Month;
+  CalendarView = CalendarView;
+
 
   constructor(private http: HttpClient) { }
 
@@ -113,6 +116,8 @@ export class MycalComponent implements OnInit {
       .pipe(
         map(({ results }: { results: Film[] }) => {
           return results.map((film: Film) => {
+            console.log(film);
+
             return {
               title: film.title,
               start: new Date(film.release_date + timezoneOffsetString),

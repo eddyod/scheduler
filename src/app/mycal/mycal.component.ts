@@ -17,8 +17,8 @@ import {
   endOfDay,
   format
 } from 'date-fns';
-import {Subject} from 'rxjs';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -26,11 +26,10 @@ import {
   CalendarView
 } from 'angular-calendar';
 
-import {ScheduleEvent} from '../scheduleEvent';
-import {APIService} from '../api.service';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { ScheduleEvent } from '../scheduleEvent';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 const timezoneOffset = new Date().getTimezoneOffset();
 const hoursOffset = String(Math.floor(Math.abs(timezoneOffset / 60))).padStart(
@@ -56,6 +55,19 @@ const colors: any = {
   }
 };
 
+import { School } from '../school';
+import { Teacher } from '../teacher';
+
+interface Film {
+  id: number;
+  title: string;
+  start: string;
+  school_id: number;
+  teacher_id: number;
+  school: School;
+  teacher: Teacher;
+  createdOn: string;
+}
 
 
 @Component({
@@ -66,59 +78,22 @@ const colors: any = {
 })
 export class MycalComponent implements OnInit {
   API_URL = 'http://www.mephistosoftware.com/rester/schedules';
-  view = 'month';
-  viewDate = new Date();
-  // events$: Observable<Array<CalendarEvent<{ scheduleEvent: ScheduleEvent }>>>;
-  events$: Observable<Array<ScheduleEvent>>;
-  // events$: Observable<ScheduleEvent[]>;
-  // events$: Array<object> = [];
-  activeDayIsOpen = false;
+  view: CalendarView = CalendarView.Month;
+  CalendarView = CalendarView;
+  viewDate: Date = new Date();
+  stuff: CalendarEvent[];
 
-  constructor(private http: HttpClient) {}
+  // events$: Observable<Array<CalendarEvent<{ film: Film }>>>;
+  events$: Observable<Array<ScheduleEvent>>;
+  activeDayIsOpen = true;
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.loadEvents();
-    console.log(this.events$);
+    this.fetchEvents();
+    //console.log(this.events$);
   }
 
-
-  /*
-  loadEvents() {
-    this.http.get<ScheduleEvent[]>(this.API_URL)
-      .subscribe((news: ScheduleEvent[]) => {
-        this.events$ = news;
-      }, (err) => {
-        console.log(err);
-      });
-  }
-   */
-
-
-
-  loadEvents() {
-    this.events$ = this.http.get<ScheduleEvent[]>(this.API_URL)
-      .pipe(
-      map(res => {
-        console.log(res);
-        return res.map(scheduleEvent => {
-          return {
-            id: scheduleEvent.id,
-            title: 'junk',
-            school_id: scheduleEvent.school_id,
-            teacher_id: scheduleEvent.teacher_id,
-            school: scheduleEvent.school,
-            teacher: scheduleEvent.teacher,
-            createdOn: scheduleEvent.createdOn,
-            start: new Date(scheduleEvent.start + timezoneOffsetString),
-            color: colors.yellow,
-            meta: {
-              scheduleEvent
-            }
-          };
-        });
-      })
-      );
-  }
 
   fetchEvents(): void {
 
@@ -136,41 +111,38 @@ export class MycalComponent implements OnInit {
 
     const paramsfull = new HttpParams()
       .set(
-      'primary_release_date.gte',
-      format(getStart(this.viewDate), 'YYYY-MM-DD')
+        'primary_release_date.gte',
+        format(getStart(this.viewDate), 'YYYY-MM-DD')
       )
       .set(
-      'primary_release_date.lte',
-      format(getEnd(this.viewDate), 'YYYY-MM-DD')
+        'primary_release_date.lte',
+        format(getEnd(this.viewDate), 'YYYY-MM-DD')
       )
       .set('api_key', '0ec33936a68018857d727958dca1424f');
 
-    const params = new HttpParams();
-
-    /*
     this.events$ = this.http
-      .get('http://www.mephistosoftware.com/rester/schedules')
-      .pipe(
-      map(({results}: {results: ScheduleEvent[]}) => {
+      .get(this.API_URL)
+      .pipe(map((results: ScheduleEvent[]) => {
+
         return results.map((scheduleEvent: ScheduleEvent) => {
+          console.log(scheduleEvent);
+
           return {
             id: scheduleEvent.id,
-            title: 'junk',
+            title: scheduleEvent.teacher.name,
             school_id: scheduleEvent.school_id,
             teacher_id: scheduleEvent.teacher_id,
             school: scheduleEvent.school,
             teacher: scheduleEvent.teacher,
             createdOn: scheduleEvent.createdOn,
             start: new Date(scheduleEvent.start + timezoneOffsetString),
+            end: new Date(scheduleEvent.end + timezoneOffsetString),
             color: colors.yellow,
-            meta: {
-              scheduleEvent
-            }
+            meta: { scheduleEvent }
           };
         });
       })
       );
-     */
   }
 
   dayClicked({
@@ -178,7 +150,7 @@ export class MycalComponent implements OnInit {
     events
   }: {
       date: Date;
-      events: Array<CalendarEvent<{scheduleEvent: ScheduleEvent}>>;
+      events: Array<ScheduleEvent>;
     }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -193,9 +165,9 @@ export class MycalComponent implements OnInit {
     }
   }
 
-  eventClicked(event: CalendarEvent<{scheduleEvent: ScheduleEvent}>): void {
+  eventClicked(event: ScheduleEvent): void {
     window.open(
-      `http://www.mephistosoftware.com/rester/schedules/${event.meta.scheduleEvent.id}`,
+      `https://www.themoviedb.org/movie/${event.id}`,
       '_blank'
     );
   }
