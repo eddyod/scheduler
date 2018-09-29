@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { School } from './school';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, of} from 'rxjs';
+import {catchError, map, tap} from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,69 +20,95 @@ export class APIService {
 
   API_URL = 'http://www.mephistosoftware.com/rester';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // teachers
   getTeacherById(id: number) {
-    return this.httpClient.get(this.API_URL + '/teachers/' + id);
+    return this.http.get(this.API_URL + '/teachers/' + id);
   }
 
-  getTeachers() {
-    return this.httpClient.get(this.API_URL + '/teachers');
+  getTeachersXXX(): Observable<Object[]> {
+    return this.http.get<Object[]>(this.API_URL + '/teachers');
+  }
+
+  /** GET heroes from the server */
+  getTeachers(): Observable<Object[]> {
+    return this.http.get<Object[]>(this.API_URL + '/teachers')
+      .pipe(
+      catchError(this.handleError('getTeachers', []))
+      );
   }
 
   createTeacher(teacher) {
-    return this.httpClient.post(this.API_URL + '/teachers/', teacher);
+    return this.http.post(this.API_URL + '/teachers/', teacher);
   }
 
   updateTeacher(teacher) {
-    return this.httpClient.put(this.API_URL + '/teachers/' + teacher.id, teacher, httpOptions);
+    return this.http.put(this.API_URL + '/teachers/' + teacher.id, teacher, httpOptions);
   }
 
   deleteTeacher(id: number) {
-    return this.httpClient.delete(this.API_URL + '/teachers/' + id);
+    return this.http.delete(this.API_URL + '/teachers/' + id);
   }
 
   // schools
   getSchoolById(id: number) {
-    return this.httpClient.get(this.API_URL + '/schools/' + id);
+    return this.http.get(this.API_URL + '/schools/' + id);
   }
 
   getSchools() {
-    return this.httpClient.get(this.API_URL + '/schools');
+    return this.http.get(this.API_URL + '/schools');
   }
 
   createSchool(school) {
-    return this.httpClient.post(this.API_URL + '/schools', school);
+    return this.http.post(this.API_URL + '/schools', school);
   }
 
   updateSchool(school) {
-    return this.httpClient.put(this.API_URL + '/schools/' + school.id, school, httpOptions);
+    return this.http.put(this.API_URL + '/schools/' + school.id, school, httpOptions);
   }
 
   deleteSchool(id: number) {
-    return this.httpClient.delete(this.API_URL + '/schools/' + id);
+    return this.http.delete(this.API_URL + '/schools/' + id);
   }
 
   // schedules
   getScheduleById(id: number) {
-    return this.httpClient.get(this.API_URL + '/schedules/' + id);
+    return this.http.get(this.API_URL + '/schedules/' + id);
   }
 
   getSchedules() {
-    return this.httpClient.get(this.API_URL + '/schedules');
+    return this.http.get(this.API_URL + '/schedules');
   }
 
   createSchedule(schedule) {
-    return this.httpClient.post(this.API_URL + '/schedules', schedule);
+    return this.http.post(this.API_URL + '/schedules', schedule);
   }
 
   updateSchedule(schedule) {
-    return this.httpClient.put(this.API_URL + '/schedules/' + schedule.id, schedule, httpOptions);
+    return this.http.put(this.API_URL + '/schedules/' + schedule.id, schedule, httpOptions);
   }
 
   deleteSchedule(id: number) {
-    return this.httpClient.delete(this.API_URL + '/schedules/' + id);
+    return this.http.delete(this.API_URL + '/schedules/' + id);
+  }
+
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 
 

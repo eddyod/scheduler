@@ -17,8 +17,8 @@ import {
   endOfDay,
   format
 } from 'date-fns';
-import { Subject } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Subject} from 'rxjs';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -26,10 +26,10 @@ import {
   CalendarView
 } from 'angular-calendar';
 
-import { ScheduleEvent } from '../scheduleEvent';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {ScheduleEvent} from '../scheduleEvent';
+import {Observable, throwError} from 'rxjs';
+import {map, catchError} from 'rxjs/operators';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 const timezoneOffset = new Date().getTimezoneOffset();
 const hoursOffset = String(Math.floor(Math.abs(timezoneOffset / 60))).padStart(
@@ -55,8 +55,8 @@ const colors: any = {
   }
 };
 
-import { School } from '../school';
-import { Teacher } from '../teacher';
+import {School} from '../school';
+import {Teacher} from '../teacher';
 
 interface Film {
   id: number;
@@ -81,18 +81,35 @@ export class MycalComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
-  stuff: CalendarEvent[];
 
-  // events$: Observable<Array<CalendarEvent<{ film: Film }>>>;
+  /*
+  events$: ScheduleEvent[] = [{
+    id: 1,
+    title: ' a death is born',
+    school_id: 1,
+    teacher_id: 1,
+    school: new School('Joe Teacher', '555-1212'),
+    teacher: new Teacher(),
+    createdOn: '2019-09-29',
+    start: new Date(),
+    end: new Date(),
+    color: {primary: '#FFF000', secondary: '#FF0000'},
+  }];
+   */
+  // events$: ScheduleEvent[];
   events$: Observable<Array<ScheduleEvent>>;
+  // events$: Observable<Array<CalendarEvent<{ film: Film }>>>;
+  // events$: Observable<Array<ScheduleEvent[]>>;
+
   activeDayIsOpen = true;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.fetchEvents();
-    //console.log(this.events$);
+    // console.log(this.events$);
   }
+
 
 
   fetchEvents(): void {
@@ -111,12 +128,12 @@ export class MycalComponent implements OnInit {
 
     const paramsfull = new HttpParams()
       .set(
-        'primary_release_date.gte',
-        format(getStart(this.viewDate), 'YYYY-MM-DD')
+      'primary_release_date.gte',
+      format(getStart(this.viewDate), 'YYYY-MM-DD')
       )
       .set(
-        'primary_release_date.lte',
-        format(getEnd(this.viewDate), 'YYYY-MM-DD')
+      'primary_release_date.lte',
+      format(getEnd(this.viewDate), 'YYYY-MM-DD')
       )
       .set('api_key', '0ec33936a68018857d727958dca1424f');
 
@@ -125,25 +142,26 @@ export class MycalComponent implements OnInit {
       .pipe(map((results: ScheduleEvent[]) => {
 
         return results.map((scheduleEvent: ScheduleEvent) => {
-          console.log(scheduleEvent);
-
           return {
             id: scheduleEvent.id,
-            title: scheduleEvent.teacher.name,
+            title: scheduleEvent.teacher.name + ' at ' + scheduleEvent.school.name,
             school_id: scheduleEvent.school_id,
             teacher_id: scheduleEvent.teacher_id,
             school: scheduleEvent.school,
             teacher: scheduleEvent.teacher,
             createdOn: scheduleEvent.createdOn,
-            start: new Date(scheduleEvent.start + timezoneOffsetString),
-            end: new Date(scheduleEvent.end + timezoneOffsetString),
+            start: new Date(scheduleEvent.start),
+            end: new Date(scheduleEvent.end),
+            // start: new Date(),
+            // end: new Date(),
             color: colors.yellow,
-            meta: { scheduleEvent }
+            meta: {scheduleEvent}
           };
         });
       })
       );
   }
+
 
   dayClicked({
     date,

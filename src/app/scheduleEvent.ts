@@ -1,6 +1,6 @@
-import { CalendarEvent } from 'angular-calendar';
-import { School } from './school';
-import { Teacher } from './teacher';
+import {CalendarEvent} from 'angular-calendar';
+import {School} from './school';
+import {Teacher} from './teacher';
 
 export interface ScheduleEvent extends CalendarEvent {
   id: number;
@@ -10,4 +10,5 @@ export interface ScheduleEvent extends CalendarEvent {
   school: School;
   teacher: Teacher;
   createdOn: string;
+
 }

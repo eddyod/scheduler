@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { APIService } from '../api.service';
-import { Teacher } from '../teacher';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {APIService} from '../api.service';
+import {Teacher} from '../teacher';
 
 
 @Component({
@@ -11,10 +11,10 @@ import { Teacher } from '../teacher';
 })
 export class TeacherListComponent implements OnInit {
 
-  private teachers: Array<object> = [];
+  private teachers: Array<Object> = [];
 
 
-  constructor(private apiService: APIService, private router: Router) { }
+  constructor(private apiService: APIService, private router: Router) {}
 
   ngOnInit() {
     this.getTeachers();

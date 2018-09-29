@@ -74,7 +74,7 @@ export class MovieComponent implements OnInit {
 
   viewDate: Date = new Date();
   events$: Observable<Array<CalendarEvent<{ film: Film }>>>;
-  activeDayIsOpen: boolean = false;
+  activeDayIsOpen = false;
 
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
