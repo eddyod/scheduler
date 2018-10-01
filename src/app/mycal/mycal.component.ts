@@ -29,11 +29,6 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-const timezoneOffset = new Date().getTimezoneOffset();
-const hoursOffset = String(Math.floor(Math.abs(timezoneOffset / 60))).padStart(2, '0');
-const minutesOffset = String(Math.abs(timezoneOffset % 60)).padEnd(2, '0');
-const direction = timezoneOffset > 0 ? '-' : '+';
-const timezoneOffsetString = `T00:00:00${direction}${hoursOffset}${minutesOffset}`;
 
 const colors: any = {
   red: {
@@ -103,10 +98,10 @@ export class MycalComponent implements OnInit {
       .pipe(map((results: ScheduleEvent[]) => {
 
         return results.map((scheduleEvent: ScheduleEvent) => {
-          // this.startClass = format(scheduleEvent.start, 'MM/DD/YYYY HH:mm');
-          // this.endClass = format(scheduleEvent.end, 'MM/DD/YYYY HH:mm');
-          this.startClass = this.toUTCString(new Date(scheduleEvent.start));
-          this.endClass = this.toUTCString(new Date(scheduleEvent.end));
+          this.startClass = format(scheduleEvent.start, 'MM/DD/YYYY HH:mm');
+          this.endClass = format(scheduleEvent.end, 'MM/DD/YYYY HH:mm');
+          // this.startClass = this.toUTCString(new Date(scheduleEvent.start));
+          // this.endClass = this.toUTCString(new Date(scheduleEvent.end));
 
           return {
             id: scheduleEvent.id,
@@ -118,8 +113,8 @@ export class MycalComponent implements OnInit {
             school: scheduleEvent.school,
             teacher: scheduleEvent.teacher,
             createdOn: scheduleEvent.createdOn,
-            start: this.toUTCDate(new Date(scheduleEvent.start)),
-            end: this.toUTCDate(new Date(scheduleEvent.end)),
+            start: new Date(scheduleEvent.start),
+            end: new Date(scheduleEvent.end),
             color: colors.yellow,
             meta: { scheduleEvent }
           };

@@ -14,8 +14,8 @@
       <tbody>
         <tr *ngFor="let schedule of schedules">
           <td>{{schedule.id}}</td>
-          <td>{{schedule.start | date : 'medium': 'UTC'}}</td>
-          <td>{{schedule.end | date : 'medium': 'UTC'}}</td>
+          <td>{{schedule.start | date : 'medium'}}</td>
+          <td>{{schedule.end | date : 'medium'}}</td>
           <td>{{schedule.teacher.name}}</td>
           <td>{{schedule.school.name}}</td>
           <td>

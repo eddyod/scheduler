@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { APIService } from '../api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DateTimeAdapter } from 'ng-pick-datetime';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-schedule-create',
@@ -24,12 +24,11 @@ export class ScheduleCreateComponent implements OnInit {
   constructor(
     private apiService: APIService,
     private formBuilder: FormBuilder,
-    private router: Router,
-    private dateTimeAdapter: DateTimeAdapter<any>) { }
+    private router: Router) { }
 
 
   ngOnInit() {
-    this.dateTimeAdapter.setLocale('en-GB');
+    // this.dateTimeAdapter.setLocale('en-GB');
     this.addForm = this.formBuilder.group({
       id: [],
       start: ['', Validators.required],
@@ -65,6 +64,8 @@ export class ScheduleCreateComponent implements OnInit {
   }
 
   onSave() {
+    this.addForm.value.start = moment(this.addForm.value.start).format("YYYY-MM-DD[T]HH:mm");
+    this.addForm.value.end = moment(this.addForm.value.end).format("YYYY-MM-DD[T]HH:mm");
     this.apiService.createSchedule(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['schedules']);
@@ -74,6 +75,8 @@ export class ScheduleCreateComponent implements OnInit {
         });
   }
   onUpdate() {
+    this.addForm.value.start = moment(this.addForm.value.start).format("YYYY-MM-DD[T]HH:mm");
+    this.addForm.value.end = moment(this.addForm.value.end).format("YYYY-MM-DD[T]HH:mm");
     this.apiService.updateSchedule(this.addForm.value).subscribe(data => {
       this.router.navigate(['schedules']);
     },

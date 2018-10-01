@@ -22,7 +22,6 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { MycalComponent } from './mycal/mycal.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
-
 @NgModule({
   declarations: [
     AppComponent,
