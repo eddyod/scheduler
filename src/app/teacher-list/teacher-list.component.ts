@@ -11,7 +11,7 @@ import {Teacher} from '../teacher';
 })
 export class TeacherListComponent implements OnInit {
 
-  private teachers: Array<Object> = [];
+  public teachers: Array<Object> = [];
 
 
   constructor(private apiService: APIService, private router: Router) {}

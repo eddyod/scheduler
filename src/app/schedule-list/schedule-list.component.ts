@@ -10,7 +10,7 @@ import {ScheduleEvent} from '../scheduleEvent';
 })
 export class ScheduleListComponent implements OnInit {
 
-    private schedules: Array<object> = [];
+    public schedules: Array<object> = [];
 
     constructor(private router: Router, private apiService: APIService) {}
 

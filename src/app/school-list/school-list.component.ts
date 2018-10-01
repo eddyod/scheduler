@@ -10,7 +10,7 @@ import {School} from '../school';
 })
 export class SchoolListComponent implements OnInit {
 
-  private schools: Array<object> = [];
+  public schools: Array<object> = [];
 
   constructor(private router: Router, private apiService: APIService) {}
 

@@ -18,8 +18,8 @@ export class ScheduleCreateComponent implements OnInit {
   scheduleFormLabel = 'Add Schedule';
   scheduleButton = 'Save';
   // drop downs
-  private teachers: Array<object> = [];
-  private schools: Array<object> = [];
+  public teachers: Array<object> = [];
+  public schools: Array<object> = [];
 
 
   constructor(
@@ -65,7 +65,6 @@ export class ScheduleCreateComponent implements OnInit {
   }
 
   onSave() {
-    console.log(this.addForm.value);
     this.apiService.createSchedule(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['schedules']);
@@ -75,7 +74,6 @@ export class ScheduleCreateComponent implements OnInit {
         });
   }
   onUpdate() {
-    console.log(this.addForm.value);
     this.apiService.updateSchedule(this.addForm.value).subscribe(data => {
       this.router.navigate(['schedules']);
     },
