@@ -28,6 +28,7 @@
     "date-fns": "^1.29.0",
     "flatpickr": "^4.5.2",
     "ng-pick-datetime": "^6.0.16",
+    "ng-pick-datetime-moment": "^1.0.7",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },

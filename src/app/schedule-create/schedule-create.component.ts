@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { APIService } from '../api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { DateTimeAdapter } from 'ng-pick-datetime';
 
 @Component({
   selector: 'app-schedule-create',
@@ -25,10 +25,11 @@ export class ScheduleCreateComponent implements OnInit {
     private apiService: APIService,
     private formBuilder: FormBuilder,
     private router: Router,
-  ) {}
+    private dateTimeAdapter: DateTimeAdapter<any>) { }
+
 
   ngOnInit() {
-
+    this.dateTimeAdapter.setLocale('en-GB');
     this.addForm = this.formBuilder.group({
       id: [],
       start: ['', Validators.required],
