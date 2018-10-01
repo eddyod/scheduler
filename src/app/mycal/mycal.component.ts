@@ -3,8 +3,6 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef
 } from '@angular/core';
 import {
   isSameMonth,
@@ -15,11 +13,7 @@ import {
   endOfWeek,
   startOfDay,
   endOfDay,
-  startOfHour,
-  startOfMinute,
-  endOfHour,
-  endOfMinute,
-  format
+  format,
 } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -95,12 +89,12 @@ export class MycalComponent implements OnInit {
 
     const paramsfull = new HttpParams()
       .set(
-      'primary_release_date.gte',
-      format(getStart(this.viewDate), 'YYYY-MM-DD')
+        'primary_release_date.gte',
+        format(getStart(this.viewDate), 'YYYY-MM-DD')
       )
       .set(
-      'primary_release_date.lte',
-      format(getEnd(this.viewDate), 'YYYY-MM-DD')
+        'primary_release_date.lte',
+        format(getEnd(this.viewDate), 'YYYY-MM-DD')
       )
       .set('api_key', '0ec33936a68018857d727958dca1424f');
 
@@ -109,21 +103,23 @@ export class MycalComponent implements OnInit {
       .pipe(map((results: ScheduleEvent[]) => {
 
         return results.map((scheduleEvent: ScheduleEvent) => {
-          this.startClass = format(scheduleEvent.start, 'MM/DD/YYYY HH:mm');
-          this.endClass = format(scheduleEvent.end, 'MM/DD/YYYY HH:mm');
+          // this.startClass = format(scheduleEvent.start, 'MM/DD/YYYY HH:mm');
+          // this.endClass = format(scheduleEvent.end, 'MM/DD/YYYY HH:mm');
+          this.startClass = this.toUTCString(new Date(scheduleEvent.start));
+          this.endClass = this.toUTCString(new Date(scheduleEvent.end));
 
           return {
             id: scheduleEvent.id,
             title: scheduleEvent.teacher.name + ' at '
-            + scheduleEvent.school.name + ' at '
-            + this.startClass + ' to ' + this.endClass,
+              + scheduleEvent.school.name + ' at '
+              + this.startClass + ' to ' + this.endClass,
             school_id: scheduleEvent.school_id,
             teacher_id: scheduleEvent.teacher_id,
             school: scheduleEvent.school,
             teacher: scheduleEvent.teacher,
             createdOn: scheduleEvent.createdOn,
-            start: new Date(scheduleEvent.start),
-            end: new Date(scheduleEvent.end),
+            start: this.toUTCDate(new Date(scheduleEvent.start)),
+            end: this.toUTCDate(new Date(scheduleEvent.end)),
             color: colors.yellow,
             meta: { scheduleEvent }
           };
@@ -132,6 +128,17 @@ export class MycalComponent implements OnInit {
       );
   }
 
+  toUTCDate = function(date) {
+    var _utc = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes());
+    return _utc;
+  };
+
+  toUTCString = function(date) {
+    var d = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes());
+    var datestring = ("0" + d.getDate()).slice(-2) + "/" + ("0"+(d.getMonth()+1)).slice(-2) + "/" +
+      d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+    return datestring;
+  };
 
   dayClicked({
     date,

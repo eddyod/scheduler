@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from '../api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ScheduleEvent } from '../scheduleEvent';
 import { Router } from '@angular/router';
 
 

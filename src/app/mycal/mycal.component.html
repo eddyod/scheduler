@@ -53,7 +53,7 @@
   </div>
 </div>
 <br>
-<div *ngIf="events$ | async; else 'loading'; let events">
+<div *ngIf="events$ | async; let events">
   <div [ngSwitch]="view">
     <mwl-calendar-month-view
       *ngSwitchCase="'month'"
