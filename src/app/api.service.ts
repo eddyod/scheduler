@@ -2,6 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';
+import {Teacher} from './teacher';
+import {School} from './school';
+import {Page} from './page';
+import {queryPaginated} from './queryPaginated';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -27,10 +31,6 @@ export class APIService {
     return this.http.get(this.API_URL + '/teachers/' + id);
   }
 
-  getTeachersXXX(): Observable<Object[]> {
-    return this.http.get<Object[]>(this.API_URL + '/teachers');
-  }
-
   /** GET heroes from the server */
   getTeachers(): Observable<Object[]> {
     return this.http.get<Object[]>(this.API_URL + '/teachers')
@@ -51,6 +51,9 @@ export class APIService {
     return this.http.delete(this.API_URL + '/teachers/' + id);
   }
 
+  listTeachers(urlOrFilter?: string | object): Observable<Page<Teacher>> {
+      return queryPaginated<Teacher>(this.http, this.API_URL + '/teachers', urlOrFilter);
+  }
   // schools
   getSchoolById(id: number) {
     return this.http.get(this.API_URL + '/schools/' + id);
@@ -70,6 +73,10 @@ export class APIService {
 
   deleteSchool(id: number) {
     return this.http.delete(this.API_URL + '/schools/' + id);
+  }
+
+  listSchools(urlOrFilter?: string | object): Observable<Page<School>> {
+      return queryPaginated<School>(this.http, this.API_URL + '/schools', urlOrFilter);
   }
 
   // schedules

@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {APIService} from '../api.service';
-import {Teacher} from '../teacher';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { APIService } from '../api.service';
+import { Teacher } from '../teacher';
 
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, merge, share, startWith, switchMap } from 'rxjs/operators';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Page } from '../page';
 
 @Component({
   selector: 'app-teacher-list',
@@ -12,12 +16,26 @@ import {Teacher} from '../teacher';
 export class TeacherListComponent implements OnInit {
 
   public teachers: Array<Object> = [];
+  filterForm: FormGroup;
+  page: Observable<Page<Teacher>>
+  pageUrl = new Subject<string>();
 
 
-  constructor(private apiService: APIService, private router: Router) {}
+  constructor(private apiService: APIService, private router: Router) {
+    this.filterForm = new FormGroup({
+      name: new FormControl()
+    });
+    this.page = this.filterForm.valueChanges.pipe(
+      debounceTime(200),
+      startWith(this.filterForm.value),
+      merge(this.pageUrl),
+      switchMap(urlOrFilter => this.apiService.listTeachers(urlOrFilter)),
+      share()
+    );
+  }
 
   ngOnInit() {
-    this.getTeachers();
+    // this.getTeachers();
   }
 
 
@@ -45,6 +63,10 @@ export class TeacherListComponent implements OnInit {
     localStorage.removeItem('id');
     this.router.navigate(['create-teacher']);
   }
+
+  onPageChanged(url: string) {
+    this.pageUrl.next(url);
+}
 
 
 }

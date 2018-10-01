@@ -3,6 +3,12 @@ import {Router} from '@angular/router';
 import {APIService} from '../api.service';
 import {School} from '../school';
 
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, merge, share, startWith, switchMap } from 'rxjs/operators';
+import { Page } from '../page';
+import { FormControl, FormGroup } from '@angular/forms';
+
+
 @Component({
   selector: 'app-school-list',
   templateUrl: './school-list.component.html',
@@ -11,11 +17,28 @@ import {School} from '../school';
 export class SchoolListComponent implements OnInit {
 
   public schools: Array<object> = [];
+  filterForm: FormGroup;
+  page: Observable<Page<School>>
+  pageUrl = new Subject<string>();
 
-  constructor(private router: Router, private apiService: APIService) {}
+
+  constructor(private router: Router, private apiService: APIService) {
+    this.filterForm = new FormGroup({
+      name: new FormControl()
+    });
+
+    this.page = this.filterForm.valueChanges.pipe(
+      debounceTime(200),
+      startWith(this.filterForm.value),
+      merge(this.pageUrl),
+      switchMap(urlOrFilter => this.apiService.listSchools(urlOrFilter)),
+      share()
+    );
+
+  }
 
   ngOnInit() {
-    this.getSchools();
+    // this.getSchools();
   }
 
   public getSchools() {

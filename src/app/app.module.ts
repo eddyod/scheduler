@@ -21,6 +21,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { MycalComponent } from './mycal/mycal.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     ScheduleListComponent,
     ScheduleCreateComponent,
     MycalComponent,
+    PaginatorComponent,
   ],
   imports: [
     BrowserModule,
