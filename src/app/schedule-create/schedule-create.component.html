@@ -3,20 +3,19 @@
   <form [formGroup]="addForm" novalidate class="form">
 
     <div class="form-group">
-      <label for="idStart">Start time:</label>
-      <input formControlName="start" placeholder="Start class time" name="start" class="form-control" id="idStart">
-      <div class="alert  alert-danger" *ngIf="addForm.get('start').hasError('required') && addForm.get('start').touched">
-        Start time is required
-      </div>
+      <label for="idStart">Start Date/Time:</label>
+      <input formControlName="start" placeholder="Start class time" name="start"
+      class="form-control" id="idStart" [owlDateTimeTrigger]="start" [owlDateTime]="start">
+      <owl-date-time #start></owl-date-time>
     </div>
 
     <div class="form-group">
-      <label for="idEnd">End time:</label>
-      <input formControlName="end" placeholder="End class time" name="end" class="form-control" id="idEnd">
-      <div class="alert  alert-danger" *ngIf="addForm.get('end').hasError('required') && addForm.get('end').touched">
-        End time is required
-      </div>
+      <label for="idEnd">End Date/Time:</label>
+      <input formControlName="end" placeholder="End class time" name="end"
+      class="form-control" id="idEnd" [owlDateTimeTrigger]="end" [owlDateTime]="end">
+      <owl-date-time #end></owl-date-time>
     </div>
+
 
     <div class="form-group">
       <label for="idSchool">School</label>

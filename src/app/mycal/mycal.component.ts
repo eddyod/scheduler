@@ -15,10 +15,14 @@ import {
   endOfWeek,
   startOfDay,
   endOfDay,
+  startOfHour,
+  startOfMinute,
+  endOfHour,
+  endOfMinute,
   format
 } from 'date-fns';
-import {Subject} from 'rxjs';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -26,16 +30,13 @@ import {
   CalendarView
 } from 'angular-calendar';
 
-import {ScheduleEvent} from '../scheduleEvent';
-import {Observable, throwError} from 'rxjs';
-import {map, catchError} from 'rxjs/operators';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { ScheduleEvent } from '../scheduleEvent';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 const timezoneOffset = new Date().getTimezoneOffset();
-const hoursOffset = String(Math.floor(Math.abs(timezoneOffset / 60))).padStart(
-  2,
-  '0'
-);
+const hoursOffset = String(Math.floor(Math.abs(timezoneOffset / 60))).padStart(2, '0');
 const minutesOffset = String(Math.abs(timezoneOffset % 60)).padEnd(2, '0');
 const direction = timezoneOffset > 0 ? '-' : '+';
 const timezoneOffsetString = `T00:00:00${direction}${hoursOffset}${minutesOffset}`;
@@ -55,21 +56,6 @@ const colors: any = {
   }
 };
 
-import {School} from '../school';
-import {Teacher} from '../teacher';
-
-interface Film {
-  id: number;
-  title: string;
-  start: string;
-  school_id: number;
-  teacher_id: number;
-  school: School;
-  teacher: Teacher;
-  createdOn: string;
-}
-
-
 @Component({
   selector: 'app-mycal',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -77,43 +63,24 @@ interface Film {
   styleUrls: ['./mycal.component.css']
 })
 export class MycalComponent implements OnInit {
+
   API_URL = 'http://www.mephistosoftware.com/rester/schedules';
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
-
-  /*
-  events$: ScheduleEvent[] = [{
-    id: 1,
-    title: ' a death is born',
-    school_id: 1,
-    teacher_id: 1,
-    school: new School('Joe Teacher', '555-1212'),
-    teacher: new Teacher(),
-    createdOn: '2019-09-29',
-    start: new Date(),
-    end: new Date(),
-    color: {primary: '#FFF000', secondary: '#FF0000'},
-  }];
-   */
-  // events$: ScheduleEvent[];
   events$: Observable<Array<ScheduleEvent>>;
-  // events$: Observable<Array<CalendarEvent<{ film: Film }>>>;
-  // events$: Observable<Array<ScheduleEvent[]>>;
-
-  activeDayIsOpen = true;
-
-  constructor(private http: HttpClient) {}
+  activeDayIsOpen = false;
+  startClass: string;
+  endClass: string;
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.fetchEvents();
-    // console.log(this.events$);
   }
 
 
 
   fetchEvents(): void {
-
     const getStart: any = {
       month: startOfMonth,
       week: startOfWeek,
@@ -142,9 +109,14 @@ export class MycalComponent implements OnInit {
       .pipe(map((results: ScheduleEvent[]) => {
 
         return results.map((scheduleEvent: ScheduleEvent) => {
+          this.startClass = format(scheduleEvent.start, 'MM/DD/YYYY HH:mm');
+          this.endClass = format(scheduleEvent.end, 'MM/DD/YYYY HH:mm');
+
           return {
             id: scheduleEvent.id,
-            title: scheduleEvent.teacher.name + ' at ' + scheduleEvent.school.name,
+            title: scheduleEvent.teacher.name + ' at '
+            + scheduleEvent.school.name + ' at '
+            + this.startClass + ' to ' + this.endClass,
             school_id: scheduleEvent.school_id,
             teacher_id: scheduleEvent.teacher_id,
             school: scheduleEvent.school,
@@ -152,10 +124,8 @@ export class MycalComponent implements OnInit {
             createdOn: scheduleEvent.createdOn,
             start: new Date(scheduleEvent.start),
             end: new Date(scheduleEvent.end),
-            // start: new Date(),
-            // end: new Date(),
             color: colors.yellow,
-            meta: {scheduleEvent}
+            meta: { scheduleEvent }
           };
         });
       })

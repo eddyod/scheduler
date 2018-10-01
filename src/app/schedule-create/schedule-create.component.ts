@@ -25,8 +25,8 @@ export class ScheduleCreateComponent implements OnInit {
   constructor(
     private apiService: APIService,
     private formBuilder: FormBuilder,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit() {
 
@@ -65,7 +65,7 @@ export class ScheduleCreateComponent implements OnInit {
   }
 
   onSave() {
-    console.log('Create fire');
+    console.log(this.addForm.value);
     this.apiService.createSchedule(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['schedules']);
@@ -75,7 +75,7 @@ export class ScheduleCreateComponent implements OnInit {
         });
   }
   onUpdate() {
-    console.log('Update fire');
+    console.log(this.addForm.value);
     this.apiService.updateSchedule(this.addForm.value).subscribe(data => {
       this.router.navigate(['schedules']);
     },
