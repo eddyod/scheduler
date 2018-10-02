@@ -3,6 +3,7 @@
     <div class="btn-group">
       <div
         class="btn btn-primary"
+        (click)="fetchEvents()"
         mwlCalendarPreviousView
         [view]="view"
         [(viewDate)]="viewDate"
@@ -11,12 +12,14 @@
       </div>
       <div
         class="btn btn-outline-secondary"
+        (click)="fetchEvents()"
         mwlCalendarToday
         [(viewDate)]="viewDate">
         Today
       </div>
       <div
         class="btn btn-primary"
+        (click)="fetchEvents()"
         mwlCalendarNextView
         [view]="view"
         [(viewDate)]="viewDate"

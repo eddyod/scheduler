@@ -1,9 +1,5 @@
 import 'angular-calendar/css/angular-calendar.css';
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   isSameMonth,
   isSameDay,
@@ -82,27 +78,25 @@ export class MycalComponent implements OnInit {
       day: endOfDay
     }[this.view];
 
-    const paramsfull = new HttpParams()
+    const params = new HttpParams()
       .set(
-        'primary_release_date.gte',
+        'start_gte',
         format(getStart(this.viewDate), 'YYYY-MM-DD')
       )
       .set(
-        'primary_release_date.lte',
+        'start_lte',
         format(getEnd(this.viewDate), 'YYYY-MM-DD')
       )
       .set('api_key', '0ec33936a68018857d727958dca1424f');
 
     this.events$ = this.http
-      .get(this.API_URL)
+      .get(this.API_URL, {params})
       //.pipe(map((results: ScheduleEvent[]) => {
       .pipe(
       map(({ results }: { results: ScheduleEvent[] }) => {
         return results.map((scheduleEvent: ScheduleEvent) => {
           this.startClass = format(scheduleEvent.start, 'MM/DD/YYYY HH:mm');
           this.endClass = format(scheduleEvent.end, 'MM/DD/YYYY HH:mm');
-          // this.startClass = this.toUTCString(new Date(scheduleEvent.start));
-          // this.endClass = this.toUTCString(new Date(scheduleEvent.end));
 
           return {
             id: scheduleEvent.id,
