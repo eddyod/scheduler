@@ -1,11 +1,12 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
-import {Teacher} from './teacher';
-import {School} from './school';
-import {Page} from './page';
-import {queryPaginated} from './queryPaginated';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { Teacher } from './teacher';
+import { School } from './school';
+import { ScheduleEvent } from './scheduleEvent';
+import { Page } from './page';
+import { queryPaginated } from './queryPaginated';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,16 +25,15 @@ export class APIService {
 
   API_URL = 'http://www.mephistosoftware.com/rester';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // teachers
   getTeacherById(id: number) {
     return this.http.get(this.API_URL + '/teachers/' + id);
   }
 
-  /** GET heroes from the server */
   getTeachers(): Observable<Object[]> {
-    return this.http.get<Object[]>(this.API_URL + '/teachers')
+    return this.http.get<Object[]>(this.API_URL + '/list-teachers')
       .pipe(
       catchError(this.handleError('getTeachers', []))
       );
@@ -52,7 +52,7 @@ export class APIService {
   }
 
   listTeachers(urlOrFilter?: string | object): Observable<Page<Teacher>> {
-      return queryPaginated<Teacher>(this.http, this.API_URL + '/teachers', urlOrFilter);
+    return queryPaginated<Teacher>(this.http, this.API_URL + '/teachers', urlOrFilter);
   }
   // schools
   getSchoolById(id: number) {
@@ -60,7 +60,7 @@ export class APIService {
   }
 
   getSchools() {
-    return this.http.get(this.API_URL + '/schools');
+    return this.http.get(this.API_URL + '/list-schools');
   }
 
   createSchool(school) {
@@ -76,7 +76,7 @@ export class APIService {
   }
 
   listSchools(urlOrFilter?: string | object): Observable<Page<School>> {
-      return queryPaginated<School>(this.http, this.API_URL + '/schools', urlOrFilter);
+    return queryPaginated<School>(this.http, this.API_URL + '/schools', urlOrFilter);
   }
 
   // schedules
@@ -86,6 +86,11 @@ export class APIService {
 
   getSchedules() {
     return this.http.get(this.API_URL + '/schedules');
+  }
+
+  // no pagination
+  getEvents() {
+    return this.http.get(this.API_URL + '/events');
   }
 
   createSchedule(schedule) {
@@ -98,6 +103,10 @@ export class APIService {
 
   deleteSchedule(id: number) {
     return this.http.delete(this.API_URL + '/schedules/' + id);
+  }
+
+  listSchedules(urlOrFilter?: string | object): Observable<Page<ScheduleEvent>> {
+    return queryPaginated<ScheduleEvent>(this.http, this.API_URL + '/schedules', urlOrFilter);
   }
 
   /**

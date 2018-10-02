@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { APIService } from '../api.service';
 import { Teacher } from '../teacher';
@@ -13,9 +13,8 @@ import { Page } from '../page';
   templateUrl: './teacher-list.component.html',
   styleUrls: ['./teacher-list.component.css']
 })
-export class TeacherListComponent implements OnInit {
+export class TeacherListComponent  {
 
-  public teachers: Array<Object> = [];
   filterForm: FormGroup;
   page: Observable<Page<Teacher>>
   pageUrl = new Subject<string>();
@@ -32,25 +31,6 @@ export class TeacherListComponent implements OnInit {
       switchMap(urlOrFilter => this.apiService.listTeachers(urlOrFilter)),
       share()
     );
-  }
-
-  ngOnInit() {
-    // this.getTeachers();
-  }
-
-
-  public getTeachers() {
-    this.apiService.getTeachers().subscribe((data: Array<object>) => {
-      this.teachers = data;
-    });
-  }
-
-  deleteTeacher(teacher: Teacher): void {
-    this.apiService.deleteTeacher(teacher.id)
-      .subscribe(data => {
-        this.teachers = this.teachers.filter(u => u !== teacher);
-      });
-    this.router.navigate(['teachers']);
   }
 
   editTeacher(teacher: Teacher): void {

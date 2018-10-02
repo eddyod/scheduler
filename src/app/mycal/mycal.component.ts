@@ -53,7 +53,7 @@ const colors: any = {
 })
 export class MycalComponent implements OnInit {
 
-  API_URL = 'http://www.mephistosoftware.com/rester/schedules';
+  API_URL = 'http://www.mephistosoftware.com/rester/events';
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
@@ -95,8 +95,9 @@ export class MycalComponent implements OnInit {
 
     this.events$ = this.http
       .get(this.API_URL)
-      .pipe(map((results: ScheduleEvent[]) => {
-
+      //.pipe(map((results: ScheduleEvent[]) => {
+      .pipe(
+      map(({ results }: { results: ScheduleEvent[] }) => {
         return results.map((scheduleEvent: ScheduleEvent) => {
           this.startClass = format(scheduleEvent.start, 'MM/DD/YYYY HH:mm');
           this.endClass = format(scheduleEvent.end, 'MM/DD/YYYY HH:mm');

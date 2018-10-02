@@ -40,8 +40,8 @@
     </div>
 
 
-    <button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="displayButton" (click)="onSave()">Save</button>
-    <button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="!displayButton" (click)="onUpdate()">Update</button>
+    <button class="btn btn-sm btn-success" [disabled]='addForm.invalid' *ngIf="displayButton" (click)="onSave()">Save</button>
+    <button class="btn btn-sm btn-success" [disabled]='addForm.invalid' *ngIf="!displayButton" (click)="onUpdate()">Update</button>
 
     <p>Form value: {{ addForm.value | json }}</p>
   </form>

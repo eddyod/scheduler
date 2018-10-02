@@ -1,26 +1,32 @@
+<div class="container" [formGroup]="filterForm">
+
 <div class="row">
-  <div class="col-md-12">
+  <div class="col">
+    <input formControlName="teacher" placeholder="Search by teacher">
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-10">
     <h3>Schedules</h3>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Start Time</th>
           <th>End Time</th>
           <th>Teacher</th>
           <th>School</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let schedule of schedules">
-          <td>{{schedule.id}}</td>
+        <tr *ngFor="let schedule of (page | async)?.results">
           <td>{{schedule.start | date : 'medium'}}</td>
           <td>{{schedule.end | date : 'medium'}}</td>
           <td>{{schedule.teacher.name}}</td>
           <td>{{schedule.school.name}}</td>
           <td>
-            <button class="btn btn-primary" (click)="editSchedule(schedule)">Edit</button>
-            <button class="btn btn-danger" (click)="deleteSchedule(schedule)" style="margin-left: 20px;">Delete</button>
+            <button class="btn btn-xs btn-primary" (click)="editSchedule(schedule)">Edit</button>
           </td>
         </tr>
       </tbody>
@@ -29,7 +35,15 @@
 </div>
 
 <div class="row">
-  <div class="col-md-6">
-    <button class="btn btn-danger" (click)="addSchedule()">Add Schedule</button>
+  <div class="col">
+    <app-paginator [page]="page | async" (pageChange)="onPageChanged($event)"></app-paginator>
   </div>
+</div>
+
+<div class="row top-buffer">
+  <div class="col">
+    <button class="btn btn-sm btn-success" (click)="addSchedule()">Add Schedule</button>
+  </div>
+</div>
+
 </div>
