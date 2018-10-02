@@ -58,5 +58,8 @@ export class ScheduleListComponent {
     this.router.navigate(['create-schedule']);
   }
 
+  onPageChanged(url: string) {
+    this.pageUrl.next(url);
+  }
 
 }

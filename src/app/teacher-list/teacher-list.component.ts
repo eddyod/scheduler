@@ -13,7 +13,7 @@ import { Page } from '../page';
   templateUrl: './teacher-list.component.html',
   styleUrls: ['./teacher-list.component.css']
 })
-export class TeacherListComponent  {
+export class TeacherListComponent {
 
   filterForm: FormGroup;
   page: Observable<Page<Teacher>>
@@ -46,7 +46,7 @@ export class TeacherListComponent  {
 
   onPageChanged(url: string) {
     this.pageUrl.next(url);
-}
+  }
 
 
 }

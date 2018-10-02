@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {APIService} from '../api.service';
-import {School} from '../school';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { APIService } from '../api.service';
+import { School } from '../school';
 
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, merge, share, startWith, switchMap } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   templateUrl: './school-list.component.html',
   styleUrls: ['./school-list.component.css']
 })
-export class SchoolListComponent implements OnInit {
+export class SchoolListComponent {
 
   public schools: Array<object> = [];
   filterForm: FormGroup;
@@ -37,22 +37,12 @@ export class SchoolListComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    // this.getSchools();
-  }
-
-  public getSchools() {
-    this.apiService.getSchools().subscribe((data: Array<object>) => {
-      this.schools = data;
-    });
-  }
-
   deleteSchool(school: School): void {
     this.apiService.deleteSchool(school.id)
       .subscribe(data => {
         this.schools = this.schools.filter(u => u !== school);
       });
-      this.router.navigate(['schools']);
+    this.router.navigate(['schools']);
   }
 
   editSchool(school: School): void {
@@ -66,5 +56,8 @@ export class SchoolListComponent implements OnInit {
     this.router.navigate(['create-school']);
   }
 
+  onPageChanged(url: string) {
+    this.pageUrl.next(url);
+  }
 
 }
