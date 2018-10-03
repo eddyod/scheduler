@@ -24,7 +24,7 @@ export class SchoolListComponent {
 
   constructor(private router: Router, private apiService: APIService) {
     this.filterForm = new FormGroup({
-      name: new FormControl()
+      search: new FormControl()
     });
 
     this.page = this.filterForm.valueChanges.pipe(

@@ -3,3 +3,5 @@
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 
 .top-buffer { margin-top:20px; }
+
+.jumbotron { margin:0; padding: 10px; }

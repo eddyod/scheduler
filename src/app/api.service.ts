@@ -33,7 +33,7 @@ export class APIService {
   }
 
   getTeachers(): Observable<Object[]> {
-    return this.http.get<Object[]>(this.API_URL + '/list-teachers')
+    return this.http.get<Object[]>(this.API_URL + '/teachers')
       .pipe(
       catchError(this.handleError('getTeachers', []))
       );
@@ -52,7 +52,7 @@ export class APIService {
   }
 
   listTeachers(urlOrFilter?: string | object): Observable<Page<Teacher>> {
-    return queryPaginated<Teacher>(this.http, this.API_URL + '/teachers', urlOrFilter);
+    return queryPaginated<Teacher>(this.http, this.API_URL + '/list-teachers', urlOrFilter);
   }
   // schools
   getSchoolById(id: number) {
@@ -60,7 +60,7 @@ export class APIService {
   }
 
   getSchools() {
-    return this.http.get(this.API_URL + '/list-schools');
+    return this.http.get(this.API_URL + '/schools');
   }
 
   createSchool(school) {
@@ -76,7 +76,7 @@ export class APIService {
   }
 
   listSchools(urlOrFilter?: string | object): Observable<Page<School>> {
-    return queryPaginated<School>(this.http, this.API_URL + '/schools', urlOrFilter);
+    return queryPaginated<School>(this.http, this.API_URL + '/list-schools', urlOrFilter);
   }
 
   // schedules

@@ -22,7 +22,7 @@ export class TeacherListComponent {
 
   constructor(private apiService: APIService, private router: Router) {
     this.filterForm = new FormGroup({
-      name: new FormControl()
+      search: new FormControl()
     });
     this.page = this.filterForm.valueChanges.pipe(
       debounceTime(200),
