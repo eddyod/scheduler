@@ -71,14 +71,10 @@ export class ScheduleCreateComponent implements OnInit {
 
   }
   checkTime() {
-    // options = RRule.parseText('every day for 3 times');
     let rule = RRuleSet.fromText(this.addForm.value.rruleText);
-    // rule.options.dtstart = new Date(Date.UTC(2000, 1, 1));
     rule.options.dtstart = this.addForm.value.start;
-
     this.dstart = this.addForm.value.start;
     console.log(rule.all());
-    // Add a rrule to rruleSet
   }
 
   onSave() {
