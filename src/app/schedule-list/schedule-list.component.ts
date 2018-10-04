@@ -18,13 +18,17 @@ export class ScheduleListComponent {
 
   public schedules: Array<object> = [];
   filterForm: FormGroup;
-  page: Observable<Page<ScheduleEvent>>
+  page: Observable<Page<ScheduleEvent>>;
   pageUrl = new Subject<string>();
+  // drop downs
+  public teachers: Array<object> = [];
+  public schools: Array<object> = [];
 
 
   constructor(private router: Router, private apiService: APIService) {
     this.filterForm = new FormGroup({
-      teacher: new FormControl()
+      school_id: new FormControl(),
+      teacher_id: new FormControl()
     });
 
     this.page = this.filterForm.valueChanges.pipe(
@@ -35,14 +39,15 @@ export class ScheduleListComponent {
       share()
     );
 
-  }
+    this.apiService.getSchools().subscribe((data: Array<object>) => {
+      this.schools = data;
+    });
 
-  deleteSchedule(schedule: ScheduleEvent): void {
-    this.apiService.deleteSchedule(schedule.id)
-      .subscribe(data => {
-        this.schedules = this.schedules.filter(u => u !== schedule);
-      });
-    this.router.navigate(['schedules']);
+    this.apiService.getTeachers().subscribe((data: Array<object>) => {
+      this.teachers = data;
+    });
+
+
   }
 
   editSchedule(schedule: ScheduleEvent): void {
@@ -57,6 +62,15 @@ export class ScheduleListComponent {
     localStorage.removeItem('id');
     this.router.navigate(['create-schedule']);
   }
+
+  deleteSchedule(schedule: ScheduleEvent): void {
+    this.apiService.deleteSchedule(schedule.id)
+      .subscribe(data => {
+        this.schedules = this.schedules.filter(u => u !== schedule);
+      });
+    this.router.navigate(['schedules']);
+  }
+
 
   onPageChanged(url: string) {
     this.pageUrl.next(url);
