@@ -3,6 +3,12 @@ import { APIService } from '../api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { RRule, RRuleSet, rrulestr } from 'rrule'
+
+// Create a rule:
+const rweekly = new RRule({
+  freq: RRule.WEEKLY,
+})
 
 @Component({
   selector: 'app-schedule-create',
@@ -19,6 +25,7 @@ export class ScheduleCreateComponent implements OnInit {
   // drop downs
   public teachers: Array<object> = [];
   public schools: Array<object> = [];
+  private dstart: Date;
 
 
   constructor(
@@ -36,6 +43,7 @@ export class ScheduleCreateComponent implements OnInit {
       school_id: ['', Validators.required],
       teacher_id: ['', Validators.required],
       createdBy: ['', Validators.required],
+      rruleText: [''],
     });
 
     const id = localStorage.getItem('id');
@@ -62,6 +70,16 @@ export class ScheduleCreateComponent implements OnInit {
 
 
   }
+  checkTime() {
+    // options = RRule.parseText('every day for 3 times');
+    let rule = RRuleSet.fromText(this.addForm.value.rruleText);
+    // rule.options.dtstart = new Date(Date.UTC(2000, 1, 1));
+    rule.options.dtstart = this.addForm.value.start;
+
+    this.dstart = this.addForm.value.start;
+    console.log(rule.all());
+    // Add a rrule to rruleSet
+  }
 
   onSave() {
     this.addForm.value.start = moment(this.addForm.value.start).format("YYYY-MM-DD[T]HH:mm");
@@ -74,6 +92,7 @@ export class ScheduleCreateComponent implements OnInit {
           alert(error);
         });
   }
+
   onUpdate() {
     this.addForm.value.start = moment(this.addForm.value.start).format("YYYY-MM-DD[T]HH:mm");
     this.addForm.value.end = moment(this.addForm.value.end).format("YYYY-MM-DD[T]HH:mm");

@@ -3,7 +3,8 @@
   <div class="row">
     <div class="col-md-10 form-group">
       <label for="idSchool">School</label>
-      <select formControlName="school_id" class="form-control" id="idSchool" name="school_id" required>
+      <select formControlName="school_id" class="form-control" id="idSchool" name="school_id">
+            <option>Select</option>
             <option *ngFor="let school of schools" [value]="school.id">{{school.name}}</option>
       </select>
     </div>
@@ -12,12 +13,14 @@
   <div class="row">
     <div class="col-md-10 form-group">
       <label for="idTeacher">Teacher</label>
-      <select formControlName="teacher_id" class="form-control" id="idTeacher" name="teacher_id" required>
+      <select formControlName="teacher_id" class="form-control" id="idTeacher" name="teacher_id">
+          <option>Select</option>
             <option *ngFor="let teacher of teachers" [value]="teacher.id">{{teacher.name}}</option>
       </select>
     </div>
   </div>
 
+</div>
 
 
   <div class="row">
@@ -60,5 +63,3 @@
       <button class="btn btn-sm btn-success" (click)="addSchedule()">Add Schedule</button>
     </div>
   </div>
-
-</div>

@@ -2,6 +2,6 @@
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 
-.top-buffer { margin-top:20px; }
+.top-buffer { margin:20px; }
 
 .jumbotron { margin:0; padding: 10px; }

@@ -32,6 +32,8 @@
     "moment": "^2.22.2",
     "ng-pick-datetime": "^6.0.16",
     "ng-pick-datetime-moment": "^1.0.7",
+    "node-nlp": "^2.0.3",
+    "rrule": "^2.5.6",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },
