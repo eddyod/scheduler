@@ -3,7 +3,8 @@ import { APIService } from '../api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { RRule, RRuleSet, rrulestr } from 'rrule'
+import { RRule, RRuleSet, rrulestr } from 'rrule';
+import { Schedule } from '../schedule';
 
 // Create a rule:
 const rweekly = new RRule({
@@ -19,14 +20,17 @@ export class ScheduleCreateComponent implements OnInit {
 
   title = 'Add Schedule';
   displayButton = true;
+  displayCheck = false;
   addForm: FormGroup;
   scheduleFormLabel = 'Add Schedule';
   scheduleButton = 'Save';
   // drop downs
   public teachers: Array<object> = [];
   public schools: Array<object> = [];
-  private dstart: Date;
-
+  public rules: Array<object> = [];
+  public scheduleForms: Array<Schedule> = [];
+  private junk_date: Date;
+  private junk_string: string;
 
   constructor(
     private apiService: APIService,
@@ -71,10 +75,20 @@ export class ScheduleCreateComponent implements OnInit {
 
   }
   checkTime() {
+    this.scheduleForms = [];
+    this.displayCheck = true;
     let rule = RRuleSet.fromText(this.addForm.value.rruleText);
-    rule.options.dtstart = this.addForm.value.start;
-    this.dstart = this.addForm.value.start;
+    rule.options.dtstart = new Date(this.addForm.value.start);
     console.log(rule.all());
+    this.rules = rule.all();
+    this.rules.forEach(rule => {
+      this.junk_string = moment(rule).format("YYYY-MM-DD[T]HH:mm");
+      let event: Schedule = {start: this.junk_string, end: this.junk_string,
+        school_id: this.addForm.value.school_id,
+        teacher_id: this.addForm.value.teacher_id,
+        createdBy: this.addForm.value.createdBy};
+        this.scheduleForms.push(event);
+    })
   }
 
   onSave() {
