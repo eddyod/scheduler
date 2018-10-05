@@ -6,10 +6,12 @@ import * as moment from 'moment';
 import { RRule, RRuleSet, rrulestr } from 'rrule';
 import { Schedule } from '../schedule';
 
-// Create a rule:
-const rweekly = new RRule({
-  freq: RRule.WEEKLY,
-})
+const timezoneOffset = new Date().getTimezoneOffset();
+const hoursOffset = String(Math.floor(Math.abs(timezoneOffset / 60))).padStart(2, '0');
+const minutesOffset = String(Math.abs(timezoneOffset % 60)).padEnd(2, '0');
+const direction = timezoneOffset > 0 ? '-' : '+';
+// const timezoneOffsetString = `T00:00:00${direction}${hoursOffset}${minutesOffset}`;
+const timezoneOffsetString = `${direction}${hoursOffset}${minutesOffset}`;
 
 @Component({
   selector: 'app-schedule-create',
@@ -29,8 +31,10 @@ export class ScheduleCreateComponent implements OnInit {
   public schools: Array<object> = [];
   public rules: Array<object> = [];
   public scheduleForms: Array<Schedule> = [];
-  private junk_date: Date;
-  private junk_string: string;
+  private startDate: Date;
+  private endDate: Date;
+  private startString: string;
+  private endString: string;
 
   constructor(
     private apiService: APIService,
@@ -78,16 +82,24 @@ export class ScheduleCreateComponent implements OnInit {
     this.scheduleForms = [];
     this.displayCheck = true;
     let rule = RRuleSet.fromText(this.addForm.value.rruleText);
-    rule.options.dtstart = new Date(this.addForm.value.start);
-    console.log(rule.all());
+    // Add a rrule to rruleSet
+    this.startDate = new Date(this.addForm.value.start + timezoneOffsetString);
+    this.endDate = new Date(this.addForm.value.end + timezoneOffsetString);
+    // rule.options.dtstart.setDate(this.startDate.getTime());
+    console.log(rule.options.dtstart);
+    console.log(new Date())
+    //this.rules = rule.between(this.startDate, this.endDate);
     this.rules = rule.all();
     this.rules.forEach(rule => {
-      this.junk_string = moment(rule).format("YYYY-MM-DD[T]HH:mm");
-      let event: Schedule = {start: this.junk_string, end: this.junk_string,
+    this.startString = moment(rule).format("YYYY-MM-DD[T]HH:mm");
+    this.endString = moment(rule).format("YYYY-MM-DD[T]HH:mm");
+      let event: Schedule = {
+        start: this.startString, end: this.endString,
         school_id: this.addForm.value.school_id,
         teacher_id: this.addForm.value.teacher_id,
-        createdBy: this.addForm.value.createdBy};
-        this.scheduleForms.push(event);
+        createdBy: this.addForm.value.createdBy
+      };
+      this.scheduleForms.push(event);
     })
   }
 
