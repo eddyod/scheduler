@@ -7,7 +7,9 @@ import {SchoolListComponent} from './school-list/school-list.component';
 import {SchoolCreateComponent} from './school-create/school-create.component';
 import {ScheduleListComponent} from './schedule-list/schedule-list.component';
 import {ScheduleCreateComponent} from './schedule-create/schedule-create.component';
+import {ScheduleUpdateComponent} from './schedule-create/schedule-update.component';
 import {MycalComponent} from './mycal/mycal.component';
+import {RepeaterComponent} from './repeater/repeater.component';
 
 
 const routes: Routes = [
@@ -25,6 +27,10 @@ const routes: Routes = [
     component: ScheduleListComponent
   },
   {
+    path: 'update-schedule',
+    component: ScheduleUpdateComponent
+  },
+  {
     path: 'create-schedule',
     component: ScheduleCreateComponent
   },
@@ -39,6 +45,10 @@ const routes: Routes = [
   {
     path: 'mycal',
     component: MycalComponent
+  },
+  {
+    path: 'repeater',
+    component: RepeaterComponent
   },
 ];
 

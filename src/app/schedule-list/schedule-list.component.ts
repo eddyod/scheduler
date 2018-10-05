@@ -55,7 +55,7 @@ export class ScheduleListComponent {
     localStorage.setItem('id', schedule.id.toString());
     localStorage.setItem('school_id', schedule.school.id.toString());
     localStorage.setItem('teacher_id', schedule.teacher.id.toString());
-    this.router.navigate(['create-schedule']);
+    this.router.navigate(['update-schedule']);
   }
 
   addSchedule(): void {

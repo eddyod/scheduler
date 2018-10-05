@@ -9,13 +9,14 @@ import * as moment from 'moment';
   templateUrl: './schedule-create.component.html',
   styleUrls: ['./schedule-create.component.css']
 })
-export class ScheduleCreateComponent implements OnInit {
+export class ScheduleUpdateComponent implements OnInit {
 
-  title = 'Add Class';
-  displayButton = true;
+  title = 'Update Schedule';
+  displayButton = false;
   addForm: FormGroup;
-  scheduleFormLabel = 'Add Class';
-  scheduleButton = 'Save';
+  scheduleFormLabel = 'Update Schedule';
+  scheduleButton = 'Update';
+
   // drop downs
   public teachers: Array<object> = [];
   public schools: Array<object> = [];
@@ -36,6 +37,17 @@ export class ScheduleCreateComponent implements OnInit {
       createdBy: ['', Validators.required],
     });
 
+    const id = localStorage.getItem('id');
+    if (+id > 0) {
+      this.apiService.getScheduleById(+id).subscribe(data => {
+        this.addForm.patchValue(data);
+      });
+      this.addForm.controls['school_id'].setValue(localStorage.getItem('school_id'));
+      this.addForm.controls['teacher_id'].setValue(localStorage.getItem('teacher_id'));
+    }
+
+
+
     this.apiService.getSchools().subscribe((data: Array<object>) => {
       this.schools = data;
     });
@@ -47,16 +59,15 @@ export class ScheduleCreateComponent implements OnInit {
 
   }
 
-  onSave() {
+  onUpdate() {
     this.addForm.value.start = moment(this.addForm.value.start).format("YYYY-MM-DD[T]HH:mm");
     this.addForm.value.end = moment(this.addForm.value.end).format("YYYY-MM-DD[T]HH:mm");
-    this.apiService.createSchedule(this.addForm.value)
-      .subscribe(data => {
-        this.router.navigate(['schedules']);
-      },
-        error => {
-          alert(error);
-        });
+    this.apiService.updateSchedule(this.addForm.value).subscribe(data => {
+      this.router.navigate(['schedules']);
+    },
+      error => {
+        alert(error);
+      });
   }
 
 }

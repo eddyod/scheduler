@@ -14,6 +14,7 @@ import { SchoolListComponent } from './school-list/school-list.component';
 import { SchoolCreateComponent } from './school-create/school-create.component';
 import { ScheduleListComponent } from './schedule-list/schedule-list.component';
 import { ScheduleCreateComponent } from './schedule-create/schedule-create.component';
+import { ScheduleUpdateComponent } from './schedule-create/schedule-update.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -22,6 +23,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { MycalComponent } from './mycal/mycal.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { RepeaterComponent } from './repeater/repeater.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +34,10 @@ import { PaginatorComponent } from './paginator/paginator.component';
     SchoolCreateComponent,
     ScheduleListComponent,
     ScheduleCreateComponent,
+    ScheduleUpdateComponent,
     MycalComponent,
     PaginatorComponent,
+    RepeaterComponent,
   ],
   imports: [
     BrowserModule,

@@ -37,35 +37,8 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="idRule">Rule for repeating classes</label>
-      <input formControlName="rruleText" placeholder="Every week on Monday for 10 times" class="form-control" id="idRule">
-    </div>
-
-
     <button class="btn btn-sm btn-primary" [disabled]='addForm.invalid' *ngIf="displayButton" (click)="onSave()">Save</button>
     <button class="btn btn-sm btn-success" [disabled]='addForm.invalid' *ngIf="!displayButton" (click)="onUpdate()">Update</button>
-    <button class="btn btn-sm btn-success" [disabled]='addForm.invalid' (click)="checkTime()" style="margin-left: 10px;">Check</button>
-
-    <div *ngIf="displayCheck">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Start</th>
-            <th>End</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let schedule of scheduleForms">
-            <td>{{schedule.start}}</td>
-            <td>{{schedule.end}}</td>
-          </tr>
-        </tbody>
-      </table>
-
-
-
-    </div>
 
     <p>Form value: {{ addForm.value | json }}</p>
   </form>
