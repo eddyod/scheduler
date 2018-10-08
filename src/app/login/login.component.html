@@ -1,0 +1,39 @@
+<form [formGroup]="addForm" novalidate class="form">
+
+  <div class="row" *ngIf="!authService.token">
+
+    <div class="col-md-6">
+
+      <h2>Log In</h2>
+
+      <div class="form-group">
+
+        <label for="idUserName">Username:</label><br />
+        <input type="text" id="idUsername" class="form-control" formControlName="username">
+        <span *ngFor="let error of authService.errors.username"><br />
+    {{ error }}</span>
+      </div>
+
+      <div class="form-group">
+
+        <label for="idPassword">Password:</label><br />
+        <input type="password" id="idPassword" class="form-control" formControlName="password">
+        <span *ngFor="let error of authService.errors.password"><br />
+    {{ error }}</span>
+      </div>
+
+      <button class="btn btn-success" [disabled]='addForm.invalid'  (click)="login()">Login</button>
+
+      <span *ngFor="let error of authService.errors.non_field_errors">{{ error }}<br /></span>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="authService.token">
+    <div class="col-md-6">You are logged in as {{ authService.username }}.<br />
+    Token Expires: {{ authService.token_expires }}<br />
+      <button (click)="refreshToken()" class="btn btn-primary">Refresh Token</button>
+      <button (click)="logout()" class="btn btn-primary">Log Out</button>
+    </div>
+
+  </div>
+</form>

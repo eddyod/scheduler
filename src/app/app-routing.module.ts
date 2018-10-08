@@ -10,6 +10,7 @@ import {ScheduleCreateComponent} from './schedule-create/schedule-create.compone
 import {ScheduleUpdateComponent} from './schedule-create/schedule-update.component';
 import {MycalComponent} from './mycal/mycal.component';
 import {RepeaterComponent} from './repeater/repeater.component';
+import {LoginComponent} from './login/login.component';
 
 
 const routes: Routes = [
@@ -49,6 +50,10 @@ const routes: Routes = [
   {
     path: 'repeater',
     component: RepeaterComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
 ];
 

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -24,6 +24,8 @@ import { MycalComponent } from './mycal/mycal.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { RepeaterComponent } from './repeater/repeater.component';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { RepeaterComponent } from './repeater/repeater.component';
     MycalComponent,
     PaginatorComponent,
     RepeaterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +59,7 @@ import { RepeaterComponent } from './repeater/repeater.component';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
