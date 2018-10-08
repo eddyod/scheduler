@@ -1,108 +1,106 @@
-<div class="col-md-6">
-  <h2 class="text-center">{{scheduleFormLabel}}</h2>
-  <form [formGroup]="addForm" novalidate class="form">
+<div class="row">
 
-    <div class="form-group">
-      <label for="idStart">Start Date/Time:</label>
-      <input formControlName="start" placeholder="Start class time" name="start" class="form-control" id="idStart" [owlDateTimeTrigger]="start" [owlDateTime]="start">
-      <owl-date-time #start></owl-date-time>
-    </div>
+  <div class="col-md-10">
+    <h2 class="text-center">{{scheduleFormLabel}}</h2>
+    <form [formGroup]="addForm" novalidate class="form">
 
-    <div class="form-group">
-      <label for="idEnd">End Date:</label>
-      <input formControlName="end" placeholder="End class date" class="form-control" id="idEnd" [owlDateTimeTrigger]="end" [owlDateTime]="end">
-      <owl-date-time [pickerType]="'calendar'" #end></owl-date-time>
-    </div>
+      <div class="form-group">
+        <label for="idStart">Start Date/Time:</label>
+        <input formControlName="start" placeholder="Start class time" class="form-control" id="idStart" [owlDateTimeTrigger]="start" [owlDateTime]="start">
+        <owl-date-time #start></owl-date-time>
+      </div>
 
-    <div class="form-group">
-      <label for="idDuration">Class Duration (in hours)</label>
-      <select formControlName="duration" class="form-control" id="idDuration" required>
+      <div class="form-group">
+        <label for="idEnd">End Date:</label>
+        <input formControlName="end" placeholder="End class date" class="form-control" id="idEnd" [owlDateTimeTrigger]="end" [owlDateTime]="end">
+        <owl-date-time [pickerType]="'calendar'" #end></owl-date-time>
+      </div>
+
+      <div class="form-group">
+        <label for="idDuration">Class Duration (in hours)</label>
+        <select formControlName="duration" class="form-control" id="idDuration" required>
         <option [value]="1">1</option>
         <option [value]="2">2</option>
         <option [value]="3">3</option>
         <option [value]="4">4</option>
         <option [value]="5">5</option>
       </select>
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
 
-      <label class="checkbox-inline">
-            <input type="checkbox" value="">Sun
-      </label>
-      <label class="checkbox-inline">
-            <input type="checkbox" value="">Mon
-      </label>
-      <label class="checkbox-inline">
-            <input type="checkbox" value="">Tue
-      </label>
-      <label class="checkbox-inline">
-            <input type="checkbox" value="">Wed
-      </label>
-      <label class="checkbox-inline">
-            <input type="checkbox" value="">Thu
-      </label>
-      <label class="checkbox-inline">
-            <input type="checkbox" value="">Fri
-      </label>
-      <label class="checkbox-inline">
-            <input type="checkbox" value="">Sat
-      </label>
-
-    </div>
+        <label class="checkbox-inline" formArrayName="byweekdays" *ngFor="let byweekday of addForm.controls['byweekdays']['controls']; let i = index">
+    <input type="checkbox" [formControlName]="i">
+    {{byweekdays[i].name}}
+  </label>
+      </div>
 
 
-    <div class="form-group">
-      <label for="idSchool">School</label>
-      <select formControlName="school_id" class="form-control" id="idSchool" name="school_id" required>
+      <div class="form-group">
+        <label for="idSchool">School</label>
+        <select formControlName="school_id" class="form-control" id="idSchool" name="school_id" required>
             <option *ngFor="let school of schools" [value]="school.id">{{school.name}}</option>
       </select>
-    </div>
+      </div>
 
-    <div class="form-group">
-      <label for="idTeacher">Teacher</label>
-      <select formControlName="teacher_id" class="form-control" id="idTeacher" name="teacher_id" required>
+      <div class="form-group">
+        <label for="idTeacher">Teacher</label>
+        <select formControlName="teacher_id" class="form-control" id="idTeacher" name="teacher_id" required>
                 <option *ngFor="let teacher of teachers" [value]="teacher.id">{{teacher.name}}</option>
       </select>
-    </div>
-
-    <div class="form-group">
-      <label for="idUser">Created By:</label>
-      <input formControlName="createdBy" placeholder="Enter 1 here for now" name="createdBy" class="form-control" id="idUser">
-      <div class="alert  alert-danger" *ngIf="addForm.get('createdBy').hasError('required') && addForm.get('createdBy').touched">
-        Created by user is required
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="idRule">Rule for repeating classes</label>
-      <input formControlName="rruleText" placeholder="Every week on Monday for 10 times" class="form-control" id="idRule">
-    </div>
+      <div class="form-group">
+        <label for="idUser">Created By:</label>
+        <input formControlName="createdBy" placeholder="Enter 1 here for now" name="createdBy" class="form-control" id="idUser">
+        <div class="alert  alert-danger" *ngIf="addForm.get('createdBy').hasError('required') && addForm.get('createdBy').touched">
+          Created by user is required
+        </div>
+      </div>
 
-
-      <button class="btn btn-sm btn-primary" [disabled]='addForm.invalid' (click)="onSave()">Save</button>
+      <button class="btn btn-sm btn-primary" [disabled]='true' (click)="onSave()">Save</button>
       <button class="btn btn-sm btn-success" [disabled]='addForm.invalid' (click)="checkTime()" style="margin-left: 10px;">Check</button>
-
-      <div *ngIf="displayCheck">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Start</th>
-              <th>End</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let schedule of scheduleForms">
-              <td>{{schedule.start}}</td>
-              <td>{{schedule.end}}</td>
-            </tr>
-          </tbody>
-        </table>
-
-
-
-      </div>
-
       <p>Form value: {{ addForm.value | json }}</p>
-  </form>
+    </form>
+
+  </div>
+</div>
+
+<div *ngIf="displayCheck" class="row">
+  <div class="col-md-10">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Start</th>
+          <th>End</th>
+          <th>School ID</th>
+          <th>Teacher ID</th>
+          <th>Created By ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let schedule of scheduleForms">
+          <td>{{schedule.start}}</td>
+          <td>{{schedule.end}}</td>
+          <td>{{schedule.school_id}}</td>
+          <td>{{schedule.teacher_id}}</td>
+          <td>{{schedule.createdBy}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div *ngIf="displayCheck"  class="row">
+  <div class="col-md-10">
+    <form>
+      <button class="btn btn-sm btn-primary" (click)="onSave()">Submit</button>
+    </form>
+
+  </div>
+</div>
+<div *ngIf="displayStatus"  class="row">
+  <div class="col-md-10">
+    <h2>Inserted {{insertCount}} classes</h2>
+
+  </div>
 </div>

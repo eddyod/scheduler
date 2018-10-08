@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { RRule, RRuleSet, rrulestr } from 'rrule';
 import { Schedule } from '../schedule';
 import { APIService } from '../api.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup, FormBuilder, Validators,
+  FormControl, FormArray, ValidatorFn
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 
@@ -22,13 +25,25 @@ const timezoneOffsetString = `${direction}${hoursOffset}${minutesOffset}`;
 export class RepeaterComponent implements OnInit {
 
   displayCheck = false;
+  displayStatus = false;
+  insertCount = 0;
   addForm: FormGroup;
+  byweekdays = [
+    { id: RRule.SU, name: 'Sun' },
+    { id: RRule.MO, name: 'Mon' },
+    { id: RRule.TU, name: 'Tue' },
+    { id: RRule.WE, name: 'Wed' },
+    { id: RRule.TH, name: 'Thu' },
+    { id: RRule.FR, name: 'Fri' },
+    { id: RRule.SA, name: 'Sat' },
+  ]
+
   public scheduleForms: Array<Schedule> = [];
   scheduleFormLabel = 'Create Classes';
   private startDate: Date;
   private endDate: Date;
+  private endTime: Date;
   private startString: string;
-  private endString: string;
   // drop downs
   public teachers: Array<object> = [];
   public schools: Array<object> = [];
@@ -40,9 +55,12 @@ export class RepeaterComponent implements OnInit {
   constructor(
     private apiService: APIService,
     private formBuilder: FormBuilder,
-    private router: Router) { }
+    private router: Router) {
+  }
 
   ngOnInit() {
+    // controls[2].setValue(true);
+    const controls = this.byweekdays.map(c => new FormControl(false));
     this.addForm = this.formBuilder.group({
       start: ['', Validators.required],
       end: ['', Validators.required],
@@ -50,9 +68,23 @@ export class RepeaterComponent implements OnInit {
       school_id: ['', Validators.required],
       teacher_id: ['', Validators.required],
       createdBy: ['', Validators.required],
-      rruleText: [''],
+      byweekdays: new FormArray(controls, minSelectedCheckboxes(1))
     });
 
+    function minSelectedCheckboxes(min = 1) {
+      const validator: ValidatorFn = (formArray: FormArray) => {
+        const totalSelected = formArray.controls
+          // get a list of checkbox values (boolean)
+          .map(control => control.value)
+          // total up the number of checked checkboxes
+          .reduce((prev, next) => next ? prev + next : prev, 0);
+
+        // if the total is not greater than the minimum, return the error message
+        return totalSelected >= min ? null : { required: true };
+      };
+
+      return validator;
+    }
 
 
     this.apiService.getSchools().subscribe((data: Array<object>) => {
@@ -65,23 +97,34 @@ export class RepeaterComponent implements OnInit {
 
   }
 
+
   checkTime() {
-    this.scheduleForms = [];
     this.displayCheck = true;
-    let rule = RRuleSet.fromText(this.addForm.value.rruleText);
-    // Add a rrule to rruleSet
+    this.displayStatus = false;
+    const selectedOrderIds = this.addForm.value.byweekdays
+      .map((v, i) => v ? this.byweekdays[i].id : null)
+      .filter(v => v !== null);
+    this.scheduleForms = [];
+    //let rule = RRuleSet.fromText(this.addForm.value.rruleText);
     this.startDate = new Date(this.addForm.value.start + timezoneOffsetString);
     this.endDate = new Date(this.addForm.value.end + timezoneOffsetString);
-    // rule.options.dtstart.setDate(this.startDate.getTime());
-    console.log(rule.options.dtstart);
-    console.log(new Date())
-    //this.rules = rule.between(this.startDate, this.endDate);
+    let rule =
+      new RRule({
+        freq: RRule.WEEKLY,
+        dtstart: this.startDate,
+        until: this.endDate,
+        byweekday: selectedOrderIds
+      })
+    // Add a rrule to rruleSet
     this.rules = rule.all();
-    this.rules.forEach(rule => {
-    this.startString = moment(rule).format("YYYY-MM-DD[T]HH:mm");
-    this.endString = moment(rule).format("YYYY-MM-DD[T]HH:mm");
+
+    rule.all().forEach(rule => {
+      this.startString = moment(rule).format("YYYY-MM-DD[T]HH:mm");
+      let tStart = moment(this.startString);
+      let tEnd = moment(tStart).add(this.addForm.value.duration, 'hours');
+
       let event: Schedule = {
-        start: this.startString, end: this.endString,
+        start: this.startString, end: tEnd.format("YYYY-MM-DD[T]HH:mm"),
         school_id: this.addForm.value.school_id,
         teacher_id: this.addForm.value.teacher_id,
         createdBy: this.addForm.value.createdBy
@@ -90,7 +133,20 @@ export class RepeaterComponent implements OnInit {
     })
   }
 
-  onSave() {}
+  onSave() {
+    this.scheduleForms.forEach(event => {
+      this.apiService.createSchedule(event)
+        .subscribe(data => {
+          this.insertCount++;
+        },
+        error => {
+          alert(error);
+          this.insertCount--;
+        });
+    });
+    this.displayStatus = true;
+    this.displayCheck = false;
+  }
 
 
 }

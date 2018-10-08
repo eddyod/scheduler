@@ -94,7 +94,10 @@ export class APIService {
   }
 
   createSchedule(schedule) {
-    return this.http.post(this.API_URL + '/schedules', schedule);
+    return this.http.post(this.API_URL + '/schedules', schedule)
+    .pipe(
+      catchError(this.handleError<any>('createSchedule'))
+    );
   }
 
   updateSchedule(schedule) {

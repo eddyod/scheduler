@@ -1,4 +1,3 @@
-
 export class Schedule  {
   start: string;
   end: string;
