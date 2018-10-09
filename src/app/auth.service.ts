@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../environments/environment';
+import * as moment from "moment";
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +23,8 @@ export class AuthService {
   // error messages received from the login attempt
   public errors: any = [];
 
-  // API_URL = 'http://www.mephistosoftware.com';
-  API_URL = 'http://localhost:8000';
+  // API_URL = 'http://www.mephistosoftware.com/rester';
+  API_URL = environment.apiEndpoint;
 
   constructor(private http: HttpClient) {
     this.httpOptions = {
@@ -32,8 +34,7 @@ export class AuthService {
 
   // Uses http.post() to get an auth token from djangorestframework-jwt endpoint
   public login(user) {
-  console.log(JSON.stringify(user));
-    this.http.post(this.API_URL + '/api-token-auth/', JSON.stringify(user), this.httpOptions).subscribe(
+    return this.http.post(this.API_URL + '/api-token-auth/', JSON.stringify(user), this.httpOptions).subscribe(
       data => {
         this.updateData(data['token']);
       },
@@ -59,6 +60,22 @@ export class AuthService {
     this.token = null;
     this.token_expires = null;
     this.username = null;
+    localStorage.removeItem("id_token");
+    localStorage.removeItem("expires_at");
+  }
+
+  public isLoggedIn() {
+    return moment().isBefore(this.token_expires );
+  }
+
+  isLoggedOut() {
+    return !this.isLoggedIn();
+  }
+
+  getExpiration() {
+    const expiration = localStorage.getItem("expires_at");
+    const expiresAt = JSON.parse(expiration);
+    return moment(expiresAt);
   }
 
   private updateData(token) {
@@ -70,6 +87,11 @@ export class AuthService {
     const token_decoded = JSON.parse(window.atob(token_parts[1]));
     this.token_expires = new Date(token_decoded.exp * 1000);
     this.username = token_decoded.username;
+
+    localStorage.setItem('id_token', token.idToken);
+    // const expiresAt = moment().add(token.expiresIn, 'second');
+    // localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+    localStorage.setItem("expires_at", JSON.stringify(this.token_expires.valueOf()));
   }
 
 

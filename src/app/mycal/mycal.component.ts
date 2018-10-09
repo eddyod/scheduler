@@ -24,6 +24,8 @@ import { ScheduleEvent } from '../scheduleEvent';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+
 
 
 const colors: any = {
@@ -49,7 +51,7 @@ const colors: any = {
 })
 export class MycalComponent implements OnInit {
 
-  API_URL = 'http://www.mephistosoftware.com/rester/events';
+  API_URL = environment.apiEndpoint + '/events';
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();

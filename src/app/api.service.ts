@@ -8,6 +8,7 @@ import { ScheduleEvent } from './scheduleEvent';
 import { Page } from './page';
 import { queryPaginated } from './queryPaginated';
 import { AuthService } from './auth.service';
+import { environment } from '../environments/environment';
 
 
 @Injectable({
@@ -15,22 +16,28 @@ import { AuthService } from './auth.service';
 })
 export class APIService {
 
-  // API_URL = 'http://www.mephistosoftware.com/rester';
-  API_URL = 'http://localhost:8000';
 
+  // API_URL = 'http://www.mephistosoftware.com/rester';
+  //API_URL = 'http://10.195.4.147:8000';
+  API_URL = environment.apiEndpoint;
+  
   constructor(private http: HttpClient,
     private authService: AuthService) {
   }
 
   // teachers
-  getTeacherById(id: number) {
-    return this.http.get(this.API_URL + '/teachers/' + id);
+  getTeacherById(id: number): Observable<Object> {
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.get(this.API_URL + '/teachers/' + id, { headers: headers });
   }
 
   getTeachers(): Observable<Object[]> {
-    return this.http.get<Object[]>(this.API_URL + '/teachers')
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.get<Object[]>(this.API_URL + '/teachers', { headers: headers })
       .pipe(
-      catchError(this.handleError('getTeachers', []))
+        catchError(this.handleError('getTeachers', []))
       );
   }
 
@@ -39,20 +46,20 @@ export class APIService {
     headers = headers.append("Authorization", "JWT " + this.authService.token);
     return this.http.post(this.API_URL + '/teachers', teacher, { headers: headers })
       .pipe(
-      catchError(this.handleError('createTeacher', []))
+        catchError(this.handleError('createTeacher', []))
       );
   }
 
-  updateTeacher(teacher) {
+  updateTeacher(teacher: Teacher): Observable<Teacher> {
     let headers = new HttpHeaders();
     headers = headers.append("Authorization", "JWT " + this.authService.token);
-    return this.http.put(this.API_URL + '/teachers/' + teacher.id, teacher, {headers: headers});
+    return this.http.put<Teacher>(this.API_URL + '/teachers/' + teacher.id, teacher, { headers: headers });
   }
 
-  deleteTeacher(id: number) {
+  deleteTeacher(id: number): Observable<{}> {
     let headers = new HttpHeaders();
     headers = headers.append("Authorization", "JWT " + this.authService.token);
-    return this.http.delete(this.API_URL + '/teachers/' + id, {headers:headers});
+    return this.http.delete(this.API_URL + '/teachers/' + id, { headers: headers });
   }
 
   listTeachers(urlOrFilter?: string | object): Observable<Page<Teacher>> {
@@ -60,23 +67,33 @@ export class APIService {
   }
   // schools
   getSchoolById(id: number) {
-    return this.http.get(this.API_URL + '/schools/' + id);
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.get(this.API_URL + '/schools/' + id, { headers: headers });
   }
 
   getSchools() {
-    return this.http.get(this.API_URL + '/schools');
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.get(this.API_URL + '/schools', { headers: headers });
   }
 
   createSchool(school) {
-    return this.http.post(this.API_URL + '/schools', school);
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.post(this.API_URL + '/schools', school, { headers: headers });
   }
 
-  updateSchool(school) {
-    return this.http.put(this.API_URL + '/schools/' + school.id, school);
+  updateSchool(school: School): Observable<School> {
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.put<School>(this.API_URL + '/schools/' + school.id, school, { headers: headers });
   }
 
   deleteSchool(id: number) {
-    return this.http.delete(this.API_URL + '/schools/' + id);
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.delete(this.API_URL + '/schools/' + id, { headers: headers });
   }
 
   listSchools(urlOrFilter?: string | object): Observable<Page<School>> {
@@ -85,31 +102,43 @@ export class APIService {
 
   // schedules
   getScheduleById(id: number) {
-    return this.http.get(this.API_URL + '/schedules/' + id);
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.get(this.API_URL + '/schedules/' + id, { headers: headers });
   }
 
   getSchedules() {
-    return this.http.get(this.API_URL + '/schedules');
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.get(this.API_URL + '/schedules', { headers: headers });
   }
 
   // no pagination
   getEvents() {
-    return this.http.get(this.API_URL + '/events');
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.get(this.API_URL + '/events', { headers: headers });
   }
 
   createSchedule(schedule) {
-    return this.http.post(this.API_URL + '/schedules', schedule)
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.post(this.API_URL + '/schedules', schedule, { headers: headers })
       .pipe(
-      catchError(this.handleError<any>('createSchedule'))
+        catchError(this.handleError<any>('createSchedule'))
       );
   }
 
-  updateSchedule(schedule) {
-    return this.http.put(this.API_URL + '/schedules/' + schedule.id, schedule);
+  updateSchedule(schedule: ScheduleEvent): Observable<ScheduleEvent> {
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.put<ScheduleEvent>(this.API_URL + '/schedules/' + schedule.id, schedule, { headers: headers });
   }
 
   deleteSchedule(id: number) {
-    return this.http.delete(this.API_URL + '/schedules/' + id);
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.delete(this.API_URL + '/schedules/' + id, { headers: headers });
   }
 
   listSchedules(urlOrFilter?: string | object): Observable<Page<ScheduleEvent>> {

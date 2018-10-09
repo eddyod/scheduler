@@ -45,22 +45,21 @@ export class TeacherCreateComponent implements OnInit {
   }
 
   onSave() {
-    console.log('Create fire');
     this.apiService.createTeacher(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['teachers']);
       },
       error => {
-        alert(error);
+        alert('There was an error inserting the data.');
       });
   }
+  
   onUpdate() {
-    console.log('Update fire');
     this.apiService.updateTeacher(this.addForm.value).subscribe(data => {
       this.router.navigate(['teachers']);
     },
       error => {
-        alert(error);
+        alert('There was an error updating the data.');
       });
   }
 
@@ -72,7 +71,7 @@ export class TeacherCreateComponent implements OnInit {
         this.router.navigate(['teachers']);
       },
       error => {
-        alert(error);
+        alert('There was an error deleting the data.');
       });
   }
 

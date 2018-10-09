@@ -58,8 +58,7 @@
         </div>
       </div>
 
-      <button class="btn btn-sm btn-primary" [disabled]='true' (click)="onSave()">Save</button>
-      <button class="btn btn-sm btn-success" [disabled]='addForm.invalid' (click)="checkTime()" style="margin-left: 10px;">Check</button>
+      <button class="btn btn-sm btn-success" [disabled]='addForm.invalid' (click)="checkTime()">Check</button>
       <p>Form value: {{ addForm.value | json }}</p>
     </form>
 

@@ -14,7 +14,7 @@ import {LoginComponent} from './login/login.component';
 
 
 const routes: Routes = [
-  {path: '', redirectTo: 'teachers', pathMatch: 'full'},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
   {
     path: 'teachers',
     component: TeacherListComponent
