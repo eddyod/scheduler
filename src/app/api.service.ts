@@ -7,14 +7,7 @@ import { School } from './school';
 import { ScheduleEvent } from './scheduleEvent';
 import { Page } from './page';
 import { queryPaginated } from './queryPaginated';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    //  'Authorization': 'my-auth-token'
-  })
-};
-
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -22,10 +15,12 @@ const httpOptions = {
 })
 export class APIService {
 
+  // API_URL = 'http://www.mephistosoftware.com/rester';
+  API_URL = 'http://localhost:8000';
 
-  API_URL = 'http://www.mephistosoftware.com/rester';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private authService: AuthService) {
+  }
 
   // teachers
   getTeacherById(id: number) {
@@ -40,15 +35,24 @@ export class APIService {
   }
 
   createTeacher(teacher) {
-    return this.http.post(this.API_URL + '/teachers/', teacher);
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.post(this.API_URL + '/teachers', teacher, { headers: headers })
+      .pipe(
+      catchError(this.handleError('createTeacher', []))
+      );
   }
 
   updateTeacher(teacher) {
-    return this.http.put(this.API_URL + '/teachers/' + teacher.id, teacher, httpOptions);
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.put(this.API_URL + '/teachers/' + teacher.id, teacher, {headers: headers});
   }
 
   deleteTeacher(id: number) {
-    return this.http.delete(this.API_URL + '/teachers/' + id);
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "JWT " + this.authService.token);
+    return this.http.delete(this.API_URL + '/teachers/' + id, {headers:headers});
   }
 
   listTeachers(urlOrFilter?: string | object): Observable<Page<Teacher>> {
@@ -68,7 +72,7 @@ export class APIService {
   }
 
   updateSchool(school) {
-    return this.http.put(this.API_URL + '/schools/' + school.id, school, httpOptions);
+    return this.http.put(this.API_URL + '/schools/' + school.id, school);
   }
 
   deleteSchool(id: number) {
@@ -95,13 +99,13 @@ export class APIService {
 
   createSchedule(schedule) {
     return this.http.post(this.API_URL + '/schedules', schedule)
-    .pipe(
+      .pipe(
       catchError(this.handleError<any>('createSchedule'))
-    );
+      );
   }
 
   updateSchedule(schedule) {
-    return this.http.put(this.API_URL + '/schedules/' + schedule.id, schedule, httpOptions);
+    return this.http.put(this.API_URL + '/schedules/' + schedule.id, schedule);
   }
 
   deleteSchedule(id: number) {

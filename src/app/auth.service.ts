@@ -21,6 +21,7 @@ export class AuthService {
   // error messages received from the login attempt
   public errors: any = [];
 
+  // API_URL = 'http://www.mephistosoftware.com';
   API_URL = 'http://localhost:8000';
 
   constructor(private http: HttpClient) {
@@ -32,7 +33,7 @@ export class AuthService {
   // Uses http.post() to get an auth token from djangorestframework-jwt endpoint
   public login(user) {
   console.log(JSON.stringify(user));
-    this.http.post('http://localhost:8000/api-token-auth/', JSON.stringify(user), this.httpOptions).subscribe(
+    this.http.post(this.API_URL + '/api-token-auth/', JSON.stringify(user), this.httpOptions).subscribe(
       data => {
         this.updateData(data['token']);
       },
