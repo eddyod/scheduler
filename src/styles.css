@@ -5,3 +5,5 @@
 .top-buffer { margin:20px; }
 
 .jumbotron { margin:0; padding: 10px; }
+
+a.disabled { cursor: not-allowed; opacity: .75;}

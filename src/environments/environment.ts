@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'http://10.195.4.147:8000'
+  // apiEndpoint: 'http://10.195.4.147:8000'
+  apiEndpoint: 'http://www.mephistosoftware.com/rester'
 };
 
 /*
