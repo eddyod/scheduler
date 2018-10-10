@@ -20,7 +20,7 @@ import {
   CalendarView
 } from 'angular-calendar';
 
-import { ScheduleEvent } from '../scheduleEvent';
+import { ScheduleEvent } from '../models/scheduleEvent';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';

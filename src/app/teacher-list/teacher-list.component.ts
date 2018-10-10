@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { APIService } from '../api.service';
-import { Teacher } from '../teacher';
+import { APIService } from '../services/api.service';
+import { Teacher } from '../models/teacher';
 
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, merge, share, startWith, switchMap } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Page } from '../page';
+import { Page } from '../models/page';
 
 @Component({
   selector: 'app-teacher-list',

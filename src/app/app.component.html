@@ -8,12 +8,12 @@
       <li><a routerLink="/mycal">Calendar</a></li>
 
       <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Schedules <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a routerLink="/schedules">List</a></li>
-                  <li><a routerLink="/create-schedule">Create Single Class</a></li>
-                  <li><a routerLink="/repeater">Create Repeating Classes</a></li>
-                </ul>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Schedules <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a routerLink="/schedules">List</a></li>
+          <li><a routerLink="/create-schedule">Create Single Class</a></li>
+          <li><a routerLink="/repeater">Create Repeating Classes</a></li>
+        </ul>
       </li>
     </ul>
 
@@ -24,12 +24,12 @@
       <li><a href="#" [class.disabled]="!authService.token">Calendar</a></li>
 
       <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Schedules <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#" [class.disabled]="!authService.token">List</a></li>
-                  <li><a href="#" [class.disabled]="!authService.token">Create Single Class</a></li>
-                  <li><a href="#" [class.disabled]="!authService.token">Create Repeating Classes</a></li>
-                </ul>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Schedules <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#" [class.disabled]="!authService.token">List</a></li>
+          <li><a href="#" [class.disabled]="!authService.token">Create Single Class</a></li>
+          <li><a href="#" [class.disabled]="!authService.token">Create Repeating Classes</a></li>
+        </ul>
       </li>
     </ul>
 
@@ -38,7 +38,7 @@
 
 <div class="container">
   <div class="jumbotron">
-        <a class="navbar-item">
+    <a class="navbar-item">
           <img alt="Premier English" src="assets/img/logo.png">
         </a>
   </div>
@@ -51,9 +51,6 @@
     <div class="panel-heading">Teacher Scheduler</div>
     <div class="panel-body">
       <router-outlet></router-outlet>
-
-
-
+    </div>
   </div>
-</div>
 </div>

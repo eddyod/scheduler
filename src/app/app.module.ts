@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -25,7 +25,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { RepeaterComponent } from './repeater/repeater.component';
 import { LoginComponent } from './login/login.component';
-import { AuthService } from './auth.service';
+import { AuthService } from './services/auth.service';
+import { InterceptService } from './services/intercept.service';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { AuthService } from './auth.service';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, InterceptService, {provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

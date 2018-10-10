@@ -1,39 +1,45 @@
+
 <form [formGroup]="addForm" novalidate class="form">
 
   <div class="row" *ngIf="!authService.token">
-
     <div class="col-md-6">
-
       <h2>Log In</h2>
 
       <div class="form-group">
-
         <label for="idUserName">Username:</label><br />
         <input type="text" id="idUsername" class="form-control" formControlName="username">
-        <span *ngFor="let error of authService.errors.username"><br />
-    {{ error }}</span>
+        <div *ngFor="let error of authService.errors.username">{{ error }}</div>
       </div>
 
       <div class="form-group">
-
         <label for="idPassword">Password:</label><br />
         <input type="password" id="idPassword" class="form-control" formControlName="password">
-        <span *ngFor="let error of authService.errors.password"><br />
-    {{ error }}</span>
+        <div *ngFor="let error of authService.errors.password">{{ error }}</div>
       </div>
 
-      <button class="btn btn-success" [disabled]='addForm.invalid'  (click)="login()">Login</button>
 
+      <div class="form-group">
+        <button class="btn btn-success" [disabled]='addForm.invalid'  (click)="login()">Login</button>
+      </div>
+
+      <div class="form-group">
+        <span *ngFor="let error of authService.errors.non_field_errors">{{ error }}<br /></span>
+      </div>
     </div>
-    <span *ngFor="let error of authService.errors.non_field_errors">{{ error }}<br /></span>
   </div>
 
   <div class="row" *ngIf="authService.token">
-    <div class="col-md-6">You are logged in as {{ authService.username }}.<br />
-    Token Expires: {{ authService.token_expires }}<br />
-      <button (click)="refreshToken()" class="btn btn-primary">Refresh Token</button>
-      <button (click)="logout()" class="btn btn-danger" style="margin-left:10px;">Log Out</button>
-    </div>
+    <div class="col-md-6">
+      <h3>You are logged in.</h3>
 
+      <div class="form-group" *ngIf="authService.token">
+        <p>You are logged in as {{ authService.username }}.</p>
+        <p>Token Expires: {{ authService.token_expires }}</p>
+        <button (click)="refreshToken()" class="btn btn-primary">Refresh Token</button>
+        <button (click)="logout()" class="btn btn-danger" style="margin-left:10px;">Log Out</button>
+      </div>
+
+    </div>
   </div>
+
 </form>

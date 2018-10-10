@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { APIService } from '../api.service';
-import { ScheduleEvent } from '../scheduleEvent';
+import { APIService } from '../services/api.service';
+import { ScheduleEvent } from '../models/scheduleEvent';
 
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, merge, share, startWith, switchMap } from 'rxjs/operators';
-import { Page } from '../page';
+import { Page } from '../models/page';
 import { FormControl, FormGroup } from '@angular/forms';
 
 

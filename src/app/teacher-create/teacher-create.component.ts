@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { APIService } from '../api.service';
+import { APIService } from '../services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Teacher } from '../teacher';
+import { Teacher } from '../models/teacher';
 import { Router } from '@angular/router';
 
 @Component({
@@ -53,7 +53,7 @@ export class TeacherCreateComponent implements OnInit {
         alert('There was an error inserting the data.');
       });
   }
-  
+
   onUpdate() {
     this.apiService.updateTeacher(this.addForm.value).subscribe(data => {
       this.router.navigate(['teachers']);

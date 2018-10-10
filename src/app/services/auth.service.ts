@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import * as moment from "moment";
 
 @Injectable({
@@ -37,6 +37,7 @@ export class AuthService {
     return this.http.post(this.API_URL + '/api-token-auth/', JSON.stringify(user), this.httpOptions).subscribe(
       data => {
         this.updateData(data['token']);
+        localStorage.setItem('currentUser', JSON.stringify(user));
       },
       err => {
         this.errors = err['error'];
@@ -62,6 +63,7 @@ export class AuthService {
     this.username = null;
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
+    localStorage.removeItem("currentUser");
   }
 
   public isLoggedIn() {
@@ -89,6 +91,7 @@ export class AuthService {
     this.username = token_decoded.username;
 
     localStorage.setItem('id_token', token.idToken);
+    localStorage.setItem('Token', token);
     // const expiresAt = moment().add(token.expiresIn, 'second');
     // localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
     localStorage.setItem("expires_at", JSON.stringify(this.token_expires.valueOf()));

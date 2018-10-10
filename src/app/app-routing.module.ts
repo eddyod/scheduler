@@ -1,55 +1,65 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-import {TeacherListComponent} from './teacher-list/teacher-list.component';
-import {TeacherCreateComponent} from './teacher-create/teacher-create.component';
-import {SchoolListComponent} from './school-list/school-list.component';
-import {SchoolCreateComponent} from './school-create/school-create.component';
-import {ScheduleListComponent} from './schedule-list/schedule-list.component';
-import {ScheduleCreateComponent} from './schedule-create/schedule-create.component';
-import {ScheduleUpdateComponent} from './schedule-create/schedule-update.component';
-import {MycalComponent} from './mycal/mycal.component';
-import {RepeaterComponent} from './repeater/repeater.component';
-import {LoginComponent} from './login/login.component';
+import { TeacherListComponent } from './teacher-list/teacher-list.component';
+import { TeacherCreateComponent } from './teacher-create/teacher-create.component';
+import { SchoolListComponent } from './school-list/school-list.component';
+import { SchoolCreateComponent } from './school-create/school-create.component';
+import { ScheduleListComponent } from './schedule-list/schedule-list.component';
+import { ScheduleCreateComponent } from './schedule-create/schedule-create.component';
+import { ScheduleUpdateComponent } from './schedule-create/schedule-update.component';
+import { MycalComponent } from './mycal/mycal.component';
+import { RepeaterComponent } from './repeater/repeater.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard';
 
 
 const routes: Routes = [
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'teachers',
-    component: TeacherListComponent
+    component: TeacherListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'create-teacher',
-    component: TeacherCreateComponent
+    component: TeacherCreateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'schedules',
-    component: ScheduleListComponent
+    component: ScheduleListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'update-schedule',
-    component: ScheduleUpdateComponent
+    component: ScheduleUpdateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'create-schedule',
-    component: ScheduleCreateComponent
+    component: ScheduleCreateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'schools',
-    component: SchoolListComponent
+    component: SchoolListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'create-school',
-    component: SchoolCreateComponent
+    component: SchoolCreateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'mycal',
-    component: MycalComponent
+    component: MycalComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'repeater',
-    component: RepeaterComponent
+    component: RepeaterComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -61,4 +71,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

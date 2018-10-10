@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RRule, RRuleSet, rrulestr } from 'rrule';
-import { Schedule } from '../schedule';
-import { APIService } from '../api.service';
+import { Schedule } from '../models/schedule';
+import { APIService } from '../services/api.service';
 import {
   FormGroup, FormBuilder, Validators,
   FormControl, FormArray, ValidatorFn
