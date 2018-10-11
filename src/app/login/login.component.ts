@@ -17,11 +17,11 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.addForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+
   }
 
   login() {
@@ -35,5 +35,7 @@ export class LoginComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
+
+
 
 }

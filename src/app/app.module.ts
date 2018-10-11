@@ -60,7 +60,7 @@ import { InterceptService } from './services/intercept.service';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
   ],
-  providers: [AuthService, InterceptService, {provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true}],
+  providers: [InterceptService, {provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

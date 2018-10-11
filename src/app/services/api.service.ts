@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Teacher } from '../models/teacher';
@@ -7,7 +7,6 @@ import { School } from '../models/school';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { Page } from '../models/page';
 import { queryPaginated } from '../models/queryPaginated';
-import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
 
 
@@ -18,8 +17,7 @@ export class APIService {
 
   API_URL = environment.apiEndpoint;
 
-  constructor(private http: HttpClient,
-    private authService: AuthService) {
+  constructor(private http: HttpClient) {
   }
 
   // teachers

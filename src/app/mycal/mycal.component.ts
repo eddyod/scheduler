@@ -88,8 +88,7 @@ export class MycalComponent implements OnInit {
       .set(
         'start_lte',
         format(getEnd(this.viewDate), 'YYYY-MM-DD')
-      )
-      .set('api_key', '0ec33936a68018857d727958dca1424f');
+      );
 
     this.events$ = this.http
       .get(this.API_URL, {params})

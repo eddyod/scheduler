@@ -11,7 +11,7 @@ import { ScheduleUpdateComponent } from './schedule-create/schedule-update.compo
 import { MycalComponent } from './mycal/mycal.component';
 import { RepeaterComponent } from './repeater/repeater.component';
 import { LoginComponent } from './login/login.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './services/auth.guard';
 
 
 const routes: Routes = [
@@ -19,7 +19,7 @@ const routes: Routes = [
   {
     path: 'teachers',
     component: TeacherListComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard]    
   },
   {
     path: 'create-teacher',

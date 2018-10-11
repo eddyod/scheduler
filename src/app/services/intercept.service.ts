@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
 import {
   HttpEvent,
   HttpInterceptor,
@@ -15,7 +14,7 @@ import { catchError, tap } from 'rxjs/operators';
 
 export class InterceptService implements HttpInterceptor {
 
-  constructor(private authService: AuthService) { }
+  constructor() { }
 
   // intercept request and add token
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -27,26 +26,13 @@ export class InterceptService implements HttpInterceptor {
       }
     });
 
-    console.log("----request----");
-
-    console.log(request);
-
-    console.log("--- end of request---");
-
-
     return next.handle(request)
       .pipe(
         tap(event => {
-          if (event instanceof HttpResponse) {
-
-            console.log(" all looks good");
-            // http response status code
-            console.log(event.status);
-          }
+          if (event instanceof HttpResponse) {}
         }, error => {
           // http response status code
-          console.log("----response----");
-          console.error("status code:");
+          console.error("Error status code:");
           console.error(error.status);
           console.error(error.message);
           console.log("--- end of response---");
