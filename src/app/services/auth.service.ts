@@ -23,7 +23,6 @@ export class AuthService {
   // error messages received from the login attempt
   public errors: any = [];
 
-  // API_URL = 'http://www.mephistosoftware.com/rester';
   API_URL = environment.apiEndpoint;
 
   constructor(private http: HttpClient) {
@@ -75,9 +74,7 @@ export class AuthService {
   }
 
   getExpiration() {
-    const expiration = localStorage.getItem("expires_at");
-    const expiresAt = JSON.parse(expiration);
-    return moment(expiresAt);
+    return moment(this.token_expires);
   }
 
   private updateData(token) {
@@ -92,9 +89,6 @@ export class AuthService {
 
     localStorage.setItem('id_token', token.idToken);
     localStorage.setItem('Token', token);
-    // const expiresAt = moment().add(token.expiresIn, 'second');
-    // localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
-    localStorage.setItem("expires_at", JSON.stringify(this.token_expires.valueOf()));
   }
 
 
