@@ -67,7 +67,6 @@ export class RepeaterComponent implements OnInit {
       duration: ['', Validators.required],
       school_id: ['', Validators.required],
       teacher_id: ['', Validators.required],
-      createdBy: ['', Validators.required],
       byweekdays: new FormArray(controls, minSelectedCheckboxes(1))
     });
 

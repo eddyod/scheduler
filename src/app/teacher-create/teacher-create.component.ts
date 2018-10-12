@@ -30,6 +30,7 @@ export class TeacherCreateComponent implements OnInit {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.maxLength(50)]],
       phone: ['', Validators.required],
+      address1: ['', Validators.required],
       isActive: ['', Validators.required]
     });
 

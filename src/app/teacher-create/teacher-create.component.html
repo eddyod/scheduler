@@ -26,18 +26,23 @@
       </div>
     </div>
 
+
     <div class="form-group">
-      <div class="radio">
-        <label><input type="radio" [value]="true" name="isActive" formControlName="isActive">Active</label>
+      <label for="idAddress1">Address:</label>
+      <input formControlName="address1" placeholder="Address" name="address1" class="form-control" id="idAddress1">
+      <div class="alert  alert-danger" *ngIf="addForm.get('address1').hasError('maxlength') && addForm.get('address1').touched">
+        Address is required.
       </div>
-      <div class="radio">
-        <label><input type="radio" [value]="false" name="isActive" formControlName="isActive">Inactive</label>
-      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="radio-inline"><input type="radio" [value]="true" name="isActive" formControlName="isActive">Active</label>
+      <label class="radio-inline"><input type="radio" [value]="false" name="isActive" formControlName="isActive">Inactive</label>
     </div>
 
     <button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="displayButton" (click)="onSave()">Save</button>
     <button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="!displayButton" (click)="onUpdate()">Update</button>
 
-    <p>Form value: {{ addForm.value | json }}</p>
   </form>
 </div>

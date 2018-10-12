@@ -12,7 +12,6 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
           <th>School Name</th>
           <th>Email</th>
           <th>Phone</th>
@@ -22,7 +21,6 @@
       </thead>
       <tbody>
         <tr *ngFor="let school of (page | async)?.results">
-          <td>{{school.id}}</td>
           <td>{{school.name}}</td>
           <td>{{school.email}}</td>
           <td>{{school.phone}}</td>
