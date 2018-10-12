@@ -33,7 +33,6 @@ export class ScheduleCreateComponent implements OnInit {
       end: ['', Validators.required],
       school_id: ['', Validators.required],
       teacher_id: ['', Validators.required],
-      createdBy: ['', Validators.required],
     });
 
     this.apiService.getSchools().subscribe((data: Array<object>) => {
@@ -48,6 +47,7 @@ export class ScheduleCreateComponent implements OnInit {
   }
 
   onSave() {
+    this.addForm.value.createdBy = localStorage.getItem('user_id');
     this.addForm.value.start = moment(this.addForm.value.start).format("YYYY-MM-DD[T]HH:mm");
     this.addForm.value.end = moment(this.addForm.value.end).format("YYYY-MM-DD[T]HH:mm");
     this.apiService.createSchedule(this.addForm.value)

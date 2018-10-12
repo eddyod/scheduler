@@ -89,6 +89,7 @@ export class AuthService {
 
     localStorage.setItem('id_token', token.idToken);
     localStorage.setItem('Token', token);
+    localStorage.setItem('user_id', token_decoded.user_id);
   }
 
 

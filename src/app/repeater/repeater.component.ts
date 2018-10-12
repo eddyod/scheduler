@@ -127,7 +127,7 @@ export class RepeaterComponent implements OnInit {
         start: this.startString, end: tEnd.format("YYYY-MM-DD[T]HH:mm"),
         school_id: this.addForm.value.school_id,
         teacher_id: this.addForm.value.teacher_id,
-        createdBy: this.addForm.value.createdBy
+        createdBy: parseInt(localStorage.getItem('user_id')),
       };
       this.scheduleForms.push(event);
     })

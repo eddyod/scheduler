@@ -1,4 +1,3 @@
-
 <div class="col-md-6">
   <h2 class="text-center">{{teacherFormLabel}}</h2>
   <form [formGroup]="addForm" novalidate class="form">
@@ -24,6 +23,15 @@
       <input formControlName="phone" placeholder="Phone" name="phone" class="form-control" id="idPhone">
       <div class="alert  alert-danger" *ngIf="addForm.get('phone').hasError('maxlength') && addForm.get('phone').touched">
         Phone is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="radio">
+        <label><input type="radio" [value]="true" name="isActive" formControlName="isActive">Active</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" [value]="false" name="isActive" formControlName="isActive">Inactive</label>
       </div>
     </div>
 

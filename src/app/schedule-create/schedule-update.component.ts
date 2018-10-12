@@ -34,7 +34,6 @@ export class ScheduleUpdateComponent implements OnInit {
       end: ['', Validators.required],
       school_id: ['', Validators.required],
       teacher_id: ['', Validators.required],
-      createdBy: ['', Validators.required],
     });
 
     const id = localStorage.getItem('id');
@@ -60,6 +59,7 @@ export class ScheduleUpdateComponent implements OnInit {
   }
 
   onUpdate() {
+    this.addForm.value.createdBy = localStorage.getItem('user_id');
     this.addForm.value.start = moment(this.addForm.value.start).format("YYYY-MM-DD[T]HH:mm");
     this.addForm.value.end = moment(this.addForm.value.end).format("YYYY-MM-DD[T]HH:mm");
     this.apiService.updateSchedule(this.addForm.value).subscribe(data => {

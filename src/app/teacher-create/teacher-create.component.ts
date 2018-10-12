@@ -30,6 +30,7 @@ export class TeacherCreateComponent implements OnInit {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.maxLength(50)]],
       phone: ['', Validators.required],
+      isActive: ['', Validators.required]
     });
 
     let id = localStorage.getItem('id');
@@ -45,6 +46,7 @@ export class TeacherCreateComponent implements OnInit {
   }
 
   onSave() {
+    this.addForm.value.createdBy = localStorage.getItem('user_id');
     this.apiService.createTeacher(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['teachers']);
@@ -55,6 +57,7 @@ export class TeacherCreateComponent implements OnInit {
   }
 
   onUpdate() {
+    this.addForm.value.createdBy = localStorage.getItem('user_id');
     this.apiService.updateTeacher(this.addForm.value).subscribe(data => {
       this.router.navigate(['teachers']);
     },

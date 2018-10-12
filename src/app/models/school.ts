@@ -14,8 +14,8 @@ export class School {
   public longitude: number;
   public description: string;
   public createdOn: string;
-  public isActive = true;
-  public createdBy_id: 1;
+  public isActive: boolean;
+  public createdBy: number;
 
   constructor(name, phone) {}
 
