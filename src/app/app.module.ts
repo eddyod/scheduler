@@ -25,8 +25,9 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { RepeaterComponent } from './repeater/repeater.component';
 import { LoginComponent } from './login/login.component';
-import { AuthService } from './services/auth.service';
 import { InterceptService } from './services/intercept.service';
+import { ChartModule } from 'angular-highcharts';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { InterceptService } from './services/intercept.service';
     PaginatorComponent,
     RepeaterComponent,
     LoginComponent,
+    ChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +61,7 @@ import { InterceptService } from './services/intercept.service';
     }),
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    ChartModule,
   ],
   providers: [InterceptService, {provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true}],
   bootstrap: [AppComponent]
