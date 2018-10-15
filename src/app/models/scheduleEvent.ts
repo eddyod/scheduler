@@ -10,5 +10,6 @@ export interface ScheduleEvent extends CalendarEvent {
   school: School;
   teacher: Teacher;
   createdOn: string;
+  completed: boolean;
 
 }

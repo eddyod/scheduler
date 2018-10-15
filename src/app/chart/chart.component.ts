@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart } from 'angular-highcharts';
-import { Observable, of } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { HttpParams } from '@angular/common/http';
 import { APIService } from '../services/api.service';
-import { Attendance } from '../models/attendance';
+import { Chart } from 'angular-highcharts';
+import * as moment from 'moment';
 
+import {
+  FormGroup, FormBuilder, Validators,
+} from '@angular/forms';
 
 
 
@@ -17,94 +17,107 @@ import { Attendance } from '../models/attendance';
 })
 export class ChartComponent implements OnInit {
 
-
-  // teachers = [];
   public teachers: Array<object> = [];
-  // teachers: Observable<Array<object>>;
+  public chart: Chart;
+  addForm: FormGroup;
+  class_month: number;
+  class_year: number;
 
 
-  chart = new Chart({
-    chart: {
-      type: 'column'
-    },
-    title: {
-      text: 'Teachers showing up per month'
-    },
-    credits: {
-      enabled: false
-    },
-    xAxis: {
-      type: 'category',
-      labels: {
-        rotation: -45,
-        style: {
-          fontSize: '13px',
-          fontFamily: 'Verdana, sans-serif'
-        }
-      }
-    },
-
-    yAxis: {
-      allowDecimals: false,
-      min: 0,
-      title: {
-        text: 'Number of scheduled classes'
-      }
-    },
-
-    series: [{
-      name: 'Population',
-      data: [],
-    }]
-
-  });
-
-  constructor(private apiService: APIService) { }
+  constructor(private apiService: APIService,
+    private formBuilder: FormBuilder,
+  ) { }
 
 
   ngOnInit() {
-    const params = new HttpParams()
-      .set('start_gte', '2018-10-01')
-      .set('start_lte', '2018-10-31');
-    this.apiService.getAttendance(params).subscribe((data: Array<object>) => {
-      this.teachers = data;
+    this.addForm = this.formBuilder.group({
+      class_month: ['', Validators.required],
+      class_year: ['', Validators.required],
     });
-    console.log(this.teachers);
+    const params = new HttpParams()
+      .set('m', '10')
+      .set('y', '2018');
+    this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]) });
+
   }
 
+  refreshChart() {
+    let params = new HttpParams()
+    .set('m', '10')
+    .set('y', '2018');
+    this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]) });
+  }
+
+
+  buildChart(data) {
+    console.log(data);
+    let names = [];
+    let shows = [];
+    let noshows = []
+    data.forEach(teacher => {
+      names.push(teacher.teacher);
+      shows.push(teacher.showed_up);
+      noshows.push(teacher.no_show);
+    });
+
+    this.chart = new Chart({
+      chart: {
+        type: 'bar'
+      },
+      title: {
+        text: 'Teacher completion rate'
+      },
+      credits: {
+        enabled: false
+      },
+      xAxis: { categories: names },
+
+      yAxis: {
+        min: 0, title: {
+          text: 'Classes completed/missed',
+          align: 'high'
+        },
+        labels: {
+          overflow: 'justify'
+        }
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true
+          }
+        }
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'top',
+        x: -40,
+        y: 80,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor: ('#FFFFFF'),
+        shadow: true
+      },
+
+      series: [
+        {
+          name: 'Showed up',
+          data: shows,
+        },
+        {
+          name: 'Missed',
+          data: noshows,
+        },
+      ]
+    });
+  }
 
 
   add() {
-    //this.getSchools().subscribe((data: Array<object>) => {
-    //   this.teachers = data;
-    // });
-    //this.fetchSeries();
     console.log(this.teachers);
   }
 
 
-  getSchools() {
-    const params = new HttpParams()
-      .set('start_gte', '2018-10-01')
-      .set('start_lte', '2018-10-31');
-    //    return this.http.get(this.API_URL, { params });
-  }
 
-
-  fetchSeries() {
-    const params = new HttpParams()
-      .set('start_gte', '2018-10-01')
-      .set('start_lte', '2018-10-31');
-    /*
-  this.http.get(this.API_URL, { params })
-    .subscribe((results: Attendance[]) => {
-      results.forEach(teacher => {
-        this.teachers.push([teacher.teacher, teacher.showed_up]);
-      })
-    })
-*/
-    // this.series.forEach(teacher => {
-    //  this.teachers.push([teacher.teacher, teacher.showed_up])
-    // })
-  }
 }

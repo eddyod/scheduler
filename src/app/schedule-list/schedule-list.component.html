@@ -34,6 +34,7 @@
             <th>End Time</th>
             <th>Teacher</th>
             <th>School</th>
+            <th>Showed Up?</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -43,6 +44,7 @@
             <td>{{schedule.end | date : 'medium'}}</td>
             <td>{{schedule.teacher.name}}</td>
             <td>{{schedule.school.name}}</td>
+            <td>{{schedule.completed}}</td>
             <td>
               <button class="btn btn-xs btn-primary" (click)="editSchedule(schedule)">Edit</button>
               <button class="btn btn-xs btn-danger" (click)="deleteSchedule(schedule)" style="margin-left:10px;">Delete</button>

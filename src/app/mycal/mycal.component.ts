@@ -109,6 +109,7 @@ export class MycalComponent implements OnInit {
             school: scheduleEvent.school,
             teacher: scheduleEvent.teacher,
             createdOn: scheduleEvent.createdOn,
+            completed: scheduleEvent.completed,
             start: new Date(scheduleEvent.start),
             end: new Date(scheduleEvent.end),
             color: colors.yellow,

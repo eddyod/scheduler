@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RRule, RRuleSet, rrulestr } from 'rrule';
+import { RRule } from 'rrule';
 import { Schedule } from '../models/schedule';
 import { APIService } from '../services/api.service';
 import {
@@ -42,7 +42,6 @@ export class RepeaterComponent implements OnInit {
   scheduleFormLabel = 'Create Classes';
   private startDate: Date;
   private endDate: Date;
-  private endTime: Date;
   private startString: string;
   // drop downs
   public teachers: Array<object> = [];
