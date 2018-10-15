@@ -108,6 +108,10 @@ export class APIService {
   listSchedules(urlOrFilter?: string | object): Observable<Page<ScheduleEvent>> {
     return queryPaginated<ScheduleEvent>(this.http, this.API_URL + '/schedules', urlOrFilter);
   }
+  // Attendance
+  getAttendance(params) {
+    return this.http.get(this.API_URL + '/attendance', {params});
+  }
 
   /**
    * Handle Http operation that failed.

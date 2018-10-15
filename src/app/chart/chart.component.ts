@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Chart } from 'angular-highcharts';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { APIService } from '../services/api.service';
 import { Attendance } from '../models/attendance';
+
 
 
 
@@ -13,10 +15,12 @@ import { Attendance } from '../models/attendance';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-export class ChartComponent {
+export class ChartComponent implements OnInit {
 
-  series: Observable<Array<Attendance>>;
-  API_URL = environment.apiEndpoint + '/attendance';
+
+  // teachers = [];
+  public teachers: Array<object> = [];
+  // teachers: Observable<Array<object>>;
 
 
   chart = new Chart({
@@ -29,9 +33,15 @@ export class ChartComponent {
     credits: {
       enabled: false
     },
-
     xAxis: {
-      categories: ['P1', 'P2', 'P3', 'P4']
+      type: 'category',
+      labels: {
+        rotation: -45,
+        style: {
+          fontSize: '13px',
+          fontFamily: 'Verdana, sans-serif'
+        }
+      }
     },
 
     yAxis: {
@@ -42,62 +52,59 @@ export class ChartComponent {
       }
     },
 
-    tooltip: {
-      formatter: function() {
-        return '<b>' + this.x + '</b><br/>' +
-          this.series.name + ': ' + this.y + '<br/>' +
-          'Total: ' + this.point.stackTotal;
-      }
-    },
-
-    plotOptions: {
-      column: {
-        stacking: 'normal'
-      }
-    },
-
-    series: [{ name: "stuff", data: this.series }];
+    series: [{
+      name: 'Population',
+      data: [],
+    }]
 
   });
 
-  constructor(private http: HttpClient) { }
+  constructor(private apiService: APIService) { }
+
 
   ngOnInit() {
-    this.fetchSeries();
-    console.log(this.series);
+    const params = new HttpParams()
+      .set('start_gte', '2018-10-01')
+      .set('start_lte', '2018-10-31');
+    this.apiService.getAttendance(params).subscribe((data: Array<object>) => {
+      this.teachers = data;
+    });
+    console.log(this.teachers);
   }
+
+
 
   add() {
-    this.chart.addPoint(Math.floor(Math.random() * 10));
-    // this.chart.addSerie({name:'Fast Eddy', data:[2,10,4,7,8], stack:'male'});
+    //this.getSchools().subscribe((data: Array<object>) => {
+    //   this.teachers = data;
+    // });
+    //this.fetchSeries();
+    console.log(this.teachers);
   }
 
-  fetchSeries(): void {
 
+  getSchools() {
     const params = new HttpParams()
-      .set('start_gte','2018-10')
-      .set('start_lte','2018-11');
-
-
-    this.series = this.http
-      .get(this.API_URL, {params})
-      .pipe(map((results: Attendance[]) => {
-      //.pipe(
-      //map(({ results }: { results: Object[] }) => {
-        return results.map((attend: Attendance) => {
-
-          return {
-            id: attend.id,
-            teacher: attend.teacher,
-            school: attend.school,
-            class_date: attend.class_date,
-            showed_up: attend.showed_up,
-            no_show: attend.no_show,
-          };
-        });
-      })
-      );
+      .set('start_gte', '2018-10-01')
+      .set('start_lte', '2018-10-31');
+    //    return this.http.get(this.API_URL, { params });
   }
 
 
+  fetchSeries() {
+    const params = new HttpParams()
+      .set('start_gte', '2018-10-01')
+      .set('start_lte', '2018-10-31');
+    /*
+  this.http.get(this.API_URL, { params })
+    .subscribe((results: Attendance[]) => {
+      results.forEach(teacher => {
+        this.teachers.push([teacher.teacher, teacher.showed_up]);
+      })
+    })
+*/
+    // this.series.forEach(teacher => {
+    //  this.teachers.push([teacher.teacher, teacher.showed_up])
+    // })
+  }
 }

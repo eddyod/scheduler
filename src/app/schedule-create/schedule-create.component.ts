@@ -42,6 +42,7 @@ export class ScheduleCreateComponent implements OnInit {
     this.apiService.getTeachers().subscribe((data: Array<object>) => {
       this.teachers = data;
     });
+    console.log(this.teachers);
 
 
   }
