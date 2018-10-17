@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -16,7 +17,6 @@ import { ScheduleListComponent } from './schedule-list/schedule-list.component';
 import { ScheduleCreateComponent } from './schedule-create/schedule-create.component';
 import { ScheduleUpdateComponent } from './schedule-create/schedule-update.component';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
@@ -28,6 +28,7 @@ import { LoginComponent } from './login/login.component';
 import { InterceptService } from './services/intercept.service';
 import { ChartModule } from 'angular-highcharts';
 import { ChartComponent } from './chart/chart.component';
+import { MaterialModule } from './shared/material.module';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { ChartComponent } from './chart/chart.component';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     ChartModule,
+    MaterialModule,
   ],
   providers: [InterceptService, {provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true}],
   bootstrap: [AppComponent]

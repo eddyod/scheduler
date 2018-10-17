@@ -5,7 +5,7 @@ import { Chart } from 'angular-highcharts';
 import * as moment from 'moment';
 
 import {
-  FormGroup, FormBuilder, Validators,
+  FormGroup, FormBuilder, Validators,FormArray,
 } from '@angular/forms';
 
 
@@ -43,8 +43,8 @@ export class ChartComponent implements OnInit {
 
   refreshChart() {
     let params = new HttpParams()
-    .set('m', '10')
-    .set('y', '2018');
+    .set('m', this.addForm.value.class_month)
+    .set('y', this.addForm.value.class_year);
     this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]) });
   }
 
