@@ -6,6 +6,7 @@ import { TeacherCreateComponent } from './teacher-create/teacher-create.componen
 import { SchoolListComponent } from './school-list/school-list.component';
 import { SchoolCreateComponent } from './school-create/school-create.component';
 import { ScheduleListComponent } from './schedule-list/schedule-list.component';
+import { SmlistComponent } from './schedule-list/smlist.component';
 import { ScheduleCreateComponent } from './schedule-create/schedule-create.component';
 import { ScheduleUpdateComponent } from './schedule-create/schedule-update.component';
 import { MycalComponent } from './mycal/mycal.component';
@@ -30,6 +31,11 @@ const routes: Routes = [
   {
     path: 'schedules',
     component: ScheduleListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'smlist',
+    component: SmlistComponent,
     canActivate: [AuthGuard]
   },
   {
