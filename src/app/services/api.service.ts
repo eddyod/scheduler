@@ -28,14 +28,14 @@ export class APIService {
   getTeachers(): Observable<Object[]> {
     return this.http.get<Object[]>(this.API_URL + '/teachers')
       .pipe(
-      catchError(this.handleError('getTeachers', []))
+        catchError(this.handleError('getTeachers', []))
       );
   }
 
   createTeacher(teacher) {
     return this.http.post(this.API_URL + '/teachers', teacher)
       .pipe(
-      catchError(this.handleError('createTeacher', []))
+        catchError(this.handleError('createTeacher', []))
       );
   }
 
@@ -85,6 +85,11 @@ export class APIService {
     return this.http.get(this.API_URL + '/schedules');
   }
 
+// no pagination
+  getClasses() {
+    return this.http.get(this.API_URL + '/class');
+  }
+
   // no pagination
   getEvents() {
     return this.http.get(this.API_URL + '/events');
@@ -93,7 +98,7 @@ export class APIService {
   createSchedule(schedule) {
     return this.http.post(this.API_URL + '/schedules', schedule)
       .pipe(
-      catchError(this.handleError<any>('createSchedule'))
+        catchError(this.handleError<any>('createSchedule'))
       );
   }
 
@@ -110,7 +115,7 @@ export class APIService {
   }
   // Attendance
   getAttendance(params) {
-    return this.http.get(this.API_URL + '/attendance', {params});
+    return this.http.get(this.API_URL + '/attendance', { params });
   }
 
   /**

@@ -36,7 +36,6 @@ const routes: Routes = [
   {
     path: 'smlist',
     component: SmlistComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'update-schedule',

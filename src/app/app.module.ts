@@ -30,7 +30,6 @@ import { ChartModule } from 'angular-highcharts';
 import { ChartComponent } from './chart/chart.component';
 import { MaterialModule } from './shared/material.module';
 import { SmlistComponent } from './schedule-list/smlist.component';
-import { TeachermanagerAppComponent } from './teachermanager/teachermanager-app.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +47,6 @@ import { TeachermanagerAppComponent } from './teachermanager/teachermanager-app.
     LoginComponent,
     ChartComponent,
     SmlistComponent,
-    TeachermanagerAppComponent,
   ],
   imports: [
     BrowserModule,
