@@ -1,4 +1,52 @@
-<p>
-  class-list works!
-</p>
-<h2>hey you</h2>
+<div class="example-header">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+
+
+<div class="example-container mat-elevation-z10">
+
+  <mat-table [dataSource]="dataSource" matSort>
+
+    <!-- start Column -->
+    <ng-container matColumnDef="start">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Start </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.start | date : 'medium'}} </mat-cell>
+    </ng-container>
+
+    <!-- end Column -->
+    <ng-container matColumnDef="end">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> End </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.end | date : 'medium'}} </mat-cell>
+    </ng-container>
+
+    <!-- school Column -->
+    <ng-container matColumnDef="school">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> School </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.school.name}} </mat-cell>
+    </ng-container>
+
+    <!-- teacher Column -->
+    <ng-container matColumnDef="teacher">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Teacher </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.teacher.name}} </mat-cell>
+    </ng-container>
+
+
+    <!-- teacher Column -->
+    <ng-container matColumnDef="completed">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Showed Up? </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.completed}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+
+
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+
+</div>

@@ -14,8 +14,6 @@ export class SmlistComponent {
 
   displayedColumns = ['start', 'end', 'completed', 'teacher',  'school'];
   dataSource: MatTableDataSource<ScheduleEvent>;
-  //public schedules: Array<object> = [];
-  //schedules: Object[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

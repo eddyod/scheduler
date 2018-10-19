@@ -1,15 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { ScheduleEvent } from '../../models/scheduleEvent';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+
+import { APIService } from '../../services/api.service';
 
 @Component({
   selector: 'app-class-list',
   templateUrl: './class-list.component.html',
   styleUrls: ['./class-list.component.css']
 })
-export class ClassListComponent implements OnInit {
+export class ClassListComponent  {
 
-  constructor() { }
+  displayedColumns = ['start', 'end', 'completed', 'teacher',  'school'];
+  dataSource: MatTableDataSource<ScheduleEvent>;
 
-  ngOnInit() {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  constructor(private apiService: APIService) {
+    this.apiService.getClasses().subscribe(data => { this.buildTable(data as ScheduleEvent[]); });
   }
+
+
+  buildTable(data) {
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  /**
+   * Set the paginator and sort after the view init since this component will
+   * be able to query its view for the initialized paginator and sort.
+   */
+  ngAfterViewInit() {
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
+
 
 }
