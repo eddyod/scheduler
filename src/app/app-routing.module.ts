@@ -75,6 +75,11 @@ const routes: Routes = [
     path: 'chart',
     component: ChartComponent
   },
+  {
+    path: 'classes',
+    loadChildren: './classes/classes.module#ClassesModule'
+  },
+
 ];
 
 @NgModule({
