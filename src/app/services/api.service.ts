@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Teacher } from '../models/teacher';
 import { School } from '../models/school';
 import { ScheduleEvent } from '../models/scheduleEvent';
@@ -28,14 +28,14 @@ export class APIService {
   getTeachers(): Observable<Object[]> {
     return this.http.get<Object[]>(this.API_URL + '/teachers')
       .pipe(
-        catchError(this.handleError('getTeachers', []))
+      catchError(this.handleError('getTeachers', []))
       );
   }
 
   createTeacher(teacher) {
     return this.http.post(this.API_URL + '/teachers', teacher)
       .pipe(
-        catchError(this.handleError('createTeacher', []))
+      catchError(this.handleError('createTeacher', []))
       );
   }
 
@@ -85,11 +85,26 @@ export class APIService {
     return this.http.get(this.API_URL + '/schedules');
   }
 
-// no pagination
+  // no pagination
   getClasses() {
     return this.http.get(this.API_URL + '/class');
   }
 
+  findClasses(
+    courseId: number, filter = '', sortOrder = 'asc',
+    pageNumber = 0, pageSize = 3): Observable<ScheduleEvent[]> {
+
+    return this.http.get('/api/lessons', {
+      params: new HttpParams()
+        .set('courseId', courseId.toString())
+        .set('filter', filter)
+        .set('sortOrder', sortOrder)
+        .set('pageNumber', pageNumber.toString())
+        .set('pageSize', pageSize.toString())
+    }).pipe(
+      map(res => res["payload"])
+      );
+  }
   // no pagination
   getEvents() {
     return this.http.get(this.API_URL + '/events');
@@ -98,7 +113,7 @@ export class APIService {
   createSchedule(schedule) {
     return this.http.post(this.API_URL + '/schedules', schedule)
       .pipe(
-        catchError(this.handleError<any>('createSchedule'))
+      catchError(this.handleError<any>('createSchedule'))
       );
   }
 

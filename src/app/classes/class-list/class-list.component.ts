@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ScheduleEvent } from '../../models/scheduleEvent';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatTable } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 
 import { APIService } from '../../services/api.service';
@@ -16,9 +16,13 @@ const allowMultiSelect = true;
 })
 export class ClassListComponent {
 
-  displayedColumns = ['start', 'end', 'completed', 'teacher', 'school', 'select'];
-  dataSource: MatTableDataSource<ScheduleEvent>;
+  displayedColumns = ['start', 'end', 'completed', 'teacher', 'school', 'delete'];
+  //dataSource: MatTableDataSource<ScheduleEvent>;
+  dataSource = new MatTableDataSource<ScheduleEvent>();
   selection = new SelectionModel<ScheduleEvent>(allowMultiSelect, initialSelection);
+  exampleDatabase: APIService | null;
+  index: number;
+  id: number;
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -26,6 +30,10 @@ export class ClassListComponent {
 
   constructor(private apiService: APIService) {
     this.apiService.getClasses().subscribe(data => { this.buildTable(data as ScheduleEvent[]); });
+  }
+
+  refresh() {
+    this.paginator._changePageSize(this.paginator.pageSize);
   }
 
 
@@ -48,25 +56,13 @@ export class ClassListComponent {
     this.dataSource.filter = filterValue;
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected == numRows;
+  deleteRow(i: number, id: number): void {
+    this.index = i;
+    this.id = id;
+    // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+    this.apiService.deleteSchedule(id).subscribe();
+    // this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
+    this.refresh();
   }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  checkDelete() {
-    console.log(this.selection.selected.forEach(row => console.log(row)));
-    this.selection.clear();
-  }
-
-
 
 }
