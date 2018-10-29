@@ -1,12 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { ScheduleEvent } from '../../models/scheduleEvent';
-import { MatPaginator, MatSort, MatTableDataSource, MatTable } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
-
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { ClassesDataSource } from '../../services/classes.data.source';
 import { APIService } from '../../services/api.service';
+import { HttpClient } from '@angular/common/http';
+import { fromEvent } from 'rxjs';
 
-const initialSelection = [];
-const allowMultiSelect = true;
 
 
 @Component({
@@ -14,33 +13,51 @@ const allowMultiSelect = true;
   templateUrl: './class-list.component.html',
   styleUrls: ['./class-list.component.css']
 })
-export class ClassListComponent {
+export class ClassListComponent implements OnInit {
 
   displayedColumns = ['start', 'end', 'completed', 'teacher', 'school', 'delete'];
-  //dataSource: MatTableDataSource<ScheduleEvent>;
-  dataSource = new MatTableDataSource<ScheduleEvent>();
-  selection = new SelectionModel<ScheduleEvent>(allowMultiSelect, initialSelection);
-  exampleDatabase: APIService | null;
+  apiDatabase: APIService | null;
+  dataSource: ClassesDataSource | null;
   index: number;
   id: number;
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('filter') filter: ElementRef;
 
-  constructor(private apiService: APIService) {
-    this.apiService.getClasses().subscribe(data => { this.buildTable(data as ScheduleEvent[]); });
+  constructor(private apiService: APIService, private http: HttpClient) {
+    //this.apiService.getClasses().subscribe(data => { this.buildTable(data as ScheduleEvent[]); });
   }
 
   refresh() {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
 
+  public loadData() {
+    this.apiDatabase = new APIService(this.http);
+    this.dataSource = new ClassesDataSource(this.apiDatabase, this.paginator, this.sort);
+    fromEvent(this.filter.nativeElement, 'keyup')
+      // .debounceTime(150)
+      // .distinctUntilChanged()
+      .subscribe(() => {
+        if (!this.dataSource) {
+          return;
+        }
+        this.dataSource.filter = this.filter.nativeElement.value;
+      });
+  }
+
+  ngOnInit() {
+      this.loadData();
+    }
+
+
 
   buildTable(data) {
-    this.dataSource = new MatTableDataSource(data);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    //this.dataSource = new MatTableDataSource(data);
+    //this.dataSource.paginator = this.paginator;
+    //this.dataSource.sort = this.sort;
   }
 
   /**
@@ -59,10 +76,17 @@ export class ClassListComponent {
   deleteRow(i: number, id: number): void {
     this.index = i;
     this.id = id;
-    // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-    this.apiService.deleteSchedule(id).subscribe();
-    // this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
-    this.refresh();
+    const foundIndex = this.apiDatabase.dataChange.value.findIndex(x => x.id === this.id);
+    // for delete we use splice in order to remove single object from DataService
+    this.apiDatabase.dataChange.value.splice(foundIndex, 1);
+    this.apiService.deleteSchedule(this.id)
+      .subscribe();
+    this.refreshTable();
   }
+  private refreshTable() {
+    this.paginator._changePageSize(this.paginator.pageSize);
+  }
+
+
 
 }

@@ -8,7 +8,7 @@ import { ScheduleEvent } from '../models/scheduleEvent';
 import { Page } from '../models/page';
 import { queryPaginated } from '../models/queryPaginated';
 import { environment } from '../../environments/environment';
-
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,13 @@ import { environment } from '../../environments/environment';
 export class APIService {
 
   API_URL = environment.apiEndpoint;
+  dataChange: BehaviorSubject<ScheduleEvent[]> = new BehaviorSubject<ScheduleEvent[]>([]);
 
   constructor(private http: HttpClient) {
+  }
+
+  get data(): ScheduleEvent[] {
+    return this.dataChange.value;
   }
 
   // teachers
