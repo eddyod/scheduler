@@ -1,9 +1,9 @@
-import { CollectionViewer, DataSource } from "@angular/cdk/collections";
+import { DataSource } from "@angular/cdk/collections";
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { APIService } from './api.service';
 import { BehaviorSubject, merge } from 'rxjs';
-import { Observable, of } from 'rxjs';
-import { catchError, finalize, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MatPaginator, MatSort } from '@angular/material';
 
 
@@ -46,8 +46,8 @@ export class ClassesDataSource extends DataSource<ScheduleEvent> {
 
     return merge(...displayDataChanges).pipe(map(() => {
       // Filter data
-      this.filteredData = this._apiDatabase.data.slice().filter((issue: ScheduleEvent) => {
-        const searchStr = (issue.id + issue.title + issue.createdOn).toLowerCase();
+      this.filteredData = this._apiDatabase.data.slice().filter((schedule: ScheduleEvent) => {
+        const searchStr = (schedule.teacher.name + schedule.school.name).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });
 
@@ -72,12 +72,12 @@ export class ClassesDataSource extends DataSource<ScheduleEvent> {
     }
 
     return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
+      let propertyA: Date | string;
+      let propertyB: Date | string;
 
       switch (this._sort.active) {
-        case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
-        case 'title': [propertyA, propertyB] = [a.title, b.title]; break;
+        case 'start': [propertyA, propertyB] = [a.start, b.start]; break;
+        case 'end': [propertyA, propertyB] = [a.end, b.end]; break;
         case 'createdOn': [propertyA, propertyB] = [a.createdOn, b.createdOn]; break;
       }
 

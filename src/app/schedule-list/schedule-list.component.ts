@@ -26,6 +26,7 @@ export class ScheduleListComponent {
 
 
   constructor(private router: Router, private apiService: APIService) {
+
     this.filterForm = new FormGroup({
       school_id: new FormControl(),
       teacher_id: new FormControl()
@@ -68,7 +69,6 @@ export class ScheduleListComponent {
       .subscribe(data => {
         this.schedules = this.schedules.filter(u => u !== schedule);
       });
-    this.router.navigate(['schedules']);
   }
 
 

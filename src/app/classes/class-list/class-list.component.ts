@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { ScheduleEvent } from '../../models/scheduleEvent';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
 import { ClassesDataSource } from '../../services/classes.data.source';
 import { APIService } from '../../services/api.service';
 import { HttpClient } from '@angular/common/http';
@@ -27,7 +26,6 @@ export class ClassListComponent implements OnInit {
   @ViewChild('filter') filter: ElementRef;
 
   constructor(private apiService: APIService, private http: HttpClient) {
-    //this.apiService.getClasses().subscribe(data => { this.buildTable(data as ScheduleEvent[]); });
   }
 
   refresh() {
@@ -38,8 +36,8 @@ export class ClassListComponent implements OnInit {
     this.apiDatabase = new APIService(this.http);
     this.dataSource = new ClassesDataSource(this.apiDatabase, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')
-      // .debounceTime(150)
-      // .distinctUntilChanged()
+    //  .debounceTime(150)
+    //  .distinctUntilChanged()
       .subscribe(() => {
         if (!this.dataSource) {
           return;
@@ -51,14 +49,6 @@ export class ClassListComponent implements OnInit {
   ngOnInit() {
       this.loadData();
     }
-
-
-
-  buildTable(data) {
-    //this.dataSource = new MatTableDataSource(data);
-    //this.dataSource.paginator = this.paginator;
-    //this.dataSource.sort = this.sort;
-  }
 
   /**
    * Set the paginator and sort after the view init since this component will
