@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Teacher } from '../models/teacher';
@@ -89,6 +89,16 @@ export class APIService {
   getSchedules() {
     return this.http.get(this.API_URL + '/schedules');
   }
+
+  getAllClasses(): void {
+    this.http.get<ScheduleEvent[]>(this.API_URL + '/class').subscribe(data => {
+        this.dataChange.next(data);
+      },
+      (error: HttpErrorResponse) => {
+      console.log (error.name + ' ' + error.message);
+      });
+  }
+
 
   // no pagination
   getClasses() {
