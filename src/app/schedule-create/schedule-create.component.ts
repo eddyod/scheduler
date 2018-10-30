@@ -53,7 +53,7 @@ export class ScheduleCreateComponent implements OnInit {
     this.addForm.value.end = moment(this.addForm.value.end).format("YYYY-MM-DD[T]HH:mm");
     this.apiService.createSchedule(this.addForm.value)
       .subscribe(data => {
-        this.router.navigate(['schedules']);
+        this.router.navigate(['classes']);
       },
         error => {
           alert(error);

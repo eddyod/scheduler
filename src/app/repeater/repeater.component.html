@@ -85,6 +85,7 @@
   <div class="col-md-10">
     <form>
       <button class="btn btn-sm btn-primary" (click)="onSave()">Submit</button>
+      <button class="btn btn-sm btn-info" (click)="onReset(); addForm.reset()" style="margin-left:25px;">Reset</button>
     </form>
 
   </div>
@@ -92,6 +93,9 @@
 <div *ngIf="displayStatus" class="row">
   <div class="col-md-10">
     <h2>Inserted {{insertCount}} classes</h2>
+    <form>
+      <button class="btn btn-sm btn-info" (click)="onReset(); addForm.reset()" style="margin-left:25px;">Reset</button>
+    </form>
 
   </div>
 </div>

@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatPaginator, MatSort } from '@angular/material';
 import { ClassesDataSource } from '../../services/classes.data.source';
+import { ScheduleEvent } from '../../models/scheduleEvent';
 import { APIService } from '../../services/api.service';
 import { HttpClient } from '@angular/common/http';
 import { fromEvent } from 'rxjs';
@@ -14,7 +16,7 @@ import { fromEvent } from 'rxjs';
 })
 export class ClassListComponent implements OnInit {
 
-  displayedColumns = ['start', 'end', 'completed', 'teacher', 'school', 'delete'];
+  displayedColumns = ['start', 'end', 'teacher', 'school', 'completed', 'actions'];
   apiDatabase: APIService | null;
   dataSource: ClassesDataSource | null;
   index: number;
@@ -25,7 +27,9 @@ export class ClassListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('filter') filter: ElementRef;
 
-  constructor(private apiService: APIService, private http: HttpClient) {
+  constructor(private apiService: APIService,
+    private http: HttpClient,
+    private router: Router) {
   }
 
   refresh() {
@@ -36,25 +40,27 @@ export class ClassListComponent implements OnInit {
     this.apiDatabase = new APIService(this.http);
     this.dataSource = new ClassesDataSource(this.apiDatabase, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')
-    //  .debounceTime(150)
-    //  .distinctUntilChanged()
       .subscribe(() => {
         if (!this.dataSource) {
           return;
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
+
   }
 
-  ngOnInit() {
-      this.loadData();
-    }
 
-  /**
-   * Set the paginator and sort after the view init since this component will
-   * be able to query its view for the initialized paginator and sort.
-   */
-  ngAfterViewInit() {
+  ngOnInit() {
+    this.loadData();
+  }
+
+
+  editSchedule(schedule: ScheduleEvent): void {
+    localStorage.removeItem('id');
+    localStorage.setItem('id', schedule.id.toString());
+    localStorage.setItem('school_id', schedule.school.id.toString());
+    localStorage.setItem('teacher_id', schedule.teacher.id.toString());
+    this.router.navigate(['update-schedule']);
   }
 
   applyFilter(filterValue: string) {

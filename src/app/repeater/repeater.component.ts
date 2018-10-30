@@ -146,5 +146,11 @@ export class RepeaterComponent implements OnInit {
     this.displayCheck = false;
   }
 
+  onReset() {
+    this.displayCheck = false;
+    this.displayStatus = false;
+    this.scheduleForms = [];
+  }
+
 
 }

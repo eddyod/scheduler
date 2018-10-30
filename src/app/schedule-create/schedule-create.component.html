@@ -25,8 +25,21 @@
     <div class="form-group">
       <label for="idTeacher">Teacher</label>
       <select formControlName="teacher_id" class="form-control" id="idTeacher" name="teacher_id" required>
-                <option *ngFor="let teacher of teachers" [value]="teacher.id">{{teacher.name}}</option>
-      </select>
+                    <option *ngFor="let teacher of teachers" [value]="teacher.id">{{teacher.name}}</option>
+          </select>
+    </div>
+
+    <div class="form-group" *ngIf="!displayButton">
+      <label>Teacher showed up? </label>
+          <label class="md-check">
+            <input type="radio" [value]="true" name="completed" formControlName="completed">
+            Yes
+          </label>
+
+          <label class="md-check">
+            <input type="radio" [value]="false" name="completed" formControlName="completed">
+             No
+          </label>
     </div>
 
     <button class="btn btn-sm btn-primary" [disabled]='addForm.invalid' *ngIf="displayButton" (click)="onSave()">Save</button>
