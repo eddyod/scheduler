@@ -1,58 +1,51 @@
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
+<mat-sidenav-container fullscreen>
 
-    <ul class="nav navbar-nav" *ngIf="authService.token">
-      <li><a routerLink="/login">Login Info</a></li>
-      <li><a routerLink="/teachers">Teachers</a></li>
-      <li><a routerLink="/schools">Schools</a></li>
-      <li><a routerLink="/mycal">Calendar</a></li>
-      <li><a routerLink="/chart">Chart</a></li>
+  <mat-sidenav #sidenav (keydown.escape)="close('escape')">
 
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Schedules <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a routerLink="/classes">List</a></li>
-          <li><a routerLink="/create-schedule">Create Single Class</a></li>
-          <li><a routerLink="/repeater">Create Repeating Classes</a></li>
-        </ul>
-      </li>
-    </ul>
+    <mat-nav-list *ngIf="authService.token">
 
-    <ul class="nav navbar-nav" *ngIf="!authService.token">
-      <li><a href="#">Login</a></li>
-      <li><a href="#" [class.disabled]="!authService.token">Teachers</a></li>
-      <li><a href="#" [class.disabled]="!authService.token">Schools</a></li>
-      <li><a href="#" [class.disabled]="!authService.token">Calendar</a></li>
-      <li><a href="#" [class.disabled]="!authService.token">Chart</a></li>
+      <a mat-list-item routerLink="/login" (click)="sidenav.close()">Login Info</a>
+      <a mat-list-item routerLink="/teachers" (click)="sidenav.close()">Teachers</a>
+      <a mat-list-item routerLink="/schools" (click)="sidenav.close()">Schools</a>
+      <a mat-list-item routerLink="/mycal" (click)="sidenav.close()">Calendar</a>
+      <a mat-list-item routerLink="/chart" (click)="sidenav.close()">Chart</a>
 
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Schedules <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#" [class.disabled]="!authService.token">List</a></li>
-          <li><a href="#" [class.disabled]="!authService.token">Create Single Class</a></li>
-          <li><a href="#" [class.disabled]="!authService.token">Create Repeating Classes</a></li>
-        </ul>
-      </li>
-    </ul>
+      <a mat-list-item routerLink="/classes" (click)="sidenav.close()">Classes</a>
+      <a mat-list-item routerLink="/create-schedule" (click)="sidenav.close()">Create Single Class</a>
+      <a mat-list-item routerLink="/repeater" (click)="sidenav.close()">Create Repeating Classes</a>
 
-  </div>
-</nav>
+    </mat-nav-list>
 
-<div class="container">
-  <div class="jumbotron">
-    <a class="navbar-item">
-          <img alt="Premier English" src="assets/img/logo.png">
-        </a>
-  </div>
+    <mat-nav-list *ngIf="!authService.token">
+
+      <a mat-list-item routerLink="/login" (click)="sidenav.close()">Login</a>
+
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="sidenav.open('mouse')">
+            <mat-icon>menu</mat-icon>
+        </button>
+  </mat-toolbar>
 
 
+  <div class="container">
+    <div class="jumbotron">
+      <a class="navbar-item">
+            <img alt="Premier English" src="assets/img/logo.png">
+          </a>
+    </div>
 
-
-
-  <div class="panel panel-primary">
-    <div class="panel-heading">Teacher Scheduler</div>
-    <div class="panel-body">
-      <router-outlet></router-outlet>
+    <div class="panel panel-primary">
+      <div class="panel-heading">Class Scheduler</div>
+      <div class="panel-body">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
-</div>
+
+
+
+</mat-sidenav-container>

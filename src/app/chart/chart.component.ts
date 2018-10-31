@@ -2,12 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { APIService } from '../services/api.service';
 import { Chart } from 'angular-highcharts';
-import * as moment from 'moment';
-
-import {
-  FormGroup, FormBuilder, Validators,FormArray,
-} from '@angular/forms';
-
 
 
 @Component({
@@ -19,38 +13,85 @@ export class ChartComponent implements OnInit {
 
   public teachers: Array<object> = [];
   public chart: Chart;
-  addForm: FormGroup;
-  class_month: number;
-  class_year: number;
+  private month: number;
+  private year: number;
+  public monthDisplay: string;
 
 
-  constructor(private apiService: APIService,
-    private formBuilder: FormBuilder,
+  constructor(private apiService: APIService
   ) { }
 
 
   ngOnInit() {
-    this.addForm = this.formBuilder.group({
-      class_month: ['', Validators.required],
-      class_year: ['', Validators.required],
-    });
+    let now = new Date();
+    this.year = now.getFullYear();
+    this.month = now.getMonth() + 1;
+    this.monthDisplay = this.convertMonth(this.month);
     const params = new HttpParams()
-      .set('m', '10')
-      .set('y', '2018');
+      .set('m', this.month.toString())
+      .set('y', this.year.toString());
     this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]) });
 
   }
 
-  refreshChart() {
+  refreshChart(month, year) {
     let params = new HttpParams()
-    .set('m', this.addForm.value.class_month)
-    .set('y', this.addForm.value.class_year);
+      .set('m', month)
+      .set('y', year);
     this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]) });
+  }
+
+  prevChart() {
+    if (this.month == 1) {
+      this.month = 12;
+      this.year--;
+    } else {
+      this.month--;
+    }
+
+    this.monthDisplay = this.convertMonth(this.month);
+    this.refreshChart(this.month, this.year);
+  }
+
+  nowChart() {
+    let now = new Date();
+    this.month = now.getMonth() + 1;
+    this.monthDisplay = this.convertMonth(this.month);
+    this.year = now.getFullYear();
+    this.refreshChart(this.month, this.year);
+  }
+
+  nextChart() {
+    if (this.month == 12) {
+      this.year++;
+      this.month = 1;
+    } else {
+      this.month++;
+    }
+
+    this.monthDisplay = this.convertMonth(this.month);
+    this.refreshChart(this.month, this.year);
+  }
+
+  private convertMonth(m): string {
+    let month = new Array();
+    month[1] = "January";
+    month[2] = "February";
+    month[3] = "March";
+    month[4] = "April";
+    month[5] = "May";
+    month[6] = "June";
+    month[7] = "July";
+    month[8] = "August";
+    month[9] = "September";
+    month[10] = "October";
+    month[11] = "November";
+    month[12] = "December";
+    return month[m];
   }
 
 
   buildChart(data) {
-    console.log(data);
     let names = [];
     let shows = [];
     let noshows = []
@@ -112,12 +153,6 @@ export class ChartComponent implements OnInit {
       ]
     });
   }
-
-
-  add() {
-    console.log(this.teachers);
-  }
-
 
 
 }

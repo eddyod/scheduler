@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 import { ClassesDataSource } from '../../services/classes.data.source';
 import { ScheduleEvent } from '../../models/scheduleEvent';
 import { APIService } from '../../services/api.service';
@@ -29,7 +29,8 @@ export class ClassListComponent implements OnInit {
 
   constructor(private apiService: APIService,
     private http: HttpClient,
-    private router: Router) {
+    private router: Router,
+    private snackBar: MatSnackBar) {
   }
 
   refresh() {
@@ -69,6 +70,22 @@ export class ClassListComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
+  updateCompleted(schedule: ScheduleEvent): void {
+    if (schedule.completed) {
+      schedule.completed = false;
+    } else {
+      schedule.completed = true;
+    }
+    schedule.teacher_id = schedule.teacher.id;
+    schedule.school_id = schedule.school.id;
+    this.apiService.updateSchedule(schedule).subscribe();
+    this.refreshTable();
+    this.snackBar.open('Class updated.', schedule.teacher.name + ' at ' + schedule.school.name, {
+      duration: 1000
+    });
+
+  }
+
   deleteRow(i: number, id: number): void {
     this.index = i;
     this.id = id;
@@ -78,7 +95,17 @@ export class ClassListComponent implements OnInit {
     this.apiService.deleteSchedule(this.id)
       .subscribe();
     this.refreshTable();
+    this.snackBar.open('Class deleted.', '', {
+      duration: 2000
+    });
   }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
