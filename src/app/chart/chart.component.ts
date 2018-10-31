@@ -14,7 +14,7 @@ export class ChartComponent implements OnInit {
   public teachers: Array<object> = [];
   public chart: Chart;
   private month: number;
-  private year: number;
+  public year: number;
   public monthDisplay: string;
 
 
