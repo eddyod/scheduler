@@ -105,17 +105,13 @@ export class APIService {
     return this.http.get(this.API_URL + '/class');
   }
 
-  findClasses(
-    courseId: number, filter = '', sortOrder = 'asc',
-    pageNumber = 0, pageSize = 3): Observable<ScheduleEvent[]> {
+  findTeachers(
+    filter = '',  limit = 20, offset = 0): Observable<Teacher[]> {
 
-    return this.http.get('/api/lessons', {
+    return this.http.get(this.API_URL + '/list-teachers', {
       params: new HttpParams()
-        .set('courseId', courseId.toString())
-        .set('filter', filter)
-        .set('sortOrder', sortOrder)
-        .set('pageNumber', pageNumber.toString())
-        .set('pageSize', pageSize.toString())
+        .set('limit', limit.toString())
+        .set('offset', offset.toString())
     }).pipe(
       map(res => res['payload'])
       );

@@ -29,7 +29,7 @@ import { InterceptService } from './services/intercept.service';
 import { ChartModule } from 'angular-highcharts';
 import { ChartComponent } from './chart/chart.component';
 import { MaterialModule } from './shared/material.module';
-import { SmlistComponent } from './schedule-list/smlist.component';
+import { TeachersComponent } from './teacher-list/teachers.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,7 @@ import { SmlistComponent } from './schedule-list/smlist.component';
     RepeaterComponent,
     LoginComponent,
     ChartComponent,
-    SmlistComponent,
+    TeachersComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,33 @@
+<mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
+
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+    <mat-cell *matCellDef="let teacher">{{teacher.id}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="phone">
+    <mat-header-cell *matHeaderCellDef>Phone</mat-header-cell>
+    <mat-cell class="description-cell" *matCellDef="let teacher">{{teacher.phone}}</mat-cell>
+
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+    <mat-cell class="duration-cell" *matCellDef="let teacher">{{teacher.email}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="address1">
+    <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+    <mat-cell class="duration-cell" *matCellDef="let teacher">{{teacher.address1}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="isActive">
+    <mat-header-cell *matHeaderCellDef>Active</mat-header-cell>
+    <mat-cell class="duration-cell" *matCellDef="let teacher">{{teacher.isActive}}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
