@@ -16,7 +16,7 @@ import { Page } from '../models/page';
 export class TeacherListComponent {
 
   filterForm: FormGroup;
-  page: Observable<Page<Teacher>>
+  page: Observable<Page<Teacher>>;
   pageUrl = new Subject<string>();
 
 

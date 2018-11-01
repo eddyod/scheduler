@@ -34,7 +34,7 @@ export class TeacherCreateComponent implements OnInit {
       isActive: ['', Validators.required]
     });
 
-    let id = localStorage.getItem('id');
+    const id = localStorage.getItem('id');
     if (+id > 0) {
       this.apiService.getTeacherById(+id).subscribe(data => {
         this.addForm.patchValue(data);

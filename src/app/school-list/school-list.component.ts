@@ -18,7 +18,7 @@ export class SchoolListComponent {
 
   public schools: Array<object> = [];
   filterForm: FormGroup;
-  page: Observable<Page<School>>
+  page: Observable<Page<School>>;
   pageUrl = new Subject<string>();
 
 

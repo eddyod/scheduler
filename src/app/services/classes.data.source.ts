@@ -1,9 +1,9 @@
-import { DataSource } from "@angular/cdk/collections";
+import { DataSource } from '@angular/cdk/collections';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { APIService } from './api.service';
 import { BehaviorSubject, merge } from 'rxjs';
 import { Observable } from 'rxjs';
-import { map, finalize } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { MatPaginator, MatSort } from '@angular/material';
 
 
@@ -27,7 +27,7 @@ export class ClassesDataSource extends DataSource<ScheduleEvent> {
     public _paginator: MatPaginator,
     public _sort: MatSort) {
     super();
-    //this.loadingSubject.next(true);
+    // this.loadingSubject.next(true);
     // Reset to the first page when the user changes the filter.
     this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
   }

@@ -11,18 +11,11 @@ import {
   endOfDay,
   format,
 } from 'date-fns';
-import { Subject } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView
-} from 'angular-calendar';
+import { CalendarView } from 'angular-calendar';
 
 import { ScheduleEvent } from '../models/scheduleEvent';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
@@ -92,7 +85,7 @@ export class MycalComponent implements OnInit {
 
     this.events$ = this.http
       .get(this.API_URL, {params})
-      //.pipe(map((results: ScheduleEvent[]) => {
+      // .pipe(map((results: ScheduleEvent[]) => {
       .pipe(
       map(({ results }: { results: ScheduleEvent[] }) => {
         return results.map((scheduleEvent: ScheduleEvent) => {
@@ -121,14 +114,14 @@ export class MycalComponent implements OnInit {
   }
 
   toUTCDate = function(date) {
-    var _utc = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes());
+    const _utc = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes());
     return _utc;
   };
 
   toUTCString = function(date) {
-    var d = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes());
-    var datestring = ("0" + d.getDate()).slice(-2) + "/" + ("0"+(d.getMonth()+1)).slice(-2) + "/" +
-      d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+    const d = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes());
+    const datestring = ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2) + '/' +
+      d.getFullYear() + ' ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
     return datestring;
   };
 

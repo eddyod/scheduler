@@ -117,7 +117,7 @@ export class APIService {
         .set('pageNumber', pageNumber.toString())
         .set('pageSize', pageSize.toString())
     }).pipe(
-      map(res => res["payload"])
+      map(res => res['payload'])
       );
   }
   // no pagination

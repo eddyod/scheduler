@@ -3,6 +3,22 @@ import { HttpParams } from '@angular/common/http';
 import { APIService } from '../services/api.service';
 import { Chart } from 'angular-highcharts';
 
+const month = new Array();
+month[1] = 'January';
+month[2] = 'February';
+month[3] = 'March';
+month[4] = 'April';
+month[5] = 'May';
+month[6] = 'June';
+month[7] = 'July';
+month[8] = 'August';
+month[9] = 'September';
+month[10] = 'October';
+month[11] = 'November';
+month[12] = 'December';
+
+const now = new Date();
+
 
 @Component({
   selector: 'app-chart',
@@ -23,26 +39,25 @@ export class ChartComponent implements OnInit {
 
 
   ngOnInit() {
-    let now = new Date();
     this.year = now.getFullYear();
     this.month = now.getMonth() + 1;
     this.monthDisplay = this.convertMonth(this.month);
     const params = new HttpParams()
       .set('m', this.month.toString())
       .set('y', this.year.toString());
-    this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]) });
+    this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]); });
 
   }
 
-  refreshChart(month, year) {
-    let params = new HttpParams()
-      .set('m', month)
+  refreshChart(m, year) {
+    const params = new HttpParams()
+      .set('m', m)
       .set('y', year);
-    this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]) });
+    this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]); });
   }
 
   prevChart() {
-    if (this.month == 1) {
+    if (this.month === 1) {
       this.month = 12;
       this.year--;
     } else {
@@ -54,7 +69,6 @@ export class ChartComponent implements OnInit {
   }
 
   nowChart() {
-    let now = new Date();
     this.month = now.getMonth() + 1;
     this.monthDisplay = this.convertMonth(this.month);
     this.year = now.getFullYear();
@@ -62,7 +76,7 @@ export class ChartComponent implements OnInit {
   }
 
   nextChart() {
-    if (this.month == 12) {
+    if (this.month === 12) {
       this.year++;
       this.month = 1;
     } else {
@@ -74,27 +88,14 @@ export class ChartComponent implements OnInit {
   }
 
   private convertMonth(m): string {
-    let month = new Array();
-    month[1] = "January";
-    month[2] = "February";
-    month[3] = "March";
-    month[4] = "April";
-    month[5] = "May";
-    month[6] = "June";
-    month[7] = "July";
-    month[8] = "August";
-    month[9] = "September";
-    month[10] = "October";
-    month[11] = "November";
-    month[12] = "December";
     return month[m];
   }
 
 
   buildChart(data) {
-    let names = [];
-    let shows = [];
-    let noshows = []
+    const names = [];
+    const shows = [];
+    const noshows = [];
     data.forEach(teacher => {
       names.push(teacher.teacher);
       shows.push(teacher.showed_up);

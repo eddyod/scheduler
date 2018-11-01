@@ -36,7 +36,7 @@ export class RepeaterComponent implements OnInit {
     { id: RRule.TH, name: 'Thu' },
     { id: RRule.FR, name: 'Fri' },
     { id: RRule.SA, name: 'Sat' },
-  ]
+  ];
 
   public scheduleForms: Array<Schedule> = [];
   scheduleFormLabel = 'Create Classes';
@@ -53,8 +53,7 @@ export class RepeaterComponent implements OnInit {
 
   constructor(
     private apiService: APIService,
-    private formBuilder: FormBuilder,
-    private router: Router) {
+    private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -103,32 +102,32 @@ export class RepeaterComponent implements OnInit {
       .map((v, i) => v ? this.byweekdays[i].id : null)
       .filter(v => v !== null);
     this.scheduleForms = [];
-    //let rule = RRuleSet.fromText(this.addForm.value.rruleText);
+    // let rule = RRuleSet.fromText(this.addForm.value.rruleText);
     this.startDate = new Date(this.addForm.value.start + timezoneOffsetString);
     this.endDate = new Date(this.addForm.value.end + timezoneOffsetString);
-    let rule =
+    const rule =
       new RRule({
         freq: RRule.WEEKLY,
         dtstart: this.startDate,
         until: this.endDate,
         byweekday: selectedOrderIds
-      })
+      });
     // Add a rrule to rruleSet
     this.rules = rule.all();
 
-    rule.all().forEach(rule => {
-      this.startString = moment(rule).format("YYYY-MM-DD[T]HH:mm");
-      let tStart = moment(this.startString);
-      let tEnd = moment(tStart).add(this.addForm.value.duration, 'hours');
+    rule.all().forEach(r => {
+      this.startString = moment(r).format('YYYY-MM-DD[T]HH:mm');
+      const tStart = moment(this.startString);
+      const tEnd = moment(tStart).add(this.addForm.value.duration, 'hours');
 
-      let event: Schedule = {
-        start: this.startString, end: tEnd.format("YYYY-MM-DD[T]HH:mm"),
+      const event: Schedule = {
+        start: this.startString, end: tEnd.format('YYYY-MM-DD[T]HH:mm'),
         school_id: this.addForm.value.school_id,
         teacher_id: this.addForm.value.teacher_id,
-        createdBy: parseInt(localStorage.getItem('user_id')),
+        createdBy: parseInt(localStorage.getItem('user_id'), 10),
       };
       this.scheduleForms.push(event);
-    })
+    });
   }
 
   onSave() {

@@ -5,12 +5,12 @@ import {
   HttpHandler,
   HttpRequest,
   HttpResponse
-} from '@angular/common/http'
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 
-@Injectable()//{providedIn: 'root'}
+@Injectable()
 
 export class InterceptService implements HttpInterceptor {
 
@@ -32,15 +32,14 @@ export class InterceptService implements HttpInterceptor {
           if (event instanceof HttpResponse) {}
         }, error => {
           // http response status code
-          console.error("Error status code:");
+          console.error('Error status code:');
           console.error(error.status);
           console.error(error.message);
-          console.log("--- end of response---");
+          console.log('--- end of response---');
 
         })
-      )
-
-  };
+      );
+  }
 
 
 }
