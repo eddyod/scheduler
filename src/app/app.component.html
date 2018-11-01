@@ -4,21 +4,21 @@
 
     <mat-nav-list *ngIf="authService.token">
 
-      <a mat-list-item routerLink="/login" (click)="sidenav.close()">Login Info</a>
-      <a mat-list-item routerLink="/teachers" (click)="sidenav.close()">Teachers</a>
-      <a mat-list-item routerLink="/schools" (click)="sidenav.close()">Schools</a>
-      <a mat-list-item routerLink="/mycal" (click)="sidenav.close()">Calendar</a>
-      <a mat-list-item routerLink="/chart" (click)="sidenav.close()">Chart</a>
+      <a mat-list-item routerLink="/login" (click)="sidenav.close()"><mat-icon>account_circle</mat-icon>Login Info</a>
+      <a mat-list-item routerLink="/teachers" (click)="sidenav.close()"><mat-icon>person</mat-icon>Teachers</a>
+      <a mat-list-item routerLink="/schools" (click)="sidenav.close()"><mat-icon>school</mat-icon>Schools</a>
+      <a mat-list-item routerLink="/mycal" (click)="sidenav.close()"><mat-icon>date_range</mat-icon>Calendar</a>
+      <a mat-list-item routerLink="/chart" (click)="sidenav.close()"><mat-icon>bar_chart</mat-icon>Chart</a>
 
-      <a mat-list-item routerLink="/classes" (click)="sidenav.close()">Classes</a>
-      <a mat-list-item routerLink="/create-schedule" (click)="sidenav.close()">Create Single Class</a>
-      <a mat-list-item routerLink="/repeater" (click)="sidenav.close()">Create Repeating Classes</a>
+      <a mat-list-item routerLink="/classes" (click)="sidenav.close()"><mat-icon>class</mat-icon>Classes</a>
+      <a mat-list-item routerLink="/create-schedule" (click)="sidenav.close()"><mat-icon>event</mat-icon>Create Single Class</a>
+      <a mat-list-item routerLink="/repeater" (click)="sidenav.close()"><mat-icon>repeat</mat-icon>Create Repeating Classes</a>
 
     </mat-nav-list>
 
     <mat-nav-list *ngIf="!authService.token">
 
-      <a mat-list-item routerLink="/login" (click)="sidenav.close()">Login</a>
+      <a mat-list-item routerLink="/login" (click)="sidenav.close()"><mat-icon>account_circle</mat-icon>Login</a>
 
     </mat-nav-list>
 
