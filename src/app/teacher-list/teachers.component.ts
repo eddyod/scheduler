@@ -1,11 +1,13 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { MatPaginator, MatSort } from '@angular/material';
 import { fromEvent } from 'rxjs';
 import { APIService } from '../services/api.service';
 import { TeacherDataSource } from '../services/teacher.datasource';
 import { Teacher } from '../models/teacher';
 import { merge } from 'rxjs';
-import { tap, map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
@@ -17,19 +19,17 @@ export class TeachersComponent implements OnInit {
 
   teacher: Teacher;
   dataSource: TeacherDataSource;
-  displayedColumns = ['id', 'phone', 'email', 'address1', 'isActive'];
+  displayedColumns = ['name', 'phone', 'email', 'address1', 'isActive', 'actions'];
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
   @ViewChild(MatSort) sort: MatSort;
-
   @ViewChild('input') input: ElementRef;
 
-
-  constructor(private apiService: APIService) { }
+  constructor(private apiService: APIService, private router: Router) { }
 
   ngOnInit() {
     this.dataSource = new TeacherDataSource(this.apiService);
-    this.dataSource.loadTeachers('', 20, 0);
+    this.dataSource.loadTeachers('', 5, 0);
   }
 
   ngAfterViewInit() {
@@ -50,7 +50,7 @@ export class TeachersComponent implements OnInit {
       tap((count) => {
         this.paginator.length = count;
       })
-      )
+    ).subscribe();
 
     // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -61,9 +61,8 @@ export class TeachersComponent implements OnInit {
       tap(() => this.loadTeachersPage())
       )
       .subscribe();
+
   }
-
-
 
   loadTeachersPage() {
     this.dataSource.loadTeachers(
@@ -72,6 +71,19 @@ export class TeachersComponent implements OnInit {
       this.paginator.pageIndex
     );
   }
+
+
+    editTeacher(teacher: Teacher): void {
+      localStorage.removeItem('id');
+      localStorage.setItem('id', teacher.id.toString());
+      this.router.navigate(['create-teacher']);
+    }
+
+    addTeacher(): void {
+      localStorage.removeItem('id');
+      this.router.navigate(['create-teacher']);
+    }
+
 
 
 }

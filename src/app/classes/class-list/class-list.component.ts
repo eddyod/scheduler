@@ -33,7 +33,7 @@ export class ClassListComponent implements OnInit {
     private snackBar: MatSnackBar) {
   }
 
-  refresh() {
+  private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
 
@@ -105,11 +105,5 @@ export class ClassListComponent implements OnInit {
       duration: 2000,
     });
   }
-
-  private refreshTable() {
-    this.paginator._changePageSize(this.paginator.pageSize);
-  }
-
-
 
 }

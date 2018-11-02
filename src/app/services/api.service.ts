@@ -33,14 +33,14 @@ export class APIService {
   getTeachers(): Observable<Object[]> {
     return this.http.get<Object[]>(this.API_URL + '/teachers')
       .pipe(
-      catchError(this.handleError('getTeachers', []))
+        catchError(this.handleError('getTeachers', []))
       );
   }
 
   createTeacher(teacher) {
     return this.http.post(this.API_URL + '/teachers', teacher)
       .pipe(
-      catchError(this.handleError('createTeacher', []))
+        catchError(this.handleError('createTeacher', []))
       );
   }
 
@@ -105,26 +105,27 @@ export class APIService {
     return this.http.get(this.API_URL + '/class');
   }
 
-  findTeachers(filter, limit, offset) {
 
-      const params = new HttpParams()
-        .set('limit', limit.toString())
-        .set('offset', offset.toString());
+  findTeachers(filter = '', limit = 20, offset = 0) {
+    const params = new HttpParams()
+            .set('search', filter)
+            .set('limit', limit.toString())
+            .set('offset', offset.toString());
 
     return this.http.get(this.API_URL + '/list-teachers', {params});
   }
 
-  findTeachersXXX(
-    filter = '', limit = 20, offset = 0): Observable<Teacher[]> {
-
+  findTeachersXXX(nameFilter = '', limit = 20, offset = 0): Observable<Teacher[]> {
     return this.http.get(this.API_URL + '/list-teachers', {
       params: new HttpParams()
+        .set('name', nameFilter)
         .set('limit', limit.toString())
         .set('offset', offset.toString())
-    }).pipe(
-      map(res => res['payload'])
-      );
+      //      }).pipe(map(results => results['results'])
+    }).pipe(map(results => results['results'])
+    );
   }
+
   // no pagination
   getEvents() {
     return this.http.get(this.API_URL + '/events');
@@ -133,7 +134,7 @@ export class APIService {
   createSchedule(schedule) {
     return this.http.post(this.API_URL + '/schedules', schedule)
       .pipe(
-      catchError(this.handleError<any>('createSchedule'))
+        catchError(this.handleError<any>('createSchedule'))
       );
   }
 

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { TeacherListComponent } from './teacher-list/teacher-list.component';
 import { TeachersComponent } from './teacher-list/teachers.component';
 import { TeacherCreateComponent } from './teacher-create/teacher-create.component';
 import { SchoolListComponent } from './school-list/school-list.component';
@@ -19,12 +18,8 @@ import { AuthGuard } from './services/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
-    path: 'teachersx',
-    component: TeachersComponent,
-  },
-  {
     path: 'teachers',
-    component: TeacherListComponent,
+    component: TeachersComponent,
     canActivate: [AuthGuard]
   },
   {
