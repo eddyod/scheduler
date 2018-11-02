@@ -22,11 +22,11 @@ export class TeacherDataSource implements DataSource<Teacher> {
 
   }
 
-  loadTeachers(filter: string, limit: number, offset: number) {
+  loadTeachers(filter: string, ordering: string, limit: number, offset: number) {
 
     this.loadingSubject.next(true);
 
-    this.apiService.findTeachers(filter, limit, offset)
+    this.apiService.findTeachers(filter, ordering, limit, offset)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))

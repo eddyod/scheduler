@@ -29,7 +29,7 @@ export class TeachersComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new TeacherDataSource(this.apiService);
-    this.dataSource.loadTeachers('', 5, 0);
+    this.dataSource.loadTeachers('','name', 5, 0);
   }
 
   ngAfterViewInit() {
@@ -65,8 +65,16 @@ export class TeachersComponent implements OnInit {
   }
 
   loadTeachersPage() {
+    let sortName: string;
+    if (this.sort.direction === 'asc') {
+      sortName = this.sort.active;
+    } else {
+      sortName = '-' + this.sort.active;
+    }
+    console.log(this.sort.active);
     this.dataSource.loadTeachers(
       this.input.nativeElement.value,
+      sortName,
       this.paginator.pageSize,
       this.paginator.pageIndex
     );
