@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TeachersComponent } from './teacher-list/teachers.component';
 import { TeacherCreateComponent } from './teacher-create/teacher-create.component';
-import { SchoolListComponent } from './school-list/school-list.component';
+import { SchoolsComponent } from './school-list/schools.component';
 import { SchoolCreateComponent } from './school-create/school-create.component';
 import { ScheduleListComponent } from './schedule-list/schedule-list.component';
 import { ScheduleCreateComponent } from './schedule-create/schedule-create.component';
@@ -44,7 +44,7 @@ const routes: Routes = [
   },
   {
     path: 'schools',
-    component: SchoolListComponent,
+    component: SchoolsComponent,
     canActivate: [AuthGuard]
   },
   {

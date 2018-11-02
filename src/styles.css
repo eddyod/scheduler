@@ -8,3 +8,7 @@
 .jumbotron { margin:0; padding: 10px; }
 
 a.disabled { cursor: not-allowed; opacity: .75;}
+
+.spinner-container {
+  float:right;
+}

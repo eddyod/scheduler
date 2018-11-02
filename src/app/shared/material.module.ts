@@ -5,7 +5,6 @@ import {
   MatButtonToggleModule,
   MatCheckboxModule,
   MatToolbarModule,
-  MatTooltipModule,
   MatCardModule,
   MatChipsModule,
   MatDatepickerModule,
@@ -68,7 +67,6 @@ import { CdkTableModule } from '@angular/cdk/table';
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule,
     CdkTableModule
   ],
   exports: [
@@ -102,7 +100,6 @@ import { CdkTableModule } from '@angular/cdk/table';
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule,
     CdkTableModule
   ]
 })

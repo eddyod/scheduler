@@ -9,9 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TeacherListComponent } from './teacher-list/teacher-list.component';
 import { TeacherCreateComponent } from './teacher-create/teacher-create.component';
-import { SchoolListComponent } from './school-list/school-list.component';
+import { SchoolsComponent } from './school-list/schools.component';
 import { SchoolCreateComponent } from './school-create/school-create.component';
 import { ScheduleListComponent } from './schedule-list/schedule-list.component';
 import { ScheduleCreateComponent } from './schedule-create/schedule-create.component';
@@ -34,9 +33,9 @@ import { TeachersComponent } from './teacher-list/teachers.component';
 @NgModule({
   declarations: [
     AppComponent,
-    TeacherListComponent,
+    TeachersComponent,
     TeacherCreateComponent,
-    SchoolListComponent,
+    SchoolsComponent,
     SchoolCreateComponent,
     ScheduleListComponent,
     ScheduleCreateComponent,

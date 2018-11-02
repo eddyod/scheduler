@@ -116,16 +116,16 @@ export class APIService {
     return this.http.get(this.API_URL + '/list-teachers', {params});
   }
 
-  findTeachersXXX(nameFilter = '', ordering = '', limit = 20, offset = 0): Observable<Teacher[]> {
-    return this.http.get(this.API_URL + '/list-teachers', {
-      params: new HttpParams()
-        .set('name', nameFilter)
-        .set('limit', limit.toString())
-        .set('offset', offset.toString())
-      //      }).pipe(map(results => results['results'])
-    }).pipe(map(results => results['results'])
-    );
-  }
+
+    findSchools(filter = '', ordering = '', limit = 20, offset = 0) {
+      const params = new HttpParams()
+              .set('search', filter)
+              .set('ordering', ordering)
+              .set('limit', limit.toString())
+              .set('offset', offset.toString());
+
+      return this.http.get(this.API_URL + '/list-schools', {params});
+    }
 
   // no pagination
   getEvents() {
