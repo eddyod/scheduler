@@ -8,7 +8,7 @@ import { ScheduleEvent } from '../models/scheduleEvent';
 import { Page } from '../models/page';
 import { queryPaginated } from '../models/queryPaginated';
 import { environment } from '../../environments/environment';
-import {BehaviorSubject} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -92,10 +92,10 @@ export class APIService {
 
   getAllClasses(): void {
     this.http.get<ScheduleEvent[]>(this.API_URL + '/class').subscribe(data => {
-        this.dataChange.next(data);
-      },
+      this.dataChange.next(data);
+    },
       (error: HttpErrorResponse) => {
-      console.log (error.name + ' ' + error.message);
+        console.log(error.name + ' ' + error.message);
       });
   }
 
@@ -105,8 +105,17 @@ export class APIService {
     return this.http.get(this.API_URL + '/class');
   }
 
-  findTeachers(
-    filter = '',  limit = 20, offset = 0): Observable<Teacher[]> {
+  findTeachers(filter, limit, offset) {
+
+      const params = new HttpParams()
+        .set('limit', limit.toString())
+        .set('offset', offset.toString());
+
+    return this.http.get(this.API_URL + '/list-teachers', {params});
+  }
+
+  findTeachersXXX(
+    filter = '', limit = 20, offset = 0): Observable<Teacher[]> {
 
     return this.http.get(this.API_URL + '/list-teachers', {
       params: new HttpParams()

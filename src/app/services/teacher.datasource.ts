@@ -11,7 +11,10 @@ import { catchError, finalize } from 'rxjs/operators';
 
 export class TeacherDataSource implements DataSource<Teacher> {
 
-  private teachersSubject = new BehaviorSubject<Teacher[]>([]);
+  public teachersSubject = new BehaviorSubject<Teacher[]>([]);
+
+  private countSubject = new BehaviorSubject<number>(0);
+  public counter$ = this.countSubject.asObservable();
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
@@ -29,11 +32,16 @@ export class TeacherDataSource implements DataSource<Teacher> {
     this.loadingSubject.next(true);
 
     this.apiService.findTeachers(filter, limit, offset)
-    .pipe(
-        catchError(() => of([])),
-        finalize(() => this.loadingSubject.next(false))
+      .pipe(
+      catchError(() => of([])),
+      finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe(teachers => this.teachersSubject.next(teachers));
+      .subscribe((teachers: Teacher[]) => {
+        this.teachersSubject.next(teachers);
+        this.countSubject.next(teachers.length)
+        console.log(teachers);
+      }
+      );
 
   }
 
