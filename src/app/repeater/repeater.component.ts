@@ -8,6 +8,9 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { School } from '../models/school';
+import { Teacher } from '../models/teacher';
+import { Observable } from 'rxjs/internal/Observable';
 
 
 const timezoneOffset = new Date().getTimezoneOffset();
@@ -44,12 +47,9 @@ export class RepeaterComponent implements OnInit {
   private endDate: Date;
   private startString: string;
   // drop downs
-  public teachers: Array<object> = [];
-  public schools: Array<object> = [];
+  public teachers: Array<Object> = [];
+  public schools: Array<School> = [];
   public rules: Array<object> = [];
-
-
-
 
   constructor(
     private apiService: APIService,
@@ -83,13 +83,12 @@ export class RepeaterComponent implements OnInit {
       return validator;
     }
 
-
-    this.apiService.getSchools().subscribe((data: Array<object>) => {
-      this.schools = data;
+    this.apiService.findSchools('', 'name', 100, 0).subscribe((results: School[]) => {
+      this.schools = results['results']
     });
 
-    this.apiService.getTeachers().subscribe((data: Array<object>) => {
-      this.teachers = data;
+    this.apiService.findTeachers('', 'name', 100, 0).subscribe((results: Teacher[]) => {
+      this.teachers = results['results']
     });
 
   }

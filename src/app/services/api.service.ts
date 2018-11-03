@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Teacher } from '../models/teacher';
 import { School } from '../models/school';
 import { ScheduleEvent } from '../models/scheduleEvent';
@@ -21,48 +21,9 @@ export class APIService {
   constructor(private http: HttpClient) {
   }
 
-  get data(): ScheduleEvent[] {
-    return this.dataChange.value;
-  }
-
-  // teachers
-  getTeacherById(id: number): Observable<Object> {
-    return this.http.get(this.API_URL + '/teachers/' + id);
-  }
-
-  getTeachers(): Observable<Object[]> {
-    return this.http.get<Object[]>(this.API_URL + '/teachers')
-      .pipe(
-        catchError(this.handleError('getTeachers', []))
-      );
-  }
-
-  createTeacher(teacher) {
-    return this.http.post(this.API_URL + '/teachers', teacher)
-      .pipe(
-        catchError(this.handleError('createTeacher', []))
-      );
-  }
-
-  updateTeacher(teacher: Teacher): Observable<Teacher> {
-    return this.http.put<Teacher>(this.API_URL + '/teachers/' + teacher.id, teacher);
-  }
-
-  deleteTeacher(id: number): Observable<{}> {
-    return this.http.delete(this.API_URL + '/teachers/' + id);
-  }
-
-  listTeachers(urlOrFilter?: string | object): Observable<Page<Teacher>> {
-    return queryPaginated<Teacher>(this.http, this.API_URL + '/list-teachers', urlOrFilter);
-  }
-
   // schools
   getSchoolById(id: number) {
     return this.http.get(this.API_URL + '/schools/' + id);
-  }
-
-  getSchools() {
-    return this.http.get(this.API_URL + '/schools');
   }
 
   createSchool(school) {
@@ -77,55 +38,50 @@ export class APIService {
     return this.http.delete(this.API_URL + '/schools/' + id);
   }
 
-  listSchools(urlOrFilter?: string | object): Observable<Page<School>> {
-    return queryPaginated<School>(this.http, this.API_URL + '/list-schools', urlOrFilter);
+  findSchools(filter = '', ordering = '', limit = 20, offset = 0) {
+    const params = new HttpParams()
+      .set('search', filter)
+      .set('ordering', ordering)
+      .set('limit', limit.toString())
+      .set('offset', offset.toString());
+
+    return this.http.get(this.API_URL + '/schools', { params });
+  }
+
+  // teachers
+  getTeacherById(id: number): Observable<Object> {
+    return this.http.get(this.API_URL + '/teachers/' + id);
+  }
+
+  createTeacher(teacher) {
+    return this.http.post(this.API_URL + '/teachers', teacher)
+      .pipe(
+      catchError(this.handleError('createTeacher', []))
+      );
+  }
+
+  updateTeacher(teacher: Teacher): Observable<Teacher> {
+    return this.http.put<Teacher>(this.API_URL + '/teachers/' + teacher.id, teacher);
+  }
+
+  deleteTeacher(id: number): Observable<{}> {
+    return this.http.delete(this.API_URL + '/teachers/' + id);
+  }
+
+  findTeachers(filter = '', ordering = '', limit = 20, offset = 0) {
+    const params = new HttpParams()
+      .set('search', filter)
+      .set('ordering', ordering)
+      .set('limit', limit.toString())
+      .set('offset', offset.toString());
+
+    return this.http.get(this.API_URL + '/teachers', { params });
   }
 
   // schedules
   getScheduleById(id: number) {
     return this.http.get(this.API_URL + '/schedules/' + id);
   }
-
-  getSchedules() {
-    return this.http.get(this.API_URL + '/schedules');
-  }
-
-  getAllClasses(): void {
-    this.http.get<ScheduleEvent[]>(this.API_URL + '/class').subscribe(data => {
-      this.dataChange.next(data);
-    },
-      (error: HttpErrorResponse) => {
-        console.log(error.name + ' ' + error.message);
-      });
-  }
-
-
-  // no pagination
-  getClasses() {
-    return this.http.get(this.API_URL + '/class');
-  }
-
-
-  findTeachers(filter = '', ordering = '', limit = 20, offset = 0) {
-    const params = new HttpParams()
-            .set('search', filter)
-            .set('ordering', ordering)
-            .set('limit', limit.toString())
-            .set('offset', offset.toString());
-
-    return this.http.get(this.API_URL + '/list-teachers', {params});
-  }
-
-
-    findSchools(filter = '', ordering = '', limit = 20, offset = 0) {
-      const params = new HttpParams()
-              .set('search', filter)
-              .set('ordering', ordering)
-              .set('limit', limit.toString())
-              .set('offset', offset.toString());
-
-      return this.http.get(this.API_URL + '/list-schools', {params});
-    }
 
   // no pagination
   getEvents() {
@@ -135,7 +91,7 @@ export class APIService {
   createSchedule(schedule) {
     return this.http.post(this.API_URL + '/schedules', schedule)
       .pipe(
-        catchError(this.handleError<any>('createSchedule'))
+      catchError(this.handleError<any>('createSchedule'))
       );
   }
 
@@ -149,6 +105,16 @@ export class APIService {
 
   listSchedules(urlOrFilter?: string | object): Observable<Page<ScheduleEvent>> {
     return queryPaginated<ScheduleEvent>(this.http, this.API_URL + '/schedules', urlOrFilter);
+  }
+
+  findClasses(filter = '', ordering = '', limit = 20, offset = 0) {
+    const params = new HttpParams()
+      .set('search', filter)
+      .set('ordering', ordering)
+      .set('limit', limit.toString())
+      .set('offset', offset.toString());
+
+    return this.http.get(this.API_URL + '/schedules', { params });
   }
   // Attendance
   getAttendance(params) {

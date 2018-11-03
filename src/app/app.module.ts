@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { TeacherCreateComponent } from './teacher-create/teacher-create.component';
 import { SchoolsComponent } from './school-list/schools.component';
 import { SchoolCreateComponent } from './school-create/school-create.component';
-import { ScheduleListComponent } from './schedule-list/schedule-list.component';
 import { ScheduleCreateComponent } from './schedule-create/schedule-create.component';
 import { ScheduleUpdateComponent } from './schedule-create/schedule-update.component';
 
@@ -29,6 +28,7 @@ import { ChartModule } from 'angular-highcharts';
 import { ChartComponent } from './chart/chart.component';
 import { MaterialModule } from './shared/material.module';
 import { TeachersComponent } from './teacher-list/teachers.component';
+import { ClassesComponent } from './classes/classes.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,6 @@ import { TeachersComponent } from './teacher-list/teachers.component';
     TeacherCreateComponent,
     SchoolsComponent,
     SchoolCreateComponent,
-    ScheduleListComponent,
     ScheduleCreateComponent,
     ScheduleUpdateComponent,
     MycalComponent,
@@ -46,6 +45,7 @@ import { TeachersComponent } from './teacher-list/teachers.component';
     LoginComponent,
     ChartComponent,
     TeachersComponent,
+    ClassesComponent,
   ],
   imports: [
     BrowserModule,

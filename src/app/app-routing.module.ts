@@ -5,7 +5,7 @@ import { TeachersComponent } from './teacher-list/teachers.component';
 import { TeacherCreateComponent } from './teacher-create/teacher-create.component';
 import { SchoolsComponent } from './school-list/schools.component';
 import { SchoolCreateComponent } from './school-create/school-create.component';
-import { ScheduleListComponent } from './schedule-list/schedule-list.component';
+import { ClassesComponent } from './classes/classes.component';
 import { ScheduleCreateComponent } from './schedule-create/schedule-create.component';
 import { ScheduleUpdateComponent } from './schedule-create/schedule-update.component';
 import { MycalComponent } from './mycal/mycal.component';
@@ -25,11 +25,6 @@ const routes: Routes = [
   {
     path: 'create-teacher',
     component: TeacherCreateComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'schedules',
-    component: ScheduleListComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -68,11 +63,13 @@ const routes: Routes = [
   },
   {
     path: 'chart',
-    component: ChartComponent
+    component: ChartComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'classes',
-    loadChildren: './classes/classes.module#ClassesModule'
+    component: ClassesComponent,
+    canActivate: [AuthGuard]
   },
 
 ];

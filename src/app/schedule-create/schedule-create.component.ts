@@ -3,6 +3,8 @@ import { APIService } from '../services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { School } from 'src/app/models/school';
+import { Teacher } from 'src/app/models/teacher';
 
 @Component({
   selector: 'app-schedule-create',
@@ -35,15 +37,13 @@ export class ScheduleCreateComponent implements OnInit {
       teacher_id: ['', Validators.required],
     });
 
-    this.apiService.getSchools().subscribe((data: Array<object>) => {
-      this.schools = data;
+    this.apiService.findSchools('', 'name', 100, 0).subscribe((results: School[]) => {
+      this.schools = results['results']
     });
 
-    this.apiService.getTeachers().subscribe((data: Array<object>) => {
-      this.teachers = data;
+    this.apiService.findTeachers('', 'name', 100, 0).subscribe((results: Teacher[]) => {
+      this.teachers = results['results']
     });
-    console.log(this.teachers);
-
 
   }
 
@@ -55,9 +55,9 @@ export class ScheduleCreateComponent implements OnInit {
       .subscribe(data => {
         this.router.navigate(['classes']);
       },
-        error => {
-          alert(error);
-        });
+      error => {
+        alert(error);
+      });
   }
 
 }
