@@ -19,7 +19,7 @@ export class ClassesComponent implements OnInit {
 
   class: ScheduleEvent;
   dataSource: ClassDataSource;
-  displayedColumns = ['start', 'end', 'teacher', 'school', 'completed', 'actions'];
+  displayedColumns = ['start', 'teacher', 'school', 'pay_rate', 'completed', 'actions'];
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

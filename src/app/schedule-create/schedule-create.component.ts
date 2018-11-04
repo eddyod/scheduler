@@ -35,6 +35,7 @@ export class ScheduleCreateComponent implements OnInit {
       end: ['', Validators.required],
       school_id: ['', Validators.required],
       teacher_id: ['', Validators.required],
+      pay_rate: ['', Validators.required]
     });
 
     this.apiService.findSchools('', 'name', 100, 0).subscribe((results: School[]) => {

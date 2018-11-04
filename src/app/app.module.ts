@@ -20,7 +20,6 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { MycalComponent } from './mycal/mycal.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { PaginatorComponent } from './paginator/paginator.component';
 import { RepeaterComponent } from './repeater/repeater.component';
 import { LoginComponent } from './login/login.component';
 import { InterceptService } from './services/intercept.service';
@@ -40,7 +39,6 @@ import { ClassesComponent } from './classes/classes.component';
     ScheduleCreateComponent,
     ScheduleUpdateComponent,
     MycalComponent,
-    PaginatorComponent,
     RepeaterComponent,
     LoginComponent,
     ChartComponent,

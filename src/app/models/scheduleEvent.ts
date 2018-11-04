@@ -9,6 +9,7 @@ export interface ScheduleEvent extends CalendarEvent {
   teacher_id: number;
   school: School;
   teacher: Teacher;
+  pay_rate: number;
   createdOn: string;
   completed: boolean;
 

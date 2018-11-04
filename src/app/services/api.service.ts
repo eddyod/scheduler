@@ -5,8 +5,6 @@ import { catchError } from 'rxjs/operators';
 import { Teacher } from '../models/teacher';
 import { School } from '../models/school';
 import { ScheduleEvent } from '../models/scheduleEvent';
-import { Page } from '../models/page';
-import { queryPaginated } from '../models/queryPaginated';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
 
@@ -83,11 +81,6 @@ export class APIService {
     return this.http.get(this.API_URL + '/schedules/' + id);
   }
 
-  // no pagination
-  getEvents() {
-    return this.http.get(this.API_URL + '/events');
-  }
-
   createSchedule(schedule) {
     return this.http.post(this.API_URL + '/schedules', schedule)
       .pipe(
@@ -103,10 +96,6 @@ export class APIService {
     return this.http.delete(this.API_URL + '/schedules/' + id);
   }
 
-  listSchedules(urlOrFilter?: string | object): Observable<Page<ScheduleEvent>> {
-    return queryPaginated<ScheduleEvent>(this.http, this.API_URL + '/schedules', urlOrFilter);
-  }
-
   findClasses(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
       .set('search', filter)
@@ -115,6 +104,11 @@ export class APIService {
       .set('offset', offset.toString());
 
     return this.http.get(this.API_URL + '/schedules', { params });
+  }
+
+  // events with limited pagination
+  getEvents() {
+    return this.http.get(this.API_URL + '/events');
   }
   // Attendance
   getAttendance(params) {

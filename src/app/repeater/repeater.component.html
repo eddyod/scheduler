@@ -27,6 +27,12 @@
       </select>
       </div>
 
+
+      <div class="form-group">
+        <label for="idPay">Pay</label>
+        <input formControlName="pay_rate" type="number" placeholder="Pay" name="pay_rate" class="form-control" id="idPay">
+      </div>
+
       <div class="form-group">
         <label class="checkbox-inline" formArrayName="byweekdays" *ngFor="let byweekday of addForm.controls['byweekdays']['controls']; let i = index">
           <input type="checkbox" [formControlName]="i">

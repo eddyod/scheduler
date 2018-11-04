@@ -6,11 +6,9 @@ import {
   FormGroup, FormBuilder, Validators,
   FormControl, FormArray, ValidatorFn
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { School } from '../models/school';
 import { Teacher } from '../models/teacher';
-import { Observable } from 'rxjs/internal/Observable';
 
 
 const timezoneOffset = new Date().getTimezoneOffset();
@@ -65,6 +63,7 @@ export class RepeaterComponent implements OnInit {
       duration: ['', Validators.required],
       school_id: ['', Validators.required],
       teacher_id: ['', Validators.required],
+      pay_rate: ['', Validators.required],
       byweekdays: new FormArray(controls, minSelectedCheckboxes(1))
     });
 
@@ -123,6 +122,7 @@ export class RepeaterComponent implements OnInit {
         start: this.startString, end: tEnd.format('YYYY-MM-DD[T]HH:mm'),
         school_id: this.addForm.value.school_id,
         teacher_id: this.addForm.value.teacher_id,
+        pay_rate:  this.addForm.value.pay_rate,
         createdBy: parseInt(localStorage.getItem('user_id'), 10),
       };
       this.scheduleForms.push(event);

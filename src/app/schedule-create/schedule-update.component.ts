@@ -36,7 +36,8 @@ export class ScheduleUpdateComponent implements OnInit {
       end: ['', Validators.required],
       school_id: ['', Validators.required],
       teacher_id: ['', Validators.required],
-      completed: ['', Validators.required]
+      completed: ['', Validators.required],
+      pay_rate: ['', Validators.required]
     });
 
     const id = localStorage.getItem('id');

@@ -4,7 +4,8 @@ export class Schedule  {
   school_id: number;
   teacher_id: number;
   createdBy: number;
+  pay_rate: number;
 
-  constructor(start, end, school_id, teacher_id, createdBy) {}
+  constructor(start, end, school_id, teacher_id, createdBy, pay_rate) {}
 
 }

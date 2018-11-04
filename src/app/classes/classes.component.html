@@ -42,6 +42,12 @@
     <mat-cell *matCellDef="let row"> {{row.teacher.name}} </mat-cell>
   </ng-container>
 
+  <!-- pay Column -->
+  <ng-container matColumnDef="pay_rate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Pay </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.pay_rate | currency }} </mat-cell>
+  </ng-container>
+
   <!-- completed Column -->
   <ng-container matColumnDef="completed">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Showed up? </mat-header-cell>
