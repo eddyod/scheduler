@@ -54,7 +54,6 @@ import { ClassesComponent } from './classes/classes.component';
     NgbModalModule,
     FlatpickrModule.forRoot(),
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
@@ -63,6 +62,7 @@ import { ClassesComponent } from './classes/classes.component';
     OwlNativeDateTimeModule,
     ChartModule,
     MaterialModule,
+    BrowserAnimationsModule,
   ],
   providers: [InterceptService, {provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true}],
   bootstrap: [AppComponent]
