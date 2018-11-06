@@ -6,7 +6,6 @@ import { Teacher } from '../models/teacher';
 import { School } from '../models/school';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { environment } from '../../environments/environment';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,6 @@ import { BehaviorSubject } from 'rxjs';
 export class APIService {
 
   API_URL = environment.apiEndpoint;
-  dataChange: BehaviorSubject<ScheduleEvent[]> = new BehaviorSubject<ScheduleEvent[]>([]);
 
   constructor(private http: HttpClient) {
   }

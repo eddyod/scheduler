@@ -22,6 +22,8 @@ export class AuthService {
 
   // error messages received from the login attempt
   public errors: any = [];
+  // var to show is logged interface
+  public isLoggedIn: boolean;
 
   API_URL = environment.apiEndpoint;
 
@@ -65,12 +67,13 @@ export class AuthService {
     localStorage.removeItem('currentUser');
   }
 
-  public isLoggedIn() {
-    return moment().isBefore(this.token_expires );
+  public checkIsLoggedIn() {
+    this.isLoggedIn = moment().isBefore(this.token_expires );
+    return this.isLoggedIn;
   }
 
   isLoggedOut() {
-    return !this.isLoggedIn();
+    return !this.checkIsLoggedIn();
   }
 
   getExpiration() {

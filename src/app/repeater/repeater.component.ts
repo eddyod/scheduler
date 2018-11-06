@@ -15,7 +15,6 @@ const timezoneOffset = new Date().getTimezoneOffset();
 const hoursOffset = String(Math.floor(Math.abs(timezoneOffset / 60))).padStart(2, '0');
 const minutesOffset = String(Math.abs(timezoneOffset % 60)).padEnd(2, '0');
 const direction = timezoneOffset > 0 ? '-' : '+';
-// const timezoneOffsetString = `T00:00:00${direction}${hoursOffset}${minutesOffset}`;
 const timezoneOffsetString = `${direction}${hoursOffset}${minutesOffset}`;
 
 @Component({
@@ -30,13 +29,13 @@ export class RepeaterComponent implements OnInit {
   insertCount = 0;
   addForm: FormGroup;
   byweekdays = [
-    { id: RRule.SU, name: 'Sun' },
-    { id: RRule.MO, name: 'Mon' },
-    { id: RRule.TU, name: 'Tue' },
-    { id: RRule.WE, name: 'Wed' },
-    { id: RRule.TH, name: 'Thu' },
-    { id: RRule.FR, name: 'Fri' },
-    { id: RRule.SA, name: 'Sat' },
+    { id: 6, name: 'Sun' },
+    { id: 0, name: 'Mon' },
+    { id: 1, name: 'Tue' },
+    { id: 2, name: 'Wed' },
+    { id: 3, name: 'Thu' },
+    { id: 4, name: 'Fri' },
+    { id: 5, name: 'Sat' },
   ];
 
   public scheduleForms: Array<Schedule> = [];
@@ -47,7 +46,6 @@ export class RepeaterComponent implements OnInit {
   // drop downs
   public teachers: Array<Object> = [];
   public schools: Array<School> = [];
-  public rules: Array<object> = [];
 
   constructor(
     private apiService: APIService,
@@ -100,7 +98,6 @@ export class RepeaterComponent implements OnInit {
       .map((v, i) => v ? this.byweekdays[i].id : null)
       .filter(v => v !== null);
     this.scheduleForms = [];
-    // let rule = RRuleSet.fromText(this.addForm.value.rruleText);
     this.startDate = new Date(this.addForm.value.start + timezoneOffsetString);
     this.endDate = new Date(this.addForm.value.end + timezoneOffsetString);
     const rule =
@@ -111,7 +108,6 @@ export class RepeaterComponent implements OnInit {
         byweekday: selectedOrderIds
       });
     // Add a rrule to rruleSet
-    this.rules = rule.all();
 
     rule.all().forEach(r => {
       this.startString = moment(r).format('YYYY-MM-DD[T]HH:mm');
