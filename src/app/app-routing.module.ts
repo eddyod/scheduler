@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { TeachersComponent } from './teacher-list/teachers.component';
-import { TeacherCreateComponent } from './teacher-create/teacher-create.component';
-import { SchoolsComponent } from './school-list/schools.component';
-import { SchoolCreateComponent } from './school-create/school-create.component';
+import { EmployeesComponent } from './employee-list/employees.component';
+import { EmployeeCreateComponent } from './employee-create/employee-create.component';
+import { LocationsComponent } from './location-list/locations.component';
+import { LocationCreateComponent } from './location-create/location-create.component';
 import { ClassesComponent } from './classes/classes.component';
 import { ScheduleCreateComponent } from './schedule-create/schedule-create.component';
 import { ScheduleUpdateComponent } from './schedule-create/schedule-update.component';
@@ -18,13 +18,13 @@ import { AuthGuard } from './services/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
-    path: 'teachers',
-    component: TeachersComponent,
+    path: 'employees',
+    component: EmployeesComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'create-teacher',
-    component: TeacherCreateComponent,
+    path: 'create-employee',
+    component: EmployeeCreateComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -38,13 +38,13 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'schools',
-    component: SchoolsComponent,
+    path: 'locations',
+    component: LocationsComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'create-school',
-    component: SchoolCreateComponent,
+    path: 'create-location',
+    component: LocationCreateComponent,
     canActivate: [AuthGuard]
   },
   {

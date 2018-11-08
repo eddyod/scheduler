@@ -94,14 +94,14 @@ export class MycalComponent implements OnInit {
 
           return {
             id: scheduleEvent.id,
-            title: scheduleEvent.teacher.name + ' at '
-              + scheduleEvent.school.name + ' at '
+            title: scheduleEvent.employee.name + ' at '
+              + scheduleEvent.location.name + ' at '
               + this.startClass + ' to ' + this.endClass,
-            school_id: scheduleEvent.school_id,
-            teacher_id: scheduleEvent.teacher_id,
-            school: scheduleEvent.school,
-            teacher: scheduleEvent.teacher,
-            createdOn: scheduleEvent.createdOn,
+            location_id: scheduleEvent.location_id,
+            employee_id: scheduleEvent.employee_id,
+            location: scheduleEvent.location,
+            employee: scheduleEvent.employee,
+            created: scheduleEvent.created,
             completed: scheduleEvent.completed,
             start: new Date(scheduleEvent.start),
             end: new Date(scheduleEvent.end),

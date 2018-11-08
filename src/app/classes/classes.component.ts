@@ -19,7 +19,7 @@ export class ClassesComponent implements OnInit {
 
   class: ScheduleEvent;
   dataSource: ClassDataSource;
-  displayedColumns = ['start', 'teacher', 'school', 'pay_rate', 'completed', 'actions'];
+  displayedColumns = ['start', 'employee', 'location', 'pay_rate', 'completed', 'actions'];
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -85,8 +85,8 @@ export class ClassesComponent implements OnInit {
   editSchedule(schedule: ScheduleEvent): void {
     localStorage.removeItem('id');
     localStorage.setItem('id', schedule.id.toString());
-    localStorage.setItem('school_id', schedule.school.id.toString());
-    localStorage.setItem('teacher_id', schedule.teacher.id.toString());
+    localStorage.setItem('location_id', schedule.location.id.toString());
+    localStorage.setItem('employee_id', schedule.employee.id.toString());
     this.router.navigate(['update-schedule']);
   }
 
@@ -97,16 +97,16 @@ export class ClassesComponent implements OnInit {
     } else {
       schedule.completed = true;
     }
-    schedule.teacher_id = schedule.teacher.id;
-    schedule.school_id = schedule.school.id;
+    schedule.employee_id = schedule.employee.id;
+    schedule.location_id = schedule.location.id;
     this.apiService.updateSchedule(schedule).subscribe();
-    this.openSnackBar('Class updated.', schedule.teacher.name + ' at ' + schedule.school.name);
+    this.openSnackBar('Class updated.', schedule.employee.name + ' at ' + schedule.location.name);
   }
 
   deleteRow(schedule: ScheduleEvent): void {
     this.apiService.deleteSchedule(schedule.id).subscribe();
     this.refreshTable();
-    this.openSnackBar('Class deleted.', schedule.teacher.name + ' at ' + schedule.school.name);
+    this.openSnackBar('Class deleted.', schedule.employee.name + ' at ' + schedule.location.name);
   }
 
   private refreshTable() {

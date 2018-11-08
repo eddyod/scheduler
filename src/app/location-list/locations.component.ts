@@ -4,22 +4,22 @@ import { Router } from '@angular/router';
 import { MatPaginator, MatSort, } from '@angular/material';
 import { fromEvent } from 'rxjs';
 import { APIService } from '../services/api.service';
-import { TeacherDataSource } from '../services/teacher.datasource';
-import { Teacher } from '../models/teacher';
+import { LocationDataSource } from '../services/location.datasource';
+import { Location } from '../models/location';
 import { merge } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
-  selector: 'app-teachers',
-  templateUrl: './teachers.component.html',
-  styleUrls: ['./teachers.component.css']
+  selector: 'app-locations',
+  templateUrl: './locations.component.html',
+  styleUrls: ['./locations.component.css']
 })
-export class TeachersComponent implements OnInit {
+export class LocationsComponent implements OnInit {
 
-  teacher: Teacher;
-  dataSource: TeacherDataSource;
-  displayedColumns = ['name', 'phone', 'email', 'address1', 'isActive', 'actions'];
+  location: Location;
+  dataSource: LocationDataSource;
+  displayedColumns = ['name', 'phone', 'email', 'address1', 'active', 'actions'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -28,8 +28,8 @@ export class TeachersComponent implements OnInit {
   constructor(private apiService: APIService, private router: Router) { }
 
   ngOnInit() {
-    this.dataSource = new TeacherDataSource(this.apiService);
-    this.dataSource.loadTeachers('','name', 10, 0);
+    this.dataSource = new LocationDataSource(this.apiService);
+    this.dataSource.loadLocations('','name', 10, 0);
   }
 
   ngAfterViewInit() {
@@ -71,7 +71,7 @@ export class TeachersComponent implements OnInit {
     } else {
       sortName = '-' + this.sort.active;
     }
-    this.dataSource.loadTeachers(
+    this.dataSource.loadLocations(
       this.input.nativeElement.value,
       sortName,
       this.paginator.pageSize,
@@ -80,15 +80,15 @@ export class TeachersComponent implements OnInit {
   }
 
 
-    editTeacher(teacher: Teacher): void {
+    editLocation(location: Location): void {
       localStorage.removeItem('id');
-      localStorage.setItem('id', teacher.id.toString());
-      this.router.navigate(['create-teacher']);
+      localStorage.setItem('id', location.id.toString());
+      this.router.navigate(['create-location']);
     }
 
-    addTeacher(): void {
+    addLocation(): void {
       localStorage.removeItem('id');
-      this.router.navigate(['create-teacher']);
+      this.router.navigate(['create-location']);
     }
 
 }

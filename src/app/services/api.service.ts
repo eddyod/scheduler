@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Teacher } from '../models/teacher';
-import { School } from '../models/school';
+import { Employee } from '../models/employee';
+import { Location } from '../models/location';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { environment } from '../../environments/environment';
 
@@ -17,61 +17,61 @@ export class APIService {
   constructor(private http: HttpClient) {
   }
 
-  // schools
-  getSchoolById(id: number) {
-    return this.http.get(this.API_URL + '/schools/' + id);
+  // locations
+  getLocationById(id: number) {
+    return this.http.get(this.API_URL + '/locations/' + id);
   }
 
-  createSchool(school) {
-    return this.http.post(this.API_URL + '/schools', school);
+  createLocation(location) {
+    return this.http.post(this.API_URL + '/locations', location);
   }
 
-  updateSchool(school: School): Observable<School> {
-    return this.http.put<School>(this.API_URL + '/schools/' + school.id, school);
+  updateLocation(location: Location): Observable<Location> {
+    return this.http.put<Location>(this.API_URL + '/locations/' + location.id, location);
   }
 
-  deleteSchool(id: number) {
-    return this.http.delete(this.API_URL + '/schools/' + id);
+  deleteLocation(id: number) {
+    return this.http.delete(this.API_URL + '/locations/' + id);
   }
 
-  findSchools(filter = '', ordering = '', limit = 20, offset = 0) {
+  findLocations(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
       .set('offset', offset.toString());
 
-    return this.http.get(this.API_URL + '/schools', { params });
+    return this.http.get(this.API_URL + '/locations', { params });
   }
 
-  // teachers
-  getTeacherById(id: number): Observable<Object> {
-    return this.http.get(this.API_URL + '/teachers/' + id);
+  // employees
+  getEmployeeById(id: number): Observable<Object> {
+    return this.http.get(this.API_URL + '/employees/' + id);
   }
 
-  createTeacher(teacher) {
-    return this.http.post(this.API_URL + '/teachers', teacher)
+  createEmployee(employee) {
+    return this.http.post(this.API_URL + '/employees', employee)
       .pipe(
-      catchError(this.handleError('createTeacher', []))
+      catchError(this.handleError('createEmployee', []))
       );
   }
 
-  updateTeacher(teacher: Teacher): Observable<Teacher> {
-    return this.http.put<Teacher>(this.API_URL + '/teachers/' + teacher.id, teacher);
+  updateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(this.API_URL + '/employees/' + employee.id, employee);
   }
 
-  deleteTeacher(id: number): Observable<{}> {
-    return this.http.delete(this.API_URL + '/teachers/' + id);
+  deleteEmployee(id: number): Observable<{}> {
+    return this.http.delete(this.API_URL + '/employees/' + id);
   }
 
-  findTeachers(filter = '', ordering = '', limit = 20, offset = 0) {
+  findEmployees(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
       .set('offset', offset.toString());
 
-    return this.http.get(this.API_URL + '/teachers', { params });
+    return this.http.get(this.API_URL + '/employees', { params });
   }
 
   // schedules

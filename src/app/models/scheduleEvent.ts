@@ -1,16 +1,16 @@
-import {CalendarEvent} from 'angular-calendar';
-import {School} from './school';
-import {Teacher} from './teacher';
+import { CalendarEvent } from 'angular-calendar';
+import { Location } from './location';
+import { Employee } from './employee';
 
 export interface ScheduleEvent extends CalendarEvent {
   id: number;
   title: string;
-  school_id: number;
-  teacher_id: number;
-  school: School;
-  teacher: Teacher;
+  location_id: number;
+  employee_id: number;
+  location: Location;
+  employee: Employee;
   pay_rate: number;
-  createdOn: string;
+  created: string;
   completed: boolean;
 
 }

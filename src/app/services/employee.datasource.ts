@@ -1,14 +1,14 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Observable, of } from 'rxjs';
 
-import { School } from '../models/school';
+import { Employee } from '../models/employee';
 import { APIService } from './api.service';
 import { BehaviorSubject } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
-export class SchoolDataSource implements DataSource<School> {
+export class EmployeeDataSource implements DataSource<Employee> {
 
-  public schoolsSubject = new BehaviorSubject<School[]>([]);
+  public employeesSubject = new BehaviorSubject<Employee[]>([]);
 
   private countSubject = new BehaviorSubject<number>(0);
   public counter$ = this.countSubject.asObservable();
@@ -22,29 +22,29 @@ export class SchoolDataSource implements DataSource<School> {
 
   }
 
-  loadSchools(filter: string, ordering: string, limit: number, offset: number) {
+  loadEmployees(filter: string, ordering: string, limit: number, offset: number) {
 
     this.loadingSubject.next(true);
 
-    this.apiService.findSchools(filter, ordering, limit, offset)
+    this.apiService.findEmployees(filter, ordering, limit, offset)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe((results: School[]) => {
-        this.schoolsSubject.next(results['results']);
+      .subscribe((results: Employee[]) => {
+        this.employeesSubject.next(results['results']);
         this.countSubject.next(results['count']);
       }
       );
   }
 
-  connect(collectionViewer: CollectionViewer): Observable<School[]> {
+  connect(collectionViewer: CollectionViewer): Observable<Employee[]> {
     console.log('Connecting data source');
-    return this.schoolsSubject.asObservable();
+    return this.employeesSubject.asObservable();
   }
 
   disconnect(collectionViewer: CollectionViewer): void {
-    this.schoolsSubject.complete();
+    this.employeesSubject.complete();
     this.loadingSubject.complete();
   }
 

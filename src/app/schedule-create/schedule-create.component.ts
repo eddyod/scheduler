@@ -3,8 +3,8 @@ import { APIService } from '../services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { School } from 'src/app/models/school';
-import { Teacher } from 'src/app/models/teacher';
+import { Location } from 'src/app/models/location';
+import { Employee } from 'src/app/models/employee';
 
 @Component({
   selector: 'app-schedule-create',
@@ -19,8 +19,8 @@ export class ScheduleCreateComponent implements OnInit {
   scheduleFormLabel = 'Add Class';
   scheduleButton = 'Save';
   // drop downs
-  public teachers: Array<object> = [];
-  public schools: Array<object> = [];
+  public employees: Array<object> = [];
+  public locations: Array<object> = [];
 
   constructor(
     private apiService: APIService,
@@ -33,17 +33,17 @@ export class ScheduleCreateComponent implements OnInit {
       id: [],
       start: ['', Validators.required],
       end: ['', Validators.required],
-      school_id: ['', Validators.required],
-      teacher_id: ['', Validators.required],
+      location_id: ['', Validators.required],
+      employee_id: ['', Validators.required],
       pay_rate: ['', Validators.required]
     });
 
-    this.apiService.findSchools('', 'name', 100, 0).subscribe((results: School[]) => {
-      this.schools = results['results']
+    this.apiService.findLocations('', 'name', 100, 0).subscribe((results: Location[]) => {
+      this.locations = results['results']
     });
 
-    this.apiService.findTeachers('', 'name', 100, 0).subscribe((results: Teacher[]) => {
-      this.teachers = results['results']
+    this.apiService.findEmployees('', 'name', 100, 0).subscribe((results: Employee[]) => {
+      this.employees = results['results']
     });
 
   }

@@ -19,7 +19,6 @@ export class ClassDataSource implements DataSource<ScheduleEvent> {
   public loading$ = this.loadingSubject.asObservable();
 
   constructor(private apiService: APIService) {
-
   }
 
   loadRecords(filter: string, ordering: string, limit: number, offset: number) {

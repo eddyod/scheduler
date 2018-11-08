@@ -1,4 +1,6 @@
-export class Teacher {
+import { User } from './user';
+
+export class Employee {
 
   public id: number;
   public name: string;
@@ -7,11 +9,14 @@ export class Teacher {
   public address1: string;
   public address2: string;
   public city: string;
-  public postalCode: string;
+  public postal_code: string;
   public province: string;
   public country: string;
-  public createdOn: string;
-  public createdBy: number;
+  public created: string;
+  public created_id: number;
+  public active: boolean;
+
+  public user: User;
 
   constructor() {}
 }

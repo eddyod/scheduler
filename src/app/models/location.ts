@@ -1,4 +1,4 @@
-export class School {
+export class Location {
 
   public id: number;
   public name: string;
@@ -7,15 +7,15 @@ export class School {
   public address1: string;
   public address2: string;
   public city: string;
-  public postalCode: string;
+  public postal_code: string;
   public province: string;
   public country: string;
   public latitude: number;
   public longitude: number;
   public description: string;
-  public createdOn: string;
-  public isActive: boolean;
-  public createdBy: number;
+  public created: string;
+  public active: boolean;
+  public created_id: number;
 
   constructor(name, phone) {}
 

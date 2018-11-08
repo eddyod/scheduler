@@ -3,8 +3,8 @@ import { APIService } from '../services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { School } from '../models/school';
-import { Teacher } from '../models/teacher';
+import { Location } from '../models/location';
+import { Employee } from '../models/employee';
 
 @Component({
   selector: 'app-schedule-create',
@@ -20,8 +20,8 @@ export class ScheduleUpdateComponent implements OnInit {
   scheduleButton = 'Update';
 
   // drop downs
-  public teachers: Array<object> = [];
-  public schools: Array<object> = [];
+  public employees: Array<object> = [];
+  public locations: Array<object> = [];
 
   constructor(
     private apiService: APIService,
@@ -34,8 +34,8 @@ export class ScheduleUpdateComponent implements OnInit {
       id: [],
       start: ['', Validators.required],
       end: ['', Validators.required],
-      school_id: ['', Validators.required],
-      teacher_id: ['', Validators.required],
+      location_id: ['', Validators.required],
+      employee_id: ['', Validators.required],
       completed: ['', Validators.required],
       pay_rate: ['', Validators.required]
     });
@@ -45,17 +45,17 @@ export class ScheduleUpdateComponent implements OnInit {
       this.apiService.getScheduleById(+id).subscribe(data => {
         this.addForm.patchValue(data);
       });
-      this.addForm.controls['school_id'].setValue(localStorage.getItem('school_id'));
-      this.addForm.controls['teacher_id'].setValue(localStorage.getItem('teacher_id'));
+      this.addForm.controls['location_id'].setValue(localStorage.getItem('location_id'));
+      this.addForm.controls['employee_id'].setValue(localStorage.getItem('employee_id'));
     }
 
 
-    this.apiService.findSchools('', 'name', 100, 0).subscribe((results: School[]) => {
-      this.schools = results['results']
+    this.apiService.findLocations('', 'name', 100, 0).subscribe((results: Location[]) => {
+      this.locations = results['results']
     });
 
-    this.apiService.findTeachers('', 'name', 100, 0).subscribe((results: Teacher[]) => {
-      this.teachers = results['results']
+    this.apiService.findEmployees('', 'name', 100, 0).subscribe((results: Employee[]) => {
+      this.employees = results['results']
     });
 
 

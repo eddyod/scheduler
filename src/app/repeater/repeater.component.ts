@@ -7,8 +7,8 @@ import {
   FormControl, FormArray, ValidatorFn
 } from '@angular/forms';
 import * as moment from 'moment';
-import { School } from '../models/school';
-import { Teacher } from '../models/teacher';
+import { Location } from '../models/location';
+import { Employee } from '../models/employee';
 
 
 const timezoneOffset = new Date().getTimezoneOffset();
@@ -44,8 +44,8 @@ export class RepeaterComponent implements OnInit {
   private endDate: Date;
   private startString: string;
   // drop downs
-  public teachers: Array<Object> = [];
-  public schools: Array<School> = [];
+  public employees: Array<Object> = [];
+  public locations: Array<Location> = [];
 
   constructor(
     private apiService: APIService,
@@ -59,8 +59,8 @@ export class RepeaterComponent implements OnInit {
       start: ['', Validators.required],
       end: ['', Validators.required],
       duration: ['', Validators.required],
-      school_id: ['', Validators.required],
-      teacher_id: ['', Validators.required],
+      location_id: ['', Validators.required],
+      employee_id: ['', Validators.required],
       pay_rate: ['', Validators.required],
       byweekdays: new FormArray(controls, minSelectedCheckboxes(1))
     });
@@ -80,12 +80,12 @@ export class RepeaterComponent implements OnInit {
       return validator;
     }
 
-    this.apiService.findSchools('', 'name', 100, 0).subscribe((results: School[]) => {
-      this.schools = results['results']
+    this.apiService.findLocations('', 'name', 100, 0).subscribe((results: Location[]) => {
+      this.locations = results['results']
     });
 
-    this.apiService.findTeachers('', 'name', 100, 0).subscribe((results: Teacher[]) => {
-      this.teachers = results['results']
+    this.apiService.findEmployees('', 'name', 100, 0).subscribe((results: Employee[]) => {
+      this.employees = results['results']
     });
 
   }
@@ -116,10 +116,10 @@ export class RepeaterComponent implements OnInit {
 
       const event: Schedule = {
         start: this.startString, end: tEnd.format('YYYY-MM-DD[T]HH:mm'),
-        school_id: this.addForm.value.school_id,
-        teacher_id: this.addForm.value.teacher_id,
+        location_id: this.addForm.value.location_id,
+        employee_id: this.addForm.value.employee_id,
         pay_rate:  this.addForm.value.pay_rate,
-        createdBy: parseInt(localStorage.getItem('user_id'), 10),
+        created_id: parseInt(localStorage.getItem('user_id'), 10),
       };
       this.scheduleForms.push(event);
     });

@@ -1,14 +1,13 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Observable, of } from 'rxjs';
-
-import { Teacher } from '../models/teacher';
-import { APIService } from './api.service';
 import { BehaviorSubject } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
+import { APIService } from './api.service';
+import { Location } from '../models/location';
 
-export class TeacherDataSource implements DataSource<Teacher> {
+export class LocationDataSource implements DataSource<Location> {
 
-  public teachersSubject = new BehaviorSubject<Teacher[]>([]);
+  public locationsSubject = new BehaviorSubject<Location[]>([]);
 
   private countSubject = new BehaviorSubject<number>(0);
   public counter$ = this.countSubject.asObservable();
@@ -22,29 +21,29 @@ export class TeacherDataSource implements DataSource<Teacher> {
 
   }
 
-  loadTeachers(filter: string, ordering: string, limit: number, offset: number) {
+  loadLocations(filter: string, ordering: string, limit: number, offset: number) {
 
     this.loadingSubject.next(true);
 
-    this.apiService.findTeachers(filter, ordering, limit, offset)
+    this.apiService.findLocations(filter, ordering, limit, offset)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe((results: Teacher[]) => {
-        this.teachersSubject.next(results['results']);
+      .subscribe((results: Location[]) => {
+        this.locationsSubject.next(results['results']);
         this.countSubject.next(results['count']);
       }
       );
   }
 
-  connect(collectionViewer: CollectionViewer): Observable<Teacher[]> {
+  connect(collectionViewer: CollectionViewer): Observable<Location[]> {
     console.log('Connecting data source');
-    return this.teachersSubject.asObservable();
+    return this.locationsSubject.asObservable();
   }
 
   disconnect(collectionViewer: CollectionViewer): void {
-    this.teachersSubject.complete();
+    this.locationsSubject.complete();
     this.loadingSubject.complete();
   }
 

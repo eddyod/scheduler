@@ -9,9 +9,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TeacherCreateComponent } from './teacher-create/teacher-create.component';
-import { SchoolsComponent } from './school-list/schools.component';
-import { SchoolCreateComponent } from './school-create/school-create.component';
+import { EmployeeCreateComponent } from './employee-create/employee-create.component';
+import { LocationsComponent } from './location-list/locations.component';
+import { LocationCreateComponent } from './location-create/location-create.component';
 import { ScheduleCreateComponent } from './schedule-create/schedule-create.component';
 import { ScheduleUpdateComponent } from './schedule-create/schedule-update.component';
 
@@ -26,23 +26,23 @@ import { InterceptService } from './services/intercept.service';
 import { ChartModule } from 'angular-highcharts';
 import { ChartComponent } from './chart/chart.component';
 import { MaterialModule } from './shared/material.module';
-import { TeachersComponent } from './teacher-list/teachers.component';
+import { EmployeesComponent } from './employee-list/employees.component';
 import { ClassesComponent } from './classes/classes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TeachersComponent,
-    TeacherCreateComponent,
-    SchoolsComponent,
-    SchoolCreateComponent,
+    EmployeesComponent,
+    EmployeeCreateComponent,
+    LocationsComponent,
+    LocationCreateComponent,
     ScheduleCreateComponent,
     ScheduleUpdateComponent,
     MycalComponent,
     RepeaterComponent,
     LoginComponent,
     ChartComponent,
-    TeachersComponent,
+    EmployeesComponent,
     ClassesComponent,
   ],
   imports: [

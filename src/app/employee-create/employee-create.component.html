@@ -1,5 +1,5 @@
 <div class="col-md-6">
-  <h2 class="text-center">{{schoolFormLabel}}</h2>
+  <h2 class="text-center">{{employeeFormLabel}}</h2>
   <form [formGroup]="addForm" novalidate class="form">
 
     <div class="form-group">
@@ -26,17 +26,19 @@
       </div>
     </div>
 
+
     <div class="form-group">
-      <label for="idAddress1">Address 1:</label>
+      <label for="idAddress1">Address:</label>
       <input formControlName="address1" placeholder="Address" name="address1" class="form-control" id="idAddress1">
       <div class="alert  alert-danger" *ngIf="addForm.get('address1').hasError('maxlength') && addForm.get('address1').touched">
         Address is required.
       </div>
     </div>
 
+
     <div class="form-group">
-      <label class="radio-inline"><input type="radio" [value]="true" name="isActive" formControlName="isActive">Active</label>
-      <label class="radio-inline"><input type="radio" [value]="false" name="isActive" formControlName="isActive">Inactive</label>
+      <label class="radio-inline"><input type="radio" [value]="true" name="active" formControlName="active">Active</label>
+      <label class="radio-inline"><input type="radio" [value]="false" name="active" formControlName="active">Inactive</label>
     </div>
 
     <button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="displayButton" (click)="onSave()">Save</button>

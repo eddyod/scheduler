@@ -5,17 +5,17 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-school-create',
-  templateUrl: './school-create.component.html',
-  styleUrls: ['./school-create.component.css']
+  selector: 'app-location-create',
+  templateUrl: './location-create.component.html',
+  styleUrls: ['./location-create.component.css']
 })
-export class SchoolCreateComponent implements OnInit {
+export class LocationCreateComponent implements OnInit {
 
-  title = 'Add School';
+  title = 'Add Location';
   displayButton = true;
   addForm: FormGroup;
-  schoolFormLabel = 'Add School';
-  schoolButton = 'Save';
+  locationFormLabel = 'Add Location';
+  locationButton = 'Save';
 
   constructor(
     private apiService: APIService,
@@ -31,35 +31,35 @@ export class SchoolCreateComponent implements OnInit {
       email: ['', [Validators.required, Validators.maxLength(50)]],
       phone: ['', Validators.required],
       address1: ['', Validators.required],
-      isActive: ['', Validators.required]
+      active: ['', Validators.required]
     });
 
     const id = localStorage.getItem('id');
     if (+id > 0) {
-      this.apiService.getSchoolById(+id).subscribe(data => {
+      this.apiService.getLocationById(+id).subscribe(data => {
         this.addForm.patchValue(data);
       });
       this.displayButton = false;
-      this.schoolFormLabel = 'Edit School';
-      this.schoolButton = 'Update';
+      this.locationFormLabel = 'Edit Location';
+      this.locationButton = 'Update';
     }
 
   }
 
   onSave() {
-    this.addForm.value.createdBy = localStorage.getItem('user_id');
-    this.apiService.createSchool(this.addForm.value)
+    this.addForm.value.created_id = localStorage.getItem('user_id');
+    this.apiService.createLocation(this.addForm.value)
       .subscribe(data => {
-        this.router.navigate(['schools']);
+        this.router.navigate(['locations']);
       },
         error => {
           alert(error);
         });
   }
   onUpdate() {
-    this.addForm.value.createdBy = localStorage.getItem('user_id');
-    this.apiService.updateSchool(this.addForm.value).subscribe(data => {
-      this.router.navigate(['schools']);
+    this.addForm.value.created_id = localStorage.getItem('user_id');
+    this.apiService.updateLocation(this.addForm.value).subscribe(data => {
+      this.router.navigate(['locations']);
     },
       error => {
         alert(error);

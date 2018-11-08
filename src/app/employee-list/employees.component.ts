@@ -4,22 +4,22 @@ import { Router } from '@angular/router';
 import { MatPaginator, MatSort, } from '@angular/material';
 import { fromEvent } from 'rxjs';
 import { APIService } from '../services/api.service';
-import { SchoolDataSource } from '../services/school.datasource';
-import { School } from '../models/school';
+import { EmployeeDataSource } from '../services/employee.datasource';
+import { Employee } from '../models/employee';
 import { merge } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
-  selector: 'app-schools',
-  templateUrl: './schools.component.html',
-  styleUrls: ['./schools.component.css']
+  selector: 'app-employees',
+  templateUrl: './employees.component.html',
+  styleUrls: ['./employees.component.css']
 })
-export class SchoolsComponent implements OnInit {
+export class EmployeesComponent implements OnInit {
 
-  school: School;
-  dataSource: SchoolDataSource;
-  displayedColumns = ['name', 'phone', 'email', 'address1', 'isActive', 'actions'];
+  employee: Employee;
+  dataSource: EmployeeDataSource;
+  displayedColumns = ['name', 'phone', 'email', 'address1', 'active', 'actions'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -28,8 +28,8 @@ export class SchoolsComponent implements OnInit {
   constructor(private apiService: APIService, private router: Router) { }
 
   ngOnInit() {
-    this.dataSource = new SchoolDataSource(this.apiService);
-    this.dataSource.loadSchools('','name', 10, 0);
+    this.dataSource = new EmployeeDataSource(this.apiService);
+    this.dataSource.loadEmployees('','name', 10, 0);
   }
 
   ngAfterViewInit() {
@@ -71,7 +71,7 @@ export class SchoolsComponent implements OnInit {
     } else {
       sortName = '-' + this.sort.active;
     }
-    this.dataSource.loadSchools(
+    this.dataSource.loadEmployees(
       this.input.nativeElement.value,
       sortName,
       this.paginator.pageSize,
@@ -80,15 +80,15 @@ export class SchoolsComponent implements OnInit {
   }
 
 
-    editSchool(school: School): void {
+    editEmployee(employee: Employee): void {
       localStorage.removeItem('id');
-      localStorage.setItem('id', school.id.toString());
-      this.router.navigate(['create-school']);
+      localStorage.setItem('id', employee.id.toString());
+      this.router.navigate(['create-employee']);
     }
 
-    addSchool(): void {
+    addEmployee(): void {
       localStorage.removeItem('id');
-      this.router.navigate(['create-school']);
+      this.router.navigate(['create-employee']);
     }
 
 }
