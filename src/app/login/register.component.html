@@ -1,47 +1,53 @@
 <h2>Register</h2>
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="firstName">First Name</label>
-    <input type="text" formControlName="first_name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" />
-    <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
-      <div *ngIf="f.first_name.errors.required">First Name is required</div>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="lastName">Last Name</label>
-    <input type="text" formControlName="last_name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }" />
-    <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
-      <div *ngIf="f.last_name.errors.required">Last Name is required</div>
-    </div>
-  </div>
 
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-      <div *ngIf="f.username.errors.required">Username is required</div>
-    </div>
-  </div>
 
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-      <div *ngIf="f.email.errors.required">Email is required</div>
-    </div>
-  </div>
+<div class="col-md-6">
+  <h2 class="text-center">{{employeeFormLabel}}</h2>
+    <form [formGroup]="addForm" novalidate class="form">
 
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-      <div *ngIf="f.password.errors.required">Password is required</div>
-      <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+    <div class="form-group">
+      <label for="idFirstName">First name:</label>
+      <input formControlName="first_name" placeholder="First name" class="form-control" id="idFirstName" name="first_name">
+      <div class="alert  alert-danger" *ngIf="addForm.get('first_name').hasError('required') && addForm.get('first_name').touched">
+        First name is required.
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <button [disabled]="loading" class="btn btn-primary">Register</button>
-    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+
+    <div class="form-group">
+      <label for="idLastName">Last name:</label>
+      <input formControlName="last_name" placeholder="Last name" class="form-control" id="idLastName" name="last_name">
+      <div class="alert  alert-danger" *ngIf="addForm.get('last_name').hasError('required') && addForm.get('last_name').touched">
+        Last name is required.
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="idUsername">Username:</label>
+      <input formControlName="username" placeholder="Username" class="form-control" id="idUsername" name="username">
+      <div class="alert  alert-danger" *ngIf="addForm.get('username').hasError('required') && addForm.get('username').touched">
+        Username is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="idEmail">Email:</label>
+      <input formControlName="email" placeholder="Email" class="form-control" id="idEmail" name="email">
+      <div class="alert  alert-danger" *ngIf="addForm.get('email').hasError('required') && addForm.get('email').touched">
+        Email is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="idPassword">Password</label>
+      <input type="password" formControlName="password" class="form-control" id="idPassword" name="password"/>
+      <div class="alert  alert-danger" *ngIf="addForm.get('password').hasError('password') && addForm.get('password').touched">
+        Password is required and must be at least 6 characters.
+      </div>
+    </div>
+
+    <button class="btn btn-success" [disabled]='addForm.invalid' (click)="register()">Register</button>
     <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
-  </div>
-</form>
+
+  </form>
+</div>

@@ -97,6 +97,7 @@ export class AuthService {
   }
 
   register(user: User) {
+    console.log(this.API_URL + '/api/users');
     return this.http.post(this.API_URL + '/api/users', user);
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import {  MatSnackBar } from '@angular/material';
 
 import { AuthService } from '../services/auth.service';
 // import { AlertService } from '../services/alert.service';
@@ -9,7 +10,7 @@ import { AuthService } from '../services/auth.service';
 @Component({ templateUrl: 'register.component.html' })
 
 export class RegisterComponent implements OnInit {
-  registerForm: FormGroup;
+  addForm: FormGroup;
   loading = false;
   submitted = false;
 
@@ -17,10 +18,11 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private snackBar: MatSnackBar
     ) { }
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
+    this.addForm = this.formBuilder.group({
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       username: ['', Validators.required],
@@ -29,28 +31,23 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.registerForm.controls; }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 
-  onSubmit() {
-    this.submitted = true;
-
-    // stop here if form is invalid
-    if (this.registerForm.invalid) {
-      return;
-    }
-
-    this.loading = true;
-    this.authService.register(this.registerForm.value)
-      .pipe(first())
+  register() {
+    this.authService.register(this.addForm.value)
       .subscribe(
         data => {
           // this.alertService.success('Registration successful', true);
+          this.openSnackBar('You have sucessfully registered. ', 'OK!');
           this.router.navigate(['/login']);
         },
         error => {
           // this.alertService.error(error);
-          this.loading = false;
+          this.openSnackBar('There was an error with the registration. ', '');
         });
   }
 }
