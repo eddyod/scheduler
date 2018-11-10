@@ -11,6 +11,7 @@ import { ScheduleUpdateComponent } from './schedule-create/schedule-update.compo
 import { MycalComponent } from './mycal/mycal.component';
 import { RepeaterComponent } from './repeater/repeater.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './login/register.component';
 import { ChartComponent } from './chart/chart.component';
 import { AuthGuard } from './services/auth.guard';
 
@@ -60,6 +61,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   },
   {
     path: 'chart',

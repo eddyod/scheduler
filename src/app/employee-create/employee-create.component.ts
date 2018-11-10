@@ -27,20 +27,26 @@ export class EmployeeCreateComponent implements OnInit {
 
   ngOnInit() {
 
-    // this.addForm = this.createFormGroup();
-
-
     this.addForm = this.formBuilder.group({
       id: [],
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.maxLength(50)]],
+      email: ['', Validators.required],
+      phone: ['', Validators.required],
+      address1: ['', Validators.required],
+      is_active: ['', Validators.required],
+    });
+    /*
+    this.addForm = this.formBuilder.group({
+      id: [],
+      name: ['', Validators.required],
       phone: ['', Validators.required],
       address1: ['', Validators.required],
       active: ['', Validators.required],
-      user: new FormGroup({email: new FormControl()})
+      user: this.formBuilder.group({
+        email: ['', Validators.required]
+      }),
     });
-
-
+    */
     const id = localStorage.getItem('id');
     if (+id > 0) {
       this.apiService.getEmployeeById(+id).subscribe(data => {
@@ -53,24 +59,9 @@ export class EmployeeCreateComponent implements OnInit {
 
   }
 
-
-  createFormGroup() {
-    return new FormGroup({
-      user: new FormGroup({
-      email: new FormControl(),
-      }),
-      id: new FormControl(),
-      name: new FormControl(),
-      phone: new FormControl(),
-      address1: new FormControl(),
-      active: new FormControl()
-    });
-  }
-
-
   onSave() {
-    this.addForm.value.created_id = localStorage.getItem('user_id');
-    this.addForm.value.created = new Date();
+    // this.addForm.value.created_id = localStorage.getItem('user_id');
+    // this.addForm.value.created = new Date();
     this.apiService.createEmployee(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['employees']);

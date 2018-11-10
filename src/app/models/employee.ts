@@ -1,4 +1,3 @@
-import { User } from './user';
 
 export class Employee {
 
@@ -12,11 +11,8 @@ export class Employee {
   public postal_code: string;
   public province: string;
   public country: string;
-  public created: string;
-  public created_id: number;
-  public active: boolean;
+  public is_active: boolean;
 
-  public user: User;
 
   constructor() {}
 }

@@ -28,6 +28,8 @@ import { ChartComponent } from './chart/chart.component';
 import { MaterialModule } from './shared/material.module';
 import { EmployeesComponent } from './employee-list/employees.component';
 import { ClassesComponent } from './classes/classes.component';
+import { RegisterComponent } from './login/register.component';
+// import { AlertService } from './services/alert.service';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { ClassesComponent } from './classes/classes.component';
     ChartComponent,
     EmployeesComponent,
     ClassesComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

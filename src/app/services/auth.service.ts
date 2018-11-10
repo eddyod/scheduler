@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { User } from '../models/user';
 import * as moment from 'moment';
 
 @Injectable({
@@ -68,7 +69,7 @@ export class AuthService {
   }
 
   public checkIsLoggedIn() {
-    this.isLoggedIn = moment().isBefore(this.token_expires );
+    this.isLoggedIn = moment().isBefore(this.token_expires);
     return this.isLoggedIn;
   }
 
@@ -93,6 +94,10 @@ export class AuthService {
     localStorage.setItem('id_token', token.idToken);
     localStorage.setItem('Token', token);
     localStorage.setItem('user_id', token_decoded.user_id);
+  }
+
+  register(user: User) {
+    return this.http.post(this.API_URL + '/api/users', user);
   }
 
 

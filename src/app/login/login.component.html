@@ -5,7 +5,7 @@
       <h2>Log In</h2>
 
       <div class="form-group">
-        <label for="idUserName">Username:</label><br />
+        <label for="idUsername">Username:</label><br />
         <input type="text" id="idUsername" class="form-control" formControlName="username">
         <div *ngFor="let error of authService.errors.username">{{ error }}</div>
       </div>
@@ -19,6 +19,8 @@
 
       <div class="form-group">
         <button class="btn btn-success" [disabled]='addForm.invalid'  (click)="login()">Login</button>
+        <a [routerLink]="['/register']" class="btn btn-link">Register</a>
+
       </div>
 
       <div class="form-group">

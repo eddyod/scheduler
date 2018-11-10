@@ -11,10 +11,10 @@ import { Router } from '@angular/router';
 })
 export class LocationCreateComponent implements OnInit {
 
-  title = 'Add Location';
+  title = 'Add School';
   displayButton = true;
   addForm: FormGroup;
-  locationFormLabel = 'Add Location';
+  locationFormLabel = 'Add School';
   locationButton = 'Save';
 
   constructor(
@@ -47,7 +47,7 @@ export class LocationCreateComponent implements OnInit {
   }
 
   onSave() {
-    this.addForm.value.created_id = localStorage.getItem('user_id');
+    this.addForm.value.site = 1;
     this.apiService.createLocation(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['locations']);
@@ -57,6 +57,7 @@ export class LocationCreateComponent implements OnInit {
         });
   }
   onUpdate() {
+    this.addForm.value.site = 1;
     this.addForm.value.created_id = localStorage.getItem('user_id');
     this.apiService.updateLocation(this.addForm.value).subscribe(data => {
       this.router.navigate(['locations']);
