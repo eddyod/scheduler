@@ -1,7 +1,7 @@
 export class Attendance {
 
   public id: number;
-  public teacher: string;
+  public employee: string;
   public class_month: number;
   public class_year: number;
   public showed_up: number;

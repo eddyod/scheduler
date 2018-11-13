@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Employee } from '../models/employee';
 import { Location } from '../models/location';
+import { Site } from '../models/site';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { environment } from '../../environments/environment';
 
@@ -103,6 +104,34 @@ export class APIService {
 
     return this.http.get(this.API_URL + '/schedules', { params });
   }
+
+  // sites
+
+  findSites(filter = '', ordering = '', limit = 20, offset = 0) {
+    const params = new HttpParams()
+      .set('search', filter)
+      .set('ordering', ordering)
+      .set('limit', limit.toString())
+      .set('offset', offset.toString());
+
+    return this.http.get(this.API_URL + '/sites', { params });
+  }
+
+  createSite(site) {
+    return this.http.post(this.API_URL + '/sites', site)
+      .pipe(
+      catchError(this.handleError('createSite', []))
+      );
+  }
+
+  updateSite(site: Site): Observable<Site> {
+    return this.http.put<Site>(this.API_URL + '/sites/' + site.id, site);
+  }
+
+  deleteSite(id: number): Observable<{}> {
+    return this.http.delete(this.API_URL + '/sites/' + id);
+  }
+
 
   // events with limited pagination
   getEvents() {

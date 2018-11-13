@@ -1,13 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 import { fromEvent } from 'rxjs';
+import { merge } from 'rxjs';
+import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
 import { APIService } from '../services/api.service';
 import { ClassDataSource } from '../services/class.datasource';
 import { ScheduleEvent } from '../models/scheduleEvent';
-import { merge } from 'rxjs';
-import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
 
 
 @Component({

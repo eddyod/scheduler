@@ -34,8 +34,8 @@
 
 
     <div class="form-group">
-      <label class="radio-inline"><input type="radio" [value]="true" name="is_active" formControlName="is_active">Active</label>
-      <label class="radio-inline"><input type="radio" [value]="false" name="is_active" formControlName="is_active">Inactive</label>
+      <label class="radio-inline"><input type="radio" [value]="true" name="active" formControlName="active">Active</label>
+      <label class="radio-inline"><input type="radio" [value]="false" name="active" formControlName="active">Inactive</label>
     </div>
 
     <button class="btn btn-success" [disabled]='addForm.invalid' *ngIf="displayButton" (click)="onSave()">Save</button>

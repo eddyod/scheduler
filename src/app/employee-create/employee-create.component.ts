@@ -33,7 +33,7 @@ export class EmployeeCreateComponent implements OnInit {
       email: ['', Validators.required],
       phone: ['', Validators.required],
       address1: ['', Validators.required],
-      is_active: ['', Validators.required],
+      active: ['', Validators.required],
     });
     /*
     this.addForm = this.formBuilder.group({
@@ -62,6 +62,7 @@ export class EmployeeCreateComponent implements OnInit {
   onSave() {
     // this.addForm.value.created_id = localStorage.getItem('user_id');
     // this.addForm.value.created = new Date();
+    this.addForm.value.site = parseInt(localStorage.getItem('site_id'), 10),
     this.apiService.createEmployee(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['employees']);
@@ -72,6 +73,7 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   onUpdate() {
+    this.addForm.value.site = parseInt(localStorage.getItem('site_id'), 10),
     this.apiService.updateEmployee(this.addForm.value).subscribe(data => {
       this.router.navigate(['employees']);
     },

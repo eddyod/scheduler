@@ -47,7 +47,7 @@ export class LocationCreateComponent implements OnInit {
   }
 
   onSave() {
-    this.addForm.value.site = 1;
+    this.addForm.value.site = parseInt(localStorage.getItem('site_id'), 10),
     this.apiService.createLocation(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['locations']);
@@ -57,7 +57,7 @@ export class LocationCreateComponent implements OnInit {
         });
   }
   onUpdate() {
-    this.addForm.value.site = 1;
+    this.addForm.value.site = parseInt(localStorage.getItem('site_id'), 10),
     this.addForm.value.created_id = localStorage.getItem('user_id');
     this.apiService.updateLocation(this.addForm.value).subscribe(data => {
       this.router.navigate(['locations']);

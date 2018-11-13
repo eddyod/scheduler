@@ -13,6 +13,7 @@ import { RepeaterComponent } from './repeater/repeater.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
 import { ChartComponent } from './chart/chart.component';
+
 import { AuthGuard } from './services/auth.guard';
 
 
@@ -76,6 +77,10 @@ const routes: Routes = [
     component: ClassesComponent,
     canActivate: [AuthGuard]
   },
+  {
+    path: 'sites',
+    loadChildren: './sites/sites.module#SitesModule'
+  }
 
 ];
 

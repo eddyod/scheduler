@@ -11,7 +11,7 @@ export class Employee {
   public postal_code: string;
   public province: string;
   public country: string;
-  public is_active: boolean;
+  public active: boolean;
 
 
   constructor() {}

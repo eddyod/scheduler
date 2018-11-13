@@ -106,6 +106,7 @@ export class MycalComponent implements OnInit {
             start: new Date(scheduleEvent.start),
             end: new Date(scheduleEvent.end),
             pay_rate: scheduleEvent.pay_rate,
+            site: scheduleEvent.site,
             color: colors.yellow,
             meta: { scheduleEvent }
           };

@@ -119,7 +119,7 @@ export class RepeaterComponent implements OnInit {
         location_id: this.addForm.value.location_id,
         employee_id: this.addForm.value.employee_id,
         pay_rate:  this.addForm.value.pay_rate,
-        created_id: parseInt(localStorage.getItem('user_id'), 10),
+        site: parseInt(localStorage.getItem('site_id'), 10),
       };
       this.scheduleForms.push(event);
     });

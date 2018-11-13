@@ -18,6 +18,7 @@ month[11] = 'November';
 month[12] = 'December';
 
 const now = new Date();
+const site_id = localStorage.getItem('site_id');
 
 
 @Component({
@@ -27,7 +28,7 @@ const now = new Date();
 })
 export class ChartComponent implements OnInit {
 
-  public teachers: Array<object> = [];
+  public employees: Array<object> = [];
   public chart: Chart;
   private month: number;
   public year: number;
@@ -41,8 +42,10 @@ export class ChartComponent implements OnInit {
   ngOnInit() {
     this.year = now.getFullYear();
     this.month = now.getMonth() + 1;
+
     this.monthDisplay = this.convertMonth(this.month);
     const params = new HttpParams()
+      .set('site_id', site_id)
       .set('m', this.month.toString())
       .set('y', this.year.toString());
     this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]); });
@@ -51,6 +54,7 @@ export class ChartComponent implements OnInit {
 
   refreshChart(m, year) {
     const params = new HttpParams()
+      .set('site_id', site_id)
       .set('m', m)
       .set('y', year);
     this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]); });
@@ -82,6 +86,7 @@ export class ChartComponent implements OnInit {
     } else {
       this.month++;
     }
+    console.log(this.employees);
 
     this.monthDisplay = this.convertMonth(this.month);
     this.refreshChart(this.month, this.year);
@@ -96,10 +101,10 @@ export class ChartComponent implements OnInit {
     const names = [];
     const shows = [];
     const noshows = [];
-    data.forEach(teacher => {
-      names.push(teacher.teacher);
-      shows.push(teacher.showed_up);
-      noshows.push(teacher.no_show);
+    data.forEach(employee => {
+      names.push(employee.employee);
+      shows.push(employee.showed_up);
+      noshows.push(employee.no_show);
     });
 
     this.chart = new Chart({
