@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
+import { UserSite } from '../models/userSite';
 import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private userSite: UserSite;
 
   // http options used for making API calls
   private httpOptions: any;
@@ -38,13 +40,30 @@ export class AuthService {
   public login(user) {
     return this.http.post(this.API_URL + '/api-token-auth/', JSON.stringify(user), this.httpOptions).subscribe(
       data => {
+        console.log(data);
         this.updateData(data['token']);
         localStorage.setItem('currentUser', JSON.stringify(user));
+        this.getAndSetSite(data['userid']);
       },
       err => {
         this.errors = err['error'];
       }
     );
+  }
+
+  private getAndSetSite(auth_id: string) {
+    const params = new HttpParams()
+      .set('auth_id', auth_id)
+    this.http.get(this.API_URL + '/user_site', { params })
+      .subscribe(data =>  {
+        console.log(data[0]['site_id']);
+        localStorage.setItem('site_id', data[0]['site_id']);
+      },
+      err => {
+        this.errors = err['error'];
+      }
+      );
+
   }
 
   // Refreshes the JWT token, to extend the time the user is logged in
@@ -63,6 +82,7 @@ export class AuthService {
     this.token = null;
     this.token_expires = null;
     this.username = null;
+    localStorage.removeItem('site_id');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
     localStorage.removeItem('currentUser');
