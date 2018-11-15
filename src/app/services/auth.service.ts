@@ -2,14 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
-import { UserSite } from '../models/userSite';
 import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private userSite: UserSite;
 
   // http options used for making API calls
   private httpOptions: any;
@@ -26,7 +24,7 @@ export class AuthService {
   // error messages received from the login attempt
   public errors: any = [];
   // var to show is logged interface
-  public isLoggedIn: boolean;
+  // public isLoggedIn: boolean;
 
   API_URL = environment.apiEndpoint;
 
@@ -88,13 +86,13 @@ export class AuthService {
     localStorage.removeItem('currentUser');
   }
 
-  public checkIsLoggedIn() {
-    this.isLoggedIn = moment().isBefore(this.token_expires);
-    return this.isLoggedIn;
+  public isLoggedIn() {
+    return  moment().isBefore(this.token_expires);
+    // return this.isLoggedIn;
   }
 
   isLoggedOut() {
-    return !this.checkIsLoggedIn();
+    return !this.isLoggedIn();
   }
 
   getExpiration() {
@@ -110,10 +108,12 @@ export class AuthService {
     const token_decoded = JSON.parse(window.atob(token_parts[1]));
     this.token_expires = new Date(token_decoded.exp * 1000);
     this.username = token_decoded.username;
-
+    console.log('first name is ');
+    console.log(token_decoded.first_name);
     localStorage.setItem('id_token', token.idToken);
     localStorage.setItem('Token', token);
     localStorage.setItem('user_id', token_decoded.user_id);
+    localStorage.setItem('first_name', token_decoded.first_name);
   }
 
   register(user: User) {

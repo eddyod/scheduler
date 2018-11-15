@@ -8,7 +8,6 @@ import { Site } from '../models/site';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { environment } from '../../environments/environment';
 
-const site_id = localStorage.getItem('site_id');
 
 
 @Injectable({
@@ -17,6 +16,7 @@ const site_id = localStorage.getItem('site_id');
 export class APIService {
 
   API_URL = environment.apiEndpoint;
+  public site_id = localStorage.getItem('site_id');
 
   constructor(private http: HttpClient) {
   }
@@ -40,7 +40,7 @@ export class APIService {
 
   findLocations(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', site_id)
+      .set('site_id', this.site_id)
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -71,6 +71,7 @@ export class APIService {
 
   findEmployees(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
+      .set('site_id', this.site_id)
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())

@@ -1,8 +1,7 @@
 <mat-sidenav-container fullscreen>
 
   <mat-sidenav #sidenav (keydown.escape)="sidenav.close()">
-
-    <mat-nav-list *ngIf="authService.token">
+    <mat-nav-list *ngIf="authService.isLoggedIn()">
 
       <a mat-list-item routerLink="/login" (click)="sidenav.close()"><mat-icon>account_circle</mat-icon>Login Info</a>
       <a mat-list-item routerLink="/locations" (click)="sidenav.close()"><mat-icon>school</mat-icon>Schools</a>
@@ -19,7 +18,7 @@
 
     </mat-nav-list>
 
-    <mat-nav-list *ngIf="!authService.token">
+    <mat-nav-list *ngIf="!authService.isLoggedIn()">
 
       <a mat-list-item routerLink="/login" (click)="sidenav.close()"><mat-icon>account_circle</mat-icon>Login</a>
 

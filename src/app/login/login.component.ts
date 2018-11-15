@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(public authService: AuthService,
     private formBuilder: FormBuilder,
-  ) { authService.checkIsLoggedIn();}
+  ) { }
 
   ngOnInit() {
     this.addForm = this.formBuilder.group({
