@@ -102,6 +102,7 @@ export class APIService {
 
   findClasses(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
+      .set('site_id', this.site_id)
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())

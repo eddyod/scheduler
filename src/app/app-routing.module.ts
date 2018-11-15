@@ -22,42 +22,34 @@ const routes: Routes = [
   {
     path: 'employees',
     component: EmployeesComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'create-employee',
     component: EmployeeCreateComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'update-schedule',
     component: ScheduleUpdateComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'create-schedule',
     component: ScheduleCreateComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'locations',
     component: LocationsComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'create-location',
     component: LocationCreateComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'mycal',
     component: MycalComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'repeater',
     component: RepeaterComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -70,12 +62,10 @@ const routes: Routes = [
   {
     path: 'chart',
     component: ChartComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'classes',
     component: ClassesComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'sites',

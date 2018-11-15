@@ -23,6 +23,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { RepeaterComponent } from './repeater/repeater.component';
 import { LoginComponent } from './login/login.component';
 import { InterceptService } from './services/intercept.service';
+import { AlertService } from './services/alert.service';
+
 import { ChartModule } from 'angular-highcharts';
 import { ChartComponent } from './chart/chart.component';
 import { MaterialModule } from './shared/material.module';
@@ -66,7 +68,7 @@ import { RegisterComponent } from './login/register.component';
     MaterialModule,
     BrowserAnimationsModule,
   ],
-  providers: [InterceptService, { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true }],
+  providers: [InterceptService, { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true }, AlertService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

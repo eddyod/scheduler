@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import * as moment from 'moment';
@@ -35,7 +36,7 @@ export class AuthService {
   }
 
   // Uses http.post() to get an auth token from djangorestframework-jwt endpoint
-  public login(user) {
+  public loginXXX(user) {
     return this.http.post(this.API_URL + '/api-token-auth/', JSON.stringify(user), this.httpOptions).subscribe(
       data => {
         console.log(data);
@@ -49,11 +50,24 @@ export class AuthService {
     );
   }
 
+  login(username: string, password: string) {
+    return this.http.post<any>(this.API_URL + '/api-token-auth/', { username: username, password: password })
+      .pipe(map(user => {
+        // login successful if there's a jwt token in the response
+        if (user && user.token) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('currentUser', JSON.stringify(user));
+        }
+
+        return user;
+      }));
+  }
+
   private getAndSetSite(auth_id: string) {
     const params = new HttpParams()
       .set('auth_id', auth_id)
     this.http.get(this.API_URL + '/user_site', { params })
-      .subscribe(data =>  {
+      .subscribe(data => {
         console.log(data[0]['site_id']);
         localStorage.setItem('site_id', data[0]['site_id']);
       },
@@ -87,7 +101,7 @@ export class AuthService {
   }
 
   public isLoggedIn() {
-    return  moment().isBefore(this.token_expires);
+    return moment().isBefore(this.token_expires);
     // return this.isLoggedIn;
   }
 

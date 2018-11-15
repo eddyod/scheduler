@@ -3,24 +3,34 @@
   <mat-sidenav #sidenav (keydown.escape)="sidenav.close()">
     <mat-nav-list *ngIf="authService.isLoggedIn()">
 
-      <a mat-list-item routerLink="/login" (click)="sidenav.close()"><mat-icon>account_circle</mat-icon>Login Info</a>
-      <a mat-list-item routerLink="/locations" (click)="sidenav.close()"><mat-icon>school</mat-icon>Schools</a>
-      <a mat-list-item routerLink="/employees" (click)="sidenav.close()"><mat-icon>person</mat-icon>Teachers</a>
+      <a mat-list-item routerLink="/login" (click)="sidenav.close()">
+        <mat-icon>account_circle</mat-icon>Login Info</a>
+      <a mat-list-item routerLink="/locations" (click)="sidenav.close()">
+        <mat-icon>school</mat-icon>Schools</a>
+      <a mat-list-item routerLink="/employees" (click)="sidenav.close()">
+        <mat-icon>person</mat-icon>Teachers</a>
 
 
-      <a mat-list-item routerLink="/classes" (click)="sidenav.close()"><mat-icon>class</mat-icon>Classes</a>
-      <a mat-list-item routerLink="/create-schedule" (click)="sidenav.close()"><mat-icon>event</mat-icon>Create Single Class</a>
-      <a mat-list-item routerLink="/repeater" (click)="sidenav.close()"><mat-icon>repeat</mat-icon>Create Repeating Classes</a>
+      <a mat-list-item routerLink="/classes" (click)="sidenav.close()">
+        <mat-icon>class</mat-icon>Classes</a>
+      <a mat-list-item routerLink="/create-schedule" (click)="sidenav.close()">
+        <mat-icon>event</mat-icon>Create Single Class</a>
+      <a mat-list-item routerLink="/repeater" (click)="sidenav.close()">
+        <mat-icon>repeat</mat-icon>Create Repeating Classes</a>
 
-      <a mat-list-item routerLink="/mycal" (click)="sidenav.close()"><mat-icon>date_range</mat-icon>Calendar</a>
-      <a mat-list-item routerLink="/chart" (click)="sidenav.close()"><mat-icon>bar_chart</mat-icon>Chart</a>
-      <a mat-list-item routerLink="/sites" (click)="sidenav.close()"><mat-icon>store_mall_directory</mat-icon>Sites</a>
+      <a mat-list-item routerLink="/mycal" (click)="sidenav.close()">
+        <mat-icon>date_range</mat-icon>Calendar</a>
+      <a mat-list-item routerLink="/chart" (click)="sidenav.close()">
+        <mat-icon>bar_chart</mat-icon>Chart</a>
+      <a mat-list-item routerLink="/sites" (click)="sidenav.close()">
+        <mat-icon>store_mall_directory</mat-icon>Sites</a>
 
     </mat-nav-list>
 
     <mat-nav-list *ngIf="!authService.isLoggedIn()">
 
-      <a mat-list-item routerLink="/login" (click)="sidenav.close()"><mat-icon>account_circle</mat-icon>Login</a>
+      <a mat-list-item routerLink="/login" (click)="sidenav.close()">
+        <mat-icon>account_circle</mat-icon>Login</a>
 
     </mat-nav-list>
 
@@ -29,7 +39,16 @@
   <mat-toolbar color="primary">
     <button mat-icon-button (click)="sidenav.open('mouse')">
             <mat-icon>menu</mat-icon>
-        </button>
+    </button>
+    <span class="example-fill-remaining-space"></span>
+
+    <!-- This fills the remaining space of the current row -->
+    <div *ngIf="authService.isLoggedIn()">
+      <button mat-icon-button>{{authService.username}}
+            <mat-icon>face</mat-icon>
+    </button>
+    </div>
+
   </mat-toolbar>
 
 
