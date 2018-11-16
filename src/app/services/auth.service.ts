@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import * as moment from 'moment';
@@ -9,6 +10,7 @@ import * as moment from 'moment';
   providedIn: 'root'
 })
 export class AuthService {
+  private loggedIn = new BehaviorSubject<boolean>(false); // {1}
 
   // http options used for making API calls
   private httpOptions: any;
@@ -35,30 +37,16 @@ export class AuthService {
     };
   }
 
-  // Uses http.post() to get an auth token from djangorestframework-jwt endpoint
-  public loginXXX(user) {
-    return this.http.post(this.API_URL + '/api-token-auth/', JSON.stringify(user), this.httpOptions).subscribe(
-      data => {
-        console.log(data);
-        this.updateData(data['token']);
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.getAndSetSite(data['userid']);
-      },
-      err => {
-        this.errors = err['error'];
-      }
-    );
-  }
-
-  login(username: string, password: string) {
+  public login(username: string, password: string) {
     return this.http.post<any>(this.API_URL + '/api-token-auth/', { username: username, password: password })
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
-        if (user && user.token) {
+        if (user && user['token']) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.updateData(user['token']);
+          // localStorage.setItem('currentUser', JSON.stringify(user));
+          this.getAndSetSite(user['userid'])
         }
-
         return user;
       }));
   }
@@ -68,12 +56,11 @@ export class AuthService {
       .set('auth_id', auth_id)
     this.http.get(this.API_URL + '/user_site', { params })
       .subscribe(data => {
-        console.log(data[0]['site_id']);
         localStorage.setItem('site_id', data[0]['site_id']);
       },
-      err => {
-        this.errors = err['error'];
-      }
+        err => {
+          this.errors = err['error'];
+        }
       );
 
   }
@@ -100,13 +87,17 @@ export class AuthService {
     localStorage.removeItem('currentUser');
   }
 
-  public isLoggedIn() {
+  public isLoggedInXX() {
     return moment().isBefore(this.token_expires);
     // return this.isLoggedIn;
   }
 
+  get isLoggedIn() {
+    return this.loggedIn.asObservable(); // {2}
+  }
+
   isLoggedOut() {
-    return !this.isLoggedIn();
+    // return !this.isLoggedIn();
   }
 
   getExpiration() {

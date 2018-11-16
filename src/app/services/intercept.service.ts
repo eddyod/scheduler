@@ -8,13 +8,15 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { AlertService } from '../services/alert.service';
+
 
 
 @Injectable()
 
 export class InterceptService implements HttpInterceptor {
 
-  constructor() { }
+  constructor(  private alertService: AlertService) { }
 
   // intercept request and add token
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -32,10 +34,10 @@ export class InterceptService implements HttpInterceptor {
           if (event instanceof HttpResponse) {}
         }, error => {
           // http response status code
-          console.error('Error status code:');
-          console.error(error.status);
-          console.error(error.message);
-          console.log('--- end of response---');
+          this.alertService.error(error.message);
+
+          // console.error(error.status);
+          // console.error(error.message);
 
         })
       );

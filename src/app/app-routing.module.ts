@@ -22,10 +22,12 @@ const routes: Routes = [
   {
     path: 'employees',
     component: EmployeesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'create-employee',
     component: EmployeeCreateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'update-schedule',

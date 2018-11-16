@@ -9,16 +9,15 @@ import { ScheduleEvent } from '../models/scheduleEvent';
 import { environment } from '../../environments/environment';
 
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class APIService {
 
   API_URL = environment.apiEndpoint;
-  public site_id = localStorage.getItem('site_id');
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient) {
   }
 
   // locations
@@ -40,7 +39,7 @@ export class APIService {
 
   findLocations(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.site_id)
+      .set('site_id', localStorage.getItem('site_id') )
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -57,7 +56,7 @@ export class APIService {
   createEmployee(employee) {
     return this.http.post(this.API_URL + '/employees', employee)
       .pipe(
-      catchError(this.handleError('createEmployee', []))
+        catchError(this.handleError('createEmployee', []))
       );
   }
 
@@ -71,7 +70,7 @@ export class APIService {
 
   findEmployees(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.site_id)
+      .set('site_id', localStorage.getItem('site_id'))
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -88,7 +87,7 @@ export class APIService {
   createSchedule(schedule) {
     return this.http.post(this.API_URL + '/schedules', schedule)
       .pipe(
-      catchError(this.handleError<any>('createSchedule'))
+        catchError(this.handleError<any>('createSchedule'))
       );
   }
 
@@ -102,7 +101,7 @@ export class APIService {
 
   findClasses(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.site_id)
+      .set('site_id', localStorage.getItem('site_id') )
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -126,7 +125,7 @@ export class APIService {
   createSite(site) {
     return this.http.post(this.API_URL + '/sites', site)
       .pipe(
-      catchError(this.handleError('createSite', []))
+        catchError(this.handleError('createSite', []))
       );
   }
 
