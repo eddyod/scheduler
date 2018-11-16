@@ -5,8 +5,11 @@ import { catchError } from 'rxjs/operators';
 import { Employee } from '../models/employee';
 import { Location } from '../models/location';
 import { Site } from '../models/site';
+import { User } from '../models/user';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { environment } from '../../environments/environment';
+
+const fetchedObject  = localStorage.getItem('user');
 
 
 @Injectable({
@@ -15,6 +18,7 @@ import { environment } from '../../environments/environment';
 export class APIService {
 
   API_URL = environment.apiEndpoint;
+  private user: User;
 
   constructor(
     private http: HttpClient) {
@@ -38,8 +42,10 @@ export class APIService {
   }
 
   findLocations(filter = '', ordering = '', limit = 20, offset = 0) {
+    this.user = JSON.parse(fetchedObject);
+
     const params = new HttpParams()
-      .set('site_id', localStorage.getItem('site_id') )
+      .set('site_id', this.user.main_site )
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -69,8 +75,9 @@ export class APIService {
   }
 
   findEmployees(filter = '', ordering = '', limit = 20, offset = 0) {
+    this.user = JSON.parse(fetchedObject);
     const params = new HttpParams()
-      .set('site_id', localStorage.getItem('site_id'))
+      .set('site_id', this.user.main_site)
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -100,8 +107,9 @@ export class APIService {
   }
 
   findClasses(filter = '', ordering = '', limit = 20, offset = 0) {
+    this.user = JSON.parse(fetchedObject);
     const params = new HttpParams()
-      .set('site_id', localStorage.getItem('site_id') )
+      .set('site_id', this.user.main_site )
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())

@@ -10,8 +10,7 @@ import * as moment from 'moment';
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(false); // {1}
-
+  private loggedIn = new BehaviorSubject<boolean>(this.tokenAvailable());
   // http options used for making API calls
   private httpOptions: any;
 
@@ -44,15 +43,27 @@ export class AuthService {
         if (user && user['token']) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           this.updateData(user['token']);
-          // localStorage.setItem('currentUser', JSON.stringify(user));
-          this.getAndSetSite(user['userid'])
+          this.getAndSetSite()
           this.loggedIn.next(true);
         }
         return user;
       }));
   }
 
-  private getAndSetSite(auth_id: string) {
+  private getAndSetSite() {
+    this.http.get(this.API_URL + '/currentuser')
+      .subscribe((user: User) => {
+        console.log(user);
+        localStorage.setItem('user', JSON.stringify(user));
+      },
+        err => {
+          this.errors = err['error'];
+        }
+      );
+
+  }
+
+  private getAndSetSiteXXX(auth_id: string) {
     const params = new HttpParams()
       .set('auth_id', auth_id)
     this.http.get(this.API_URL + '/user_site', { params })
@@ -63,7 +74,6 @@ export class AuthService {
           this.errors = err['error'];
         }
       );
-
   }
 
   // Refreshes the JWT token, to extend the time the user is logged in
@@ -82,24 +92,12 @@ export class AuthService {
     this.loggedIn.next(false);
     this.token = null;
     this.token_expires = null;
-    this.username = null;
-    localStorage.removeItem('site_id');
-    localStorage.removeItem('id_token');
+    localStorage.removeItem('user');
     localStorage.removeItem('expires_at');
-    localStorage.removeItem('currentUser');
-  }
-
-  public isLoggedInXX() {
-    return moment().isBefore(this.token_expires);
-    // return this.isLoggedIn;
   }
 
   get isLoggedIn() {
     return this.loggedIn.asObservable(); // {2}
-  }
-
-  isLoggedOut() {
-    // return !this.isLoggedIn();
   }
 
   getExpiration() {
@@ -115,13 +113,17 @@ export class AuthService {
     const token_decoded = JSON.parse(window.atob(token_parts[1]));
     this.token_expires = new Date(token_decoded.exp * 1000);
     this.username = token_decoded.username;
-    localStorage.setItem('id_token', token.idToken);
-    localStorage.setItem('Token', token);
+    localStorage.setItem('token', token);
+    localStorage.setItem('username', this.username);
     localStorage.setItem('user_id', token_decoded.user_id);
   }
 
+  private tokenAvailable(): boolean {
+    this.username = localStorage.getItem('username');
+    return !!localStorage.getItem('token');
+  }
+
   register(user: User) {
-    console.log(this.API_URL + '/api/users');
     return this.http.post(this.API_URL + '/api/users', user);
   }
 

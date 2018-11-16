@@ -13,6 +13,7 @@ import { RepeaterComponent } from './repeater/repeater.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
 import { ChartComponent } from './chart/chart.component';
+import { UserinfoComponent } from './login/userinfo.component';
 
 import { AuthGuard } from './services/auth.guard';
 
@@ -32,30 +33,41 @@ const routes: Routes = [
   {
     path: 'update-schedule',
     component: ScheduleUpdateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'create-schedule',
     component: ScheduleCreateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'locations',
     component: LocationsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'create-location',
     component: LocationCreateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'mycal',
     component: MycalComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'repeater',
     component: RepeaterComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'userinfo',
+    component: UserinfoComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'register',
@@ -64,14 +76,17 @@ const routes: Routes = [
   {
     path: 'chart',
     component: ChartComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'classes',
     component: ClassesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'sites',
-    loadChildren: './sites/sites.module#SitesModule'
+    loadChildren: './sites/sites.module#SitesModule',
+    canActivate: [AuthGuard]
   }
 
 ];

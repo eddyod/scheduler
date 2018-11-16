@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
 
     // reset login status
     this.authService.logout();
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/login';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/userinfo';
     this.isLoggedIn$ = this.authService.isLoggedIn; // {2}
   }
 
@@ -66,17 +66,6 @@ export class LoginComponent implements OnInit {
         this.loading = false;
       });
   }
-
-  refreshToken() {
-    this.authService.refreshToken();
-  }
-
-  logout() {
-    this.authService.logout();
-    this.loading = false;
-    this.alertService.success('You have successfully logged out.')
-  }
-
 
 
 }

@@ -1,5 +1,8 @@
 import 'angular-calendar/css/angular-calendar.css';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import {
   isSameMonth,
   isSameDay,
@@ -13,12 +16,11 @@ import {
 } from 'date-fns';
 import { CalendarView } from 'angular-calendar';
 
+import { User } from '../models/user';
 import { ScheduleEvent } from '../models/scheduleEvent';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
+const fetchedObject  = localStorage.getItem('user');
 
 
 const colors: any = {
@@ -52,6 +54,8 @@ export class MycalComponent implements OnInit {
   activeDayIsOpen = false;
   startClass: string;
   endClass: string;
+  private user: User;
+
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
@@ -72,16 +76,11 @@ export class MycalComponent implements OnInit {
       week: endOfWeek,
       day: endOfDay
     }[this.view];
-
+    this.user = JSON.parse(fetchedObject);
     const params = new HttpParams()
-      .set(
-        'start_gte',
-        format(getStart(this.viewDate), 'YYYY-MM-DD')
-      )
-      .set(
-        'start_lte',
-        format(getEnd(this.viewDate), 'YYYY-MM-DD')
-      );
+      .set('site_id', this.user.main_site)
+      .set('start_gte', format(getStart(this.viewDate), 'YYYY-MM-DD') )
+      .set('start_lte', format(getEnd(this.viewDate), 'YYYY-MM-DD') );
 
     this.events$ = this.http
       .get(this.API_URL, {params})

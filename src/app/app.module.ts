@@ -25,6 +25,7 @@ import { LoginComponent } from './login/login.component';
 import { InterceptService } from './services/intercept.service';
 import { AlertService } from './services/alert.service';
 import { AuthService } from './services/auth.service';
+import { AuthGuard } from './services/auth.guard';
 
 import { ChartModule } from 'angular-highcharts';
 import { ChartComponent } from './chart/chart.component';
@@ -34,6 +35,7 @@ import { ClassesComponent } from './classes/classes.component';
 import { RegisterComponent } from './login/register.component';
 import { AlertComponent } from './shared/alert.component';
 import { HeaderComponent } from './shared/header.component';
+import { UserinfoComponent } from './login/userinfo.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { HeaderComponent } from './shared/header.component';
     RegisterComponent,
     AlertComponent,
     HeaderComponent,
+    UserinfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,7 @@ import { HeaderComponent } from './shared/header.component';
     MaterialModule,
     BrowserAnimationsModule,
   ],
-  providers: [InterceptService, { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true }, AlertService, AuthService],
+  providers: [InterceptService, { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true }, AlertService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

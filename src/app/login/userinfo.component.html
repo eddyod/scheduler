@@ -1,0 +1,13 @@
+<div class="row" *ngIf="isLoggedIn$ | async">
+  <div class="col-md-6">
+
+    <div class="form-group">
+      <p>You are logged in as {{ authService.username }}.</p>
+      <p>Your login will expire at: {{ authService.token_expires }}</p>
+      <p>Each time you click on any link, your session will be extended another hour</p>
+      <button (click)="refreshToken()" class="btn btn-primary">Refresh session</button>
+      <button (click)="logout()" class="btn btn-danger" style="margin-left:10px;">Log Out</button>
+    </div>
+
+  </div>
+</div>
