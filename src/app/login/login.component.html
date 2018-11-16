@@ -1,6 +1,5 @@
-
 <form [formGroup]="addForm" novalidate class="form">
-  <div class="row" *ngIf="!isLoggedIn">
+  <div class="row" *ngIf="!(isLoggedIn$ | async)">
     <div class="col-md-6">
       <h2>Log In</h2>
 
@@ -29,7 +28,7 @@
     </div>
   </div>
 
-  <div class="row" *ngIf="isLoggedIn">
+  <div class="row" *ngIf="isLoggedIn$ | async">
     <div class="col-md-6">
 
       <div class="form-group">

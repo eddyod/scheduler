@@ -1,34 +1,33 @@
 <mat-sidenav #sidenav (keydown.escape)="sidenav.close()">
-  <mat-nav-list *ngIf="isLoggedIn$ | async as isLoggedIn">
+  <mat-nav-list *ngIf="isLoggedIn$ | async">
 
     <a mat-list-item routerLink="/login" (click)="sidenav.close()">
-        <mat-icon>account_circle</mat-icon>Login Info</a>
+      <mat-icon>account_circle</mat-icon>Login Info</a>
     <a mat-list-item routerLink="/locations" (click)="sidenav.close()">
-        <mat-icon>school</mat-icon>Schools</a>
+      <mat-icon>school</mat-icon>Schools</a>
     <a mat-list-item routerLink="/employees" (click)="sidenav.close()">
-        <mat-icon>person</mat-icon>Teachers</a>
+      <mat-icon>person</mat-icon>Teachers</a>
 
 
     <a mat-list-item routerLink="/classes" (click)="sidenav.close()">
-        <mat-icon>class</mat-icon>Classes</a>
+      <mat-icon>class</mat-icon>Classes</a>
     <a mat-list-item routerLink="/create-schedule" (click)="sidenav.close()">
-        <mat-icon>event</mat-icon>Create Single Class</a>
+      <mat-icon>event</mat-icon>Create Single Class</a>
     <a mat-list-item routerLink="/repeater" (click)="sidenav.close()">
-        <mat-icon>repeat</mat-icon>Create Repeating Classes</a>
+      <mat-icon>repeat</mat-icon>Create Repeating Classes</a>
 
     <a mat-list-item routerLink="/mycal" (click)="sidenav.close()">
-        <mat-icon>date_range</mat-icon>Calendar</a>
+      <mat-icon>date_range</mat-icon>Calendar</a>
     <a mat-list-item routerLink="/chart" (click)="sidenav.close()">
-        <mat-icon>bar_chart</mat-icon>Chart</a>
+      <mat-icon>bar_chart</mat-icon>Chart</a>
     <a mat-list-item routerLink="/sites" (click)="sidenav.close()">
-        <mat-icon>store_mall_directory</mat-icon>Sites</a>
+      <mat-icon>store_mall_directory</mat-icon>Sites</a>
 
   </mat-nav-list>
 
-  <mat-nav-list *ngIf="!isLoggedIn">
-
+  <mat-nav-list *ngIf="!(isLoggedIn$ | async)">
     <a mat-list-item routerLink="/login" (click)="sidenav.close()">
-        <mat-icon>account_circle</mat-icon>Login</a>
+      <mat-icon>account_circle</mat-icon>Login</a>
 
   </mat-nav-list>
 
@@ -43,16 +42,12 @@
   </button>
 </span>
   <span class="fill-remaining-space"></span>
-  <button mat-button>Menu Option 01</button>
-  <button mat-button>Menu Option 02</button>
-  <button mat-button routerLink="/login" *ngIf="!isLoggedIn">Login</button>
+  <div *ngIf="isLoggedIn$ | async">
+    <a mat-list-item routerLink="/login">
+      <mat-icon>face</mat-icon>{{authService.username}}</a>
 
-  <div *ngIf="isLoggedIn">
-    <button mat-icon-button>{{authService.username}}
-          <mat-icon>face</mat-icon>
-  </button>
+
   </div>
 
 
-  <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
 </mat-toolbar>

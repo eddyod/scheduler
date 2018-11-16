@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
 import { AlertService } from '../services/alert.service';
@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
-  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isLoggedIn$: Observable<boolean>;                  // {1}
+
 
   constructor(public authService: AuthService,
     private formBuilder: FormBuilder,
@@ -36,10 +37,11 @@ export class LoginComponent implements OnInit {
     // reset login status
     this.authService.logout();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/login';
+    this.isLoggedIn$ = this.authService.isLoggedIn; // {2}
   }
 
   get isLoggedIn() {
-    return this.loggedIn.asObservable();
+    return this.authService.isLoggedIn;
   }
 
 
@@ -58,7 +60,6 @@ export class LoginComponent implements OnInit {
       data => {
         this.router.navigate([this.returnUrl]);
         this.alertService.success('You have successfully logged in.')
-        this.loggedIn.next(true);
       },
       error => {
         this.alertService.error("The username and/or password were incorrect.");
@@ -71,7 +72,6 @@ export class LoginComponent implements OnInit {
   }
 
   logout() {
-    this.loggedIn.next(false);
     this.authService.logout();
     this.loading = false;
     this.alertService.success('You have successfully logged out.')

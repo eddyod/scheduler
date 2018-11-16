@@ -46,6 +46,7 @@ export class AuthService {
           this.updateData(user['token']);
           // localStorage.setItem('currentUser', JSON.stringify(user));
           this.getAndSetSite(user['userid'])
+          this.loggedIn.next(true);
         }
         return user;
       }));
@@ -78,6 +79,7 @@ export class AuthService {
   }
 
   public logout() {
+    this.loggedIn.next(false);
     this.token = null;
     this.token_expires = null;
     this.username = null;
@@ -113,12 +115,9 @@ export class AuthService {
     const token_decoded = JSON.parse(window.atob(token_parts[1]));
     this.token_expires = new Date(token_decoded.exp * 1000);
     this.username = token_decoded.username;
-    console.log('first name is ');
-    console.log(token_decoded.first_name);
     localStorage.setItem('id_token', token.idToken);
     localStorage.setItem('Token', token);
     localStorage.setItem('user_id', token_decoded.user_id);
-    localStorage.setItem('first_name', token_decoded.first_name);
   }
 
   register(user: User) {
