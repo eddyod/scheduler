@@ -1,8 +1,6 @@
 <h3>Sites</h3>
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="openAddSiteDialog()">New Site</button>
-  <button mat-menu-item (click)="toggleTheme.emit()">Toggle theme</button>
-  <button mat-menu-item (click)="toggleDir.emit()">Toggle dir</button>
 </mat-menu>
 
 <div class="spinner-container" *ngIf="dataSource.loading$ | async">
