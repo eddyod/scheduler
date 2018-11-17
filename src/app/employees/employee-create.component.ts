@@ -47,7 +47,7 @@ export class EmployeeCreateComponent implements OnInit {
       }),
     });
     */
-    const id = localStorage.getItem('id');
+    const id = sessionStorage.getItem('id');
     if (+id > 0) {
       this.apiService.getEmployeeById(+id).subscribe(data => {
         this.addForm.patchValue(data);
@@ -60,9 +60,9 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   onSave() {
-    // this.addForm.value.created_id = localStorage.getItem('user_id');
+    // this.addForm.value.created_id = sessionStorage.getItem('user_id');
     // this.addForm.value.created = new Date();
-    this.addForm.value.site = parseInt(localStorage.getItem('site_id'), 10),
+    this.addForm.value.site = parseInt(sessionStorage.getItem('site_id'), 10),
     this.apiService.createEmployee(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['employees']);
@@ -73,7 +73,7 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   onUpdate() {
-    this.addForm.value.site = parseInt(localStorage.getItem('site_id'), 10),
+    this.addForm.value.site = parseInt(sessionStorage.getItem('site_id'), 10),
     this.apiService.updateEmployee(this.addForm.value).subscribe(data => {
       this.router.navigate(['employees']);
     },

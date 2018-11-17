@@ -20,7 +20,7 @@ month[11] = 'November';
 month[12] = 'December';
 
 const now = new Date();
-const fetchedObject  = localStorage.getItem('user');
+const fetchedObject  = sessionStorage.getItem('user');
 
 
 @Component({

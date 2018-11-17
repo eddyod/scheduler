@@ -9,7 +9,6 @@ import { User } from '../models/user';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { environment } from '../../environments/environment';
 
-const fetchedObject  = localStorage.getItem('user');
 
 
 @Injectable({
@@ -22,6 +21,8 @@ export class APIService {
 
   constructor(
     private http: HttpClient) {
+      const fetchedObject  = sessionStorage.getItem('user');
+      this.user = JSON.parse(fetchedObject);
   }
 
   // locations
@@ -42,8 +43,6 @@ export class APIService {
   }
 
   findLocations(filter = '', ordering = '', limit = 20, offset = 0) {
-    this.user = JSON.parse(fetchedObject);
-
     const params = new HttpParams()
       .set('site_id', this.user.main_site )
       .set('search', filter)
@@ -75,7 +74,6 @@ export class APIService {
   }
 
   findEmployees(filter = '', ordering = '', limit = 20, offset = 0) {
-    this.user = JSON.parse(fetchedObject);
     const params = new HttpParams()
       .set('site_id', this.user.main_site)
       .set('search', filter)
@@ -107,7 +105,6 @@ export class APIService {
   }
 
   findClasses(filter = '', ordering = '', limit = 20, offset = 0) {
-    this.user = JSON.parse(fetchedObject);
     const params = new HttpParams()
       .set('site_id', this.user.main_site )
       .set('search', filter)

@@ -49,7 +49,7 @@ export class ScheduleCreateComponent implements OnInit {
   }
 
   onSave() {
-    this.addForm.value.createdBy = localStorage.getItem('user_id');
+    this.addForm.value.createdBy = sessionStorage.getItem('user_id');
     this.addForm.value.start = moment(this.addForm.value.start).format('YYYY-MM-DD[T]HH:mm');
     this.addForm.value.end = moment(this.addForm.value.end).format('YYYY-MM-DD[T]HH:mm');
     this.apiService.createSchedule(this.addForm.value)

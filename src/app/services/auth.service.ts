@@ -54,7 +54,7 @@ export class AuthService {
     this.http.get(this.API_URL + '/currentuser')
       .subscribe((user: User) => {
         console.log(user);
-        localStorage.setItem('user', JSON.stringify(user));
+        sessionStorage.setItem('user', JSON.stringify(user));
       },
         err => {
           this.errors = err['error'];
@@ -68,7 +68,7 @@ export class AuthService {
       .set('auth_id', auth_id)
     this.http.get(this.API_URL + '/user_site', { params })
       .subscribe(data => {
-        localStorage.setItem('site_id', data[0]['site_id']);
+        sessionStorage.setItem('site_id', data[0]['site_id']);
       },
         err => {
           this.errors = err['error'];
@@ -92,8 +92,8 @@ export class AuthService {
     this.loggedIn.next(false);
     this.token = null;
     this.token_expires = null;
-    localStorage.removeItem('user');
-    localStorage.removeItem('expires_at');
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('expires_at');
   }
 
   get isLoggedIn() {
@@ -113,14 +113,14 @@ export class AuthService {
     const token_decoded = JSON.parse(window.atob(token_parts[1]));
     this.token_expires = new Date(token_decoded.exp * 1000);
     this.username = token_decoded.username;
-    localStorage.setItem('token', token);
-    localStorage.setItem('username', this.username);
-    localStorage.setItem('user_id', token_decoded.user_id);
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('username', this.username);
+    sessionStorage.setItem('user_id', token_decoded.user_id);
   }
 
   private tokenAvailable(): boolean {
-    this.username = localStorage.getItem('username');
-    return !!localStorage.getItem('token');
+    this.username = sessionStorage.getItem('username');
+    return !!sessionStorage.getItem('token');
   }
 
   register(user: User) {

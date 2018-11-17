@@ -21,7 +21,7 @@ export class UserinfoComponent implements OnInit {
 
   ngOnInit() {
     this.isLoggedIn$ = this.authService.isLoggedIn; // {2}
-    // console.log(localStorage.getItem('username'));
+    // console.log(sessionStorage.getItem('username'));
   }
 
   refreshToken() {

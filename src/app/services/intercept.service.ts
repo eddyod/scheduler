@@ -24,7 +24,7 @@ export class InterceptService implements HttpInterceptor {
     // modify request
     request = request.clone({
       setHeaders: {
-        Authorization: `JWT ${localStorage.getItem('token')}`
+        Authorization: `JWT ${sessionStorage.getItem('token')}`
       }
     });
 

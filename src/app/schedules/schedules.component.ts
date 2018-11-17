@@ -12,11 +12,11 @@ import { ScheduleEvent } from '../models/scheduleEvent';
 
 
 @Component({
-  selector: 'app-classes',
-  templateUrl: './classes.component.html',
-  styleUrls: ['./classes.component.css']
+  selector: 'app-schedule',
+  templateUrl: './schedules.component.html',
+  styleUrls: ['./schedules.component.css']
 })
-export class ClassesComponent implements OnInit {
+export class SchedulesComponent implements OnInit {
 
   class: ScheduleEvent;
   dataSource: ClassDataSource;
@@ -84,11 +84,11 @@ export class ClassesComponent implements OnInit {
   }
 
   editSchedule(schedule: ScheduleEvent): void {
-    localStorage.removeItem('id');
-    localStorage.setItem('id', schedule.id.toString());
-    localStorage.setItem('location_id', schedule.location.id.toString());
-    localStorage.setItem('employee_id', schedule.employee.id.toString());
-    this.router.navigate(['update-schedule']);
+    sessionStorage.removeItem('id');
+    sessionStorage.setItem('id', schedule.id.toString());
+    sessionStorage.setItem('location_id', schedule.location.id.toString());
+    sessionStorage.setItem('employee_id', schedule.employee.id.toString());
+    this.router.navigate(['schedules/update']);
   }
 
 
@@ -115,8 +115,8 @@ export class ClassesComponent implements OnInit {
   }
 
   addClass(): void {
-    localStorage.removeItem('id');
-    this.router.navigate(['create-schedule']);
+    sessionStorage.removeItem('id');
+    this.router.navigate(['schedules/create']);
   }
 
   openSnackBar(message: string, action: string) {

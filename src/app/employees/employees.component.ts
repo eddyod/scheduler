@@ -4,21 +4,21 @@ import { Router } from '@angular/router';
 import { MatPaginator, MatSort, } from '@angular/material';
 import { fromEvent } from 'rxjs';
 import { APIService } from '../services/api.service';
-import { LocationDataSource } from '../services/location.datasource';
-import { Location } from '../models/location';
+import { EmployeeDataSource } from '../services/employee.datasource';
+import { Employee } from '../models/employee';
 import { merge } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
-  selector: 'app-locations',
-  templateUrl: './locations.component.html',
-  styleUrls: ['./locations.component.css']
+  selector: 'app-employees',
+  templateUrl: './employees.component.html',
+  styleUrls: ['./employees.component.css']
 })
-export class LocationsComponent implements OnInit {
+export class EmployeesComponent implements OnInit {
 
-  location: Location;
-  dataSource: LocationDataSource;
+  employee: Employee;
+  dataSource: EmployeeDataSource;
   displayedColumns = ['name', 'phone', 'email', 'address1', 'active', 'actions'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -28,8 +28,8 @@ export class LocationsComponent implements OnInit {
   constructor(private apiService: APIService, private router: Router) { }
 
   ngOnInit() {
-    this.dataSource = new LocationDataSource(this.apiService);
-    this.dataSource.loadLocations('','name', 10, 0);
+    this.dataSource = new EmployeeDataSource(this.apiService);
+    this.dataSource.loadEmployees('','name', 10, 0);
   }
 
   ngAfterViewInit() {
@@ -71,7 +71,7 @@ export class LocationsComponent implements OnInit {
     } else {
       sortName = '-' + this.sort.active;
     }
-    this.dataSource.loadLocations(
+    this.dataSource.loadEmployees(
       this.input.nativeElement.value,
       sortName,
       this.paginator.pageSize,
@@ -80,15 +80,15 @@ export class LocationsComponent implements OnInit {
   }
 
 
-    editLocation(location: Location): void {
-      localStorage.removeItem('id');
-      localStorage.setItem('id', location.id.toString());
-      this.router.navigate(['create-location']);
+    editEmployee(employee: Employee): void {
+      sessionStorage.removeItem('id');
+      sessionStorage.setItem('id', employee.id.toString());
+      this.router.navigate(['employees/create']);
     }
 
-    addLocation(): void {
-      localStorage.removeItem('id');
-      this.router.navigate(['create-location']);
+    addEmployee(): void {
+      sessionStorage.removeItem('id');
+      this.router.navigate(['employees/create']);
     }
 
 }

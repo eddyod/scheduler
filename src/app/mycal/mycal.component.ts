@@ -20,7 +20,7 @@ import { User } from '../models/user';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { environment } from '../../environments/environment';
 
-const fetchedObject  = localStorage.getItem('user');
+const fetchedObject  = sessionStorage.getItem('user');
 
 
 const colors: any = {

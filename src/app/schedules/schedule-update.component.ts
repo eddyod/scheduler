@@ -40,13 +40,13 @@ export class ScheduleUpdateComponent implements OnInit {
       pay_rate: ['', Validators.required]
     });
 
-    const id = localStorage.getItem('id');
+    const id = sessionStorage.getItem('id');
     if (+id > 0) {
       this.apiService.getScheduleById(+id).subscribe(data => {
         this.addForm.patchValue(data);
       });
-      this.addForm.controls['location_id'].setValue(localStorage.getItem('location_id'));
-      this.addForm.controls['employee_id'].setValue(localStorage.getItem('employee_id'));
+      this.addForm.controls['location_id'].setValue(sessionStorage.getItem('location_id'));
+      this.addForm.controls['employee_id'].setValue(sessionStorage.getItem('employee_id'));
     }
 
 
@@ -62,7 +62,7 @@ export class ScheduleUpdateComponent implements OnInit {
   }
 
   onUpdate() {
-    this.addForm.value.createdBy = localStorage.getItem('user_id');
+    this.addForm.value.createdBy = sessionStorage.getItem('user_id');
     this.addForm.value.start = moment(this.addForm.value.start).format('YYYY-MM-DD[T]HH:mm');
     this.addForm.value.end = moment(this.addForm.value.end).format('YYYY-MM-DD[T]HH:mm');
     this.apiService.updateSchedule(this.addForm.value).subscribe(data => {
