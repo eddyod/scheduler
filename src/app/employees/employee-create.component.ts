@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { APIService } from '../services/api.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+
+import { APIService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 import { Employee } from '../models/employee';
-import { User } from '../models/user';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,13 +18,14 @@ export class EmployeeCreateComponent implements OnInit {
   addForm: FormGroup;
   employeeFormLabel = 'Add Employee';
   employeeButton = 'Save';
-  user: any;
 
   constructor(
     private apiService: APIService,
+    private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) { }
+  ) {
+}
 
   ngOnInit() {
 
@@ -35,18 +37,7 @@ export class EmployeeCreateComponent implements OnInit {
       address1: ['', Validators.required],
       active: ['', Validators.required],
     });
-    /*
-    this.addForm = this.formBuilder.group({
-      id: [],
-      name: ['', Validators.required],
-      phone: ['', Validators.required],
-      address1: ['', Validators.required],
-      active: ['', Validators.required],
-      user: this.formBuilder.group({
-        email: ['', Validators.required]
-      }),
-    });
-    */
+
     const id = sessionStorage.getItem('id');
     if (+id > 0) {
       this.apiService.getEmployeeById(+id).subscribe(data => {
@@ -60,9 +51,7 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   onSave() {
-    // this.addForm.value.created_id = sessionStorage.getItem('user_id');
-    // this.addForm.value.created = new Date();
-    this.addForm.value.site = parseInt(sessionStorage.getItem('site_id'), 10),
+    this.addForm.value.site = this.authService.user.main_site;
     this.apiService.createEmployee(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['employees']);
@@ -73,7 +62,7 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   onUpdate() {
-    this.addForm.value.site = parseInt(sessionStorage.getItem('site_id'), 10),
+    this.addForm.value.site = this.authService.user.main_site;
     this.apiService.updateEmployee(this.addForm.value).subscribe(data => {
       this.router.navigate(['employees']);
     },
@@ -81,8 +70,6 @@ export class EmployeeCreateComponent implements OnInit {
         alert('There was an error updating the data.');
       });
   }
-
-
 
   deleteEmployee(employee: Employee): void {
     this.apiService.deleteEmployee(employee.id)
@@ -93,7 +80,5 @@ export class EmployeeCreateComponent implements OnInit {
           alert('There was an error deleting the data.');
         });
   }
-
-
 
 }

@@ -6,13 +6,18 @@ import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import * as moment from 'moment';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(this.tokenAvailable());
   // http options used for making API calls
-  private httpOptions: any;
+  // private httpOptions: any;
 
   // the actual JWT token
   public token: string;
@@ -26,59 +31,45 @@ export class AuthService {
   // error messages received from the login attempt
   public errors: any = [];
   // var to show is logged interface
-  // public isLoggedIn: boolean;
+  public user: User = new User();
 
   API_URL = environment.apiEndpoint;
 
   constructor(private http: HttpClient) {
-    this.httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
+    // this.httpOptions = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
   }
 
   public login(username: string, password: string) {
     return this.http.post<any>(this.API_URL + '/api-token-auth/', { username: username, password: password })
-      .pipe(map(user => {
+      .pipe(map(data => {
         // login successful if there's a jwt token in the response
-        if (user && user['token']) {
+        if (data && data['token']) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          this.updateData(user['token']);
+          this.updateData(data['token']);
           this.getAndSetSite()
           this.loggedIn.next(true);
         }
-        return user;
+        return data;
       }));
   }
 
   private getAndSetSite() {
     this.http.get(this.API_URL + '/currentuser')
       .subscribe((user: User) => {
-        console.log(user);
         sessionStorage.setItem('user', JSON.stringify(user));
+        this.user = user;
+        console.log(this.user);
       },
-        err => {
-          this.errors = err['error'];
-        }
+      err => {
+        this.errors = err['error'];
+      }
       );
 
-  }
-
-  private getAndSetSiteXXX(auth_id: string) {
-    const params = new HttpParams()
-      .set('auth_id', auth_id)
-    this.http.get(this.API_URL + '/user_site', { params })
-      .subscribe(data => {
-        sessionStorage.setItem('site_id', data[0]['site_id']);
-      },
-        err => {
-          this.errors = err['error'];
-        }
-      );
   }
 
   // Refreshes the JWT token, to extend the time the user is logged in
   public refreshToken() {
-    this.http.post(this.API_URL + '/api-token-refresh/', JSON.stringify({ token: this.token }), this.httpOptions).subscribe(
+    this.http.post(this.API_URL + '/api-token-refresh/', JSON.stringify({ token: this.token }), httpOptions).subscribe(
       data => {
         this.updateData(data['token']);
       },
@@ -100,7 +91,7 @@ export class AuthService {
     return this.loggedIn.asObservable(); // {2}
   }
 
-  getExpiration() {
+  public getExpiration() {
     return moment(this.token_expires);
   }
 
@@ -123,9 +114,8 @@ export class AuthService {
     return !!sessionStorage.getItem('token');
   }
 
-  register(user: User) {
+  public register(user: User) {
     return this.http.post(this.API_URL + '/api/users', user);
   }
-
 
 }

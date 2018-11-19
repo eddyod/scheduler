@@ -12,5 +12,5 @@ export interface ScheduleEvent extends CalendarEvent {
   pay_rate: number;
   created: string;
   completed: boolean;
-  site: number;
+  site: string;
 }

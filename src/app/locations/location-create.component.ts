@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { APIService } from '../services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { APIService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-location-create',
@@ -19,9 +20,10 @@ export class LocationCreateComponent implements OnInit {
 
   constructor(
     private apiService: APIService,
+    private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
 
@@ -47,18 +49,19 @@ export class LocationCreateComponent implements OnInit {
   }
 
   onSave() {
-    this.addForm.value.site = parseInt(sessionStorage.getItem('site_id'), 10),
+    this.addForm.value.site = this.authService.user.main_site;
+    this.addForm.value.created_id = this.authService.user.id;
     this.apiService.createLocation(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['locations']);
       },
-        error => {
-          alert(error);
-        });
+      error => {
+        alert(error);
+      });
   }
   onUpdate() {
-    this.addForm.value.site = parseInt(sessionStorage.getItem('site_id'), 10),
-    this.addForm.value.created_id = sessionStorage.getItem('user_id');
+    this.addForm.value.site = this.authService.user.main_site;
+    this.addForm.value.created_id = this.authService.user.id;
     this.apiService.updateLocation(this.addForm.value).subscribe(data => {
       this.router.navigate(['locations']);
     },
@@ -66,5 +69,4 @@ export class LocationCreateComponent implements OnInit {
         alert(error);
       });
   }
-
 }

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { APIService } from '../services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+
+import { APIService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 import { Location } from '../models/location';
 import { Employee } from '../models/employee';
 
@@ -26,7 +28,9 @@ export class ScheduleUpdateComponent implements OnInit {
   constructor(
     private apiService: APIService,
     private formBuilder: FormBuilder,
-    private router: Router) { }
+    private authService: AuthService,
+    private router: Router) {
+  }
 
 
   ngOnInit() {
@@ -62,11 +66,11 @@ export class ScheduleUpdateComponent implements OnInit {
   }
 
   onUpdate() {
-    this.addForm.value.createdBy = sessionStorage.getItem('user_id');
+    this.addForm.value.site = this.authService.user.main_site;
     this.addForm.value.start = moment(this.addForm.value.start).format('YYYY-MM-DD[T]HH:mm');
     this.addForm.value.end = moment(this.addForm.value.end).format('YYYY-MM-DD[T]HH:mm');
     this.apiService.updateSchedule(this.addForm.value).subscribe(data => {
-      this.router.navigate(['classes']);
+      this.router.navigate(['schedules']);
     },
       error => {
         alert(error);

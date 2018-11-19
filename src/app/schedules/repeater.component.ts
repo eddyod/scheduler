@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { RRule } from 'rrule';
-import { Schedule } from '../models/schedule';
-import { APIService } from '../services/api.service';
 import {
   FormGroup, FormBuilder, Validators,
   FormControl, FormArray, ValidatorFn
 } from '@angular/forms';
 import * as moment from 'moment';
+
+import { APIService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
+import { Schedule } from '../models/schedule';
 import { Location } from '../models/location';
 import { Employee } from '../models/employee';
-
 
 const timezoneOffset = new Date().getTimezoneOffset();
 const hoursOffset = String(Math.floor(Math.abs(timezoneOffset / 60))).padStart(2, '0');
@@ -49,6 +50,7 @@ export class RepeaterComponent implements OnInit {
 
   constructor(
     private apiService: APIService,
+    private authService: AuthService,
     private formBuilder: FormBuilder) {
   }
 
@@ -115,11 +117,14 @@ export class RepeaterComponent implements OnInit {
       const tEnd = moment(tStart).add(this.addForm.value.duration, 'hours');
 
       const event: Schedule = {
-        start: this.startString, end: tEnd.format('YYYY-MM-DD[T]HH:mm'),
+        start: this.startString,
+        end: tEnd.format('YYYY-MM-DD[T]HH:mm'),
+        pay_rate: this.addForm.value.pay_rate,
+        created: new Date(),
+        completed: '1',
         location_id: this.addForm.value.location_id,
         employee_id: this.addForm.value.employee_id,
-        pay_rate:  this.addForm.value.pay_rate,
-        site: parseInt(sessionStorage.getItem('site_id'), 10),
+        site: this.authService.user.main_site,
       };
       this.scheduleForms.push(event);
     });

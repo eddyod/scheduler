@@ -16,12 +16,9 @@ import {
 } from 'date-fns';
 import { CalendarView } from 'angular-calendar';
 
-import { User } from '../models/user';
+import { AuthService } from '../services/auth.service';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { environment } from '../../environments/environment';
-
-const fetchedObject  = sessionStorage.getItem('user');
-
 
 const colors: any = {
   red: {
@@ -54,15 +51,14 @@ export class MycalComponent implements OnInit {
   activeDayIsOpen = false;
   startClass: string;
   endClass: string;
-  private user: User;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+  private authService: AuthService) {
+  }
 
   ngOnInit() {
     this.fetchEvents();
   }
-
-
 
   fetchEvents(): void {
     const getStart: any = {
@@ -76,9 +72,8 @@ export class MycalComponent implements OnInit {
       week: endOfWeek,
       day: endOfDay
     }[this.view];
-    this.user = JSON.parse(fetchedObject);
     const params = new HttpParams()
-      .set('site_id', this.user.main_site)
+      .set('site_id', this.authService.user.main_site)
       .set('start_gte', format(getStart(this.viewDate), 'YYYY-MM-DD') )
       .set('start_lte', format(getEnd(this.viewDate), 'YYYY-MM-DD') );
 

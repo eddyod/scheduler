@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Chart } from 'angular-highcharts';
 
-import { User } from '../models/user';
 import { APIService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 
 const month = new Array();
 month[1] = 'January';
@@ -20,8 +20,6 @@ month[11] = 'November';
 month[12] = 'December';
 
 const now = new Date();
-const fetchedObject  = sessionStorage.getItem('user');
-
 
 @Component({
   selector: 'app-chart',
@@ -35,21 +33,21 @@ export class ChartComponent implements OnInit {
   private month: number;
   public year: number;
   public monthDisplay: string;
-  private user; User;
 
 
-  constructor(private apiService: APIService
-  ) { }
+  constructor(
+    private apiService: APIService,
+    private authService: AuthService,
+  ) {}
 
 
   ngOnInit() {
     this.year = now.getFullYear();
     this.month = now.getMonth() + 1;
-    this.user = JSON.parse(fetchedObject);
 
     this.monthDisplay = this.convertMonth(this.month);
     const params = new HttpParams()
-      .set('site_id', this.user.main_site)
+      .set('site_id', this.authService.user.main_site)
       .set('m', this.month.toString())
       .set('y', this.year.toString());
     this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]); });
@@ -58,7 +56,7 @@ export class ChartComponent implements OnInit {
 
   refreshChart(m, year) {
     const params = new HttpParams()
-    .set('site_id', this.user.main_site)
+      .set('site_id', this.authService.user.main_site)
       .set('m', m)
       .set('y', year);
     this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]); });
@@ -90,7 +88,6 @@ export class ChartComponent implements OnInit {
     } else {
       this.month++;
     }
-    console.log(this.employees);
 
     this.monthDisplay = this.convertMonth(this.month);
     this.refreshChart(this.month, this.year);
@@ -163,6 +160,5 @@ export class ChartComponent implements OnInit {
       ]
     });
   }
-
 
 }

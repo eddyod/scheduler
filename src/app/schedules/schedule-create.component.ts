@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { APIService } from '../services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+
+import { APIService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 import { Location } from 'src/app/models/location';
 import { Employee } from 'src/app/models/employee';
+
 
 @Component({
   selector: 'app-schedule-create',
@@ -24,8 +27,10 @@ export class ScheduleCreateComponent implements OnInit {
 
   constructor(
     private apiService: APIService,
+    private authService: AuthService,
     private formBuilder: FormBuilder,
-    private router: Router) { }
+    private router: Router) {
+  }
 
 
   ngOnInit() {
@@ -49,12 +54,12 @@ export class ScheduleCreateComponent implements OnInit {
   }
 
   onSave() {
-    this.addForm.value.createdBy = sessionStorage.getItem('user_id');
+    this.addForm.value.site = this.authService.user.main_site;
     this.addForm.value.start = moment(this.addForm.value.start).format('YYYY-MM-DD[T]HH:mm');
     this.addForm.value.end = moment(this.addForm.value.end).format('YYYY-MM-DD[T]HH:mm');
     this.apiService.createSchedule(this.addForm.value)
       .subscribe(data => {
-        this.router.navigate(['classes']);
+        this.router.navigate(['schedules']);
       },
       error => {
         alert(error);
