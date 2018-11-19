@@ -54,6 +54,7 @@ export class MycalComponent implements OnInit {
 
   constructor(private http: HttpClient,
   private authService: AuthService) {
+    this.authService.title = 'View Monthly, Weekly, Daily Events';
   }
 
   ngOnInit() {

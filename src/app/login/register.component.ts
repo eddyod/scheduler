@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import {  MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { AuthService } from '../services/auth.service';
 // import { AlertService } from '../services/alert.service';
@@ -19,7 +19,9 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private snackBar: MatSnackBar
-    ) { }
+  ) {
+    this.authService.title = 'Registration';
+  }
 
   ngOnInit() {
     this.addForm = this.formBuilder.group({

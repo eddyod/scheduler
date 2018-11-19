@@ -38,7 +38,6 @@ export class LocationDataSource implements DataSource<Location> {
   }
 
   connect(collectionViewer: CollectionViewer): Observable<Location[]> {
-    console.log('Connecting data source');
     return this.locationsSubject.asObservable();
   }
 

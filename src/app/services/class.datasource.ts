@@ -38,7 +38,6 @@ export class ClassDataSource implements DataSource<ScheduleEvent> {
   }
 
   connect(collectionViewer: CollectionViewer): Observable<ScheduleEvent[]> {
-    console.log('Connecting data source');
     return this.classesSubject.asObservable();
   }
 

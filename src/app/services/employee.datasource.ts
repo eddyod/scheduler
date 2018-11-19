@@ -39,7 +39,6 @@ export class EmployeeDataSource implements DataSource<Employee> {
   }
 
   connect(collectionViewer: CollectionViewer): Observable<Employee[]> {
-    console.log('Connecting data source');
     return this.employeesSubject.asObservable();
   }
 

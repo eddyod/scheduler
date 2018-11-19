@@ -6,11 +6,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { EmployeesComponent } from './employees.component';
 import { EmployeeCreateComponent } from './employee-create.component';
-
+import { AuthGuard } from '../services/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: EmployeesComponent },
-  { path: 'create', component: EmployeeCreateComponent },
+  { path: '', component: EmployeesComponent, canActivate: [AuthGuard] },
+  { path: 'create', component: EmployeeCreateComponent, canActivate: [AuthGuard]  },
 ];
 
 

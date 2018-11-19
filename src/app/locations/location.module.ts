@@ -6,11 +6,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LocationsComponent } from './locations.component';
 import { LocationCreateComponent } from './location-create.component';
+import { AuthGuard } from '../services/auth.guard';
 
 
 const routes: Routes = [
-  { path: '', component: LocationsComponent },
-  { path: 'create', component: LocationCreateComponent },
+  { path: '', component: LocationsComponent, canActivate: [AuthGuard] },
+  { path: 'create', component: LocationCreateComponent, canActivate: [AuthGuard] },
 ];
 
 

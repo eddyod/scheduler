@@ -1,39 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { MycalComponent } from './mycal/mycal.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './login/register.component';
-import { ChartComponent } from './chart/chart.component';
-import { UserinfoComponent } from './login/userinfo.component';
-
-import { AuthGuard } from './services/auth.guard';
-
-
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'account/login', pathMatch: 'full' },
+  {
+    path: 'account',
+    loadChildren: './login/account.module#AccountModule'
+  },
   {
     path: 'mycal',
-    component: MycalComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'userinfo',
-    component: UserinfoComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'register',
-    component: RegisterComponent
+    loadChildren: './mycal/mycal.module#MycalModule'
   },
   {
     path: 'chart',
-    component: ChartComponent,
-    canActivate: [AuthGuard]
+    loadChildren: './chart/attendance-chart.module#AttendanceChartModule'
   },
   {
     path: 'employees',

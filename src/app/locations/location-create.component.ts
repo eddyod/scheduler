@@ -23,7 +23,9 @@ export class LocationCreateComponent implements OnInit {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {}
+  ) {
+    this.authService.title = 'Create Location';
+  }
 
   ngOnInit() {
 

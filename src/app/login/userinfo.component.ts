@@ -17,7 +17,9 @@ export class UserinfoComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private alertService: AlertService
-  ) { }
+  ) {
+    this.authService.title = 'Account Information';
+  }
 
   ngOnInit() {
     this.isLoggedIn$ = this.authService.isLoggedIn; // {2}
@@ -30,7 +32,7 @@ export class UserinfoComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    this.alertService.success('You have successfully logged out.')
+    this.alertService.success('You have successfully logged out.');
   }
 
 }

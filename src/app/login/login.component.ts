@@ -26,7 +26,9 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private alertService: AlertService
-  ) { }
+  ) {
+    this.authService.title = 'User Login';
+  }
 
   ngOnInit() {
     this.addForm = this.formBuilder.group({
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit {
 
     // reset login status
     this.authService.logout();
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/userinfo';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/info';
     this.isLoggedIn$ = this.authService.isLoggedIn; // {2}
   }
 
@@ -57,14 +59,14 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.addForm.value.username, this.addForm.value.password)
       .pipe(first())
       .subscribe(
-      data => {
-        this.router.navigate([this.returnUrl]);
-        this.alertService.success('You have successfully logged in.')
-      },
-      error => {
-        this.alertService.error("The username and/or password were incorrect.");
-        this.loading = false;
-      });
+        data => {
+          this.router.navigate([this.returnUrl]);
+          this.alertService.success('You have successfully logged in.');
+        },
+        error => {
+          this.alertService.error('The username and/or password were incorrect.');
+          this.loading = false;
+        });
   }
 
 

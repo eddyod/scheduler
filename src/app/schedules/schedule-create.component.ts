@@ -30,6 +30,7 @@ export class ScheduleCreateComponent implements OnInit {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router) {
+      this.authService.title = 'Create Schedule';
   }
 
 
@@ -44,11 +45,11 @@ export class ScheduleCreateComponent implements OnInit {
     });
 
     this.apiService.findLocations('', 'name', 100, 0).subscribe((results: Location[]) => {
-      this.locations = results['results']
+      this.locations = results['results'];
     });
 
     this.apiService.findEmployees('', 'name', 100, 0).subscribe((results: Employee[]) => {
-      this.employees = results['results']
+      this.employees = results['results'];
     });
 
   }
@@ -61,9 +62,9 @@ export class ScheduleCreateComponent implements OnInit {
       .subscribe(data => {
         this.router.navigate(['schedules']);
       },
-      error => {
-        alert(error);
-      });
+        error => {
+          alert(error);
+        });
   }
 
 }

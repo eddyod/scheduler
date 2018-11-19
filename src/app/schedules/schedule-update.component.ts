@@ -30,6 +30,7 @@ export class ScheduleUpdateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router) {
+      this.authService.title = 'Update Schedule';
   }
 
 
@@ -55,11 +56,11 @@ export class ScheduleUpdateComponent implements OnInit {
 
 
     this.apiService.findLocations('', 'name', 100, 0).subscribe((results: Location[]) => {
-      this.locations = results['results']
+      this.locations = results['results'];
     });
 
     this.apiService.findEmployees('', 'name', 100, 0).subscribe((results: Employee[]) => {
-      this.employees = results['results']
+      this.employees = results['results'];
     });
 
 

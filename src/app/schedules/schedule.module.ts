@@ -12,12 +12,13 @@ import { SchedulesComponent } from './schedules.component';
 import { ScheduleCreateComponent } from './schedule-create.component';
 import { ScheduleUpdateComponent } from './schedule-update.component';
 import { RepeaterComponent } from './repeater.component';
+import { AuthGuard } from '../services/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: SchedulesComponent },
-  { path: 'create', component: ScheduleCreateComponent },
-  { path: 'update', component: ScheduleUpdateComponent },
-  { path: 'repeater', component: RepeaterComponent },
+  { path: '', component: SchedulesComponent, canActivate: [AuthGuard] },
+  { path: 'create', component: ScheduleCreateComponent, canActivate: [AuthGuard]  },
+  { path: 'update', component: ScheduleUpdateComponent, canActivate: [AuthGuard]  },
+  { path: 'repeater', component: RepeaterComponent, canActivate: [AuthGuard]  },
 ];
 
 @NgModule({

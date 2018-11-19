@@ -7,7 +7,6 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent  {
-  title = 'Premier English Class Scheduler';
 
   constructor(public authService: AuthService) { }
 

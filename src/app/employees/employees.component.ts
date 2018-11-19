@@ -1,13 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { merge } from 'rxjs';
+import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { MatPaginator, MatSort, } from '@angular/material';
 import { fromEvent } from 'rxjs';
+
+import { AuthService } from '../services/auth.service';
 import { APIService } from '../services/api.service';
 import { EmployeeDataSource } from '../services/employee.datasource';
 import { Employee } from '../models/employee';
-import { merge } from 'rxjs';
-import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
@@ -25,32 +26,37 @@ export class EmployeesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
 
-  constructor(private apiService: APIService, private router: Router) { }
+  constructor(private apiService: APIService,
+    private authService: AuthService,
+    private router: Router) {
+    this.authService.title = 'List Employees';
+  }
 
   ngOnInit() {
     this.dataSource = new EmployeeDataSource(this.apiService);
-    this.dataSource.loadEmployees('','name', 10, 0);
+    this.dataSource.loadEmployees('', 'name', 10, 0);
   }
+
 
   ngAfterViewInit() {
     // server-side search
     fromEvent(this.input.nativeElement, 'keyup')
       .pipe(
-      debounceTime(150),
-      distinctUntilChanged(),
-      tap(() => {
-        this.paginator.pageIndex = 0;
-        this.loadPage();
-      })
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.loadPage();
+        })
       )
       .subscribe();
 
     this.dataSource.counter$
       .pipe(
-      tap((count) => {
-        this.paginator.length = count;
-      })
-    ).subscribe();
+        tap((count) => {
+          this.paginator.length = count;
+        })
+      ).subscribe();
 
     // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -58,7 +64,7 @@ export class EmployeesComponent implements OnInit {
     // on sort or paginate events, load a new page
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
-      tap(() => this.loadPage())
+        tap(() => this.loadPage())
       )
       .subscribe();
 
@@ -80,15 +86,15 @@ export class EmployeesComponent implements OnInit {
   }
 
 
-    editEmployee(employee: Employee): void {
-      sessionStorage.removeItem('id');
-      sessionStorage.setItem('id', employee.id.toString());
-      this.router.navigate(['employees/create']);
-    }
+  editEmployee(employee: Employee): void {
+    sessionStorage.removeItem('id');
+    sessionStorage.setItem('id', employee.id.toString());
+    this.router.navigate(['employees/create']);
+  }
 
-    addEmployee(): void {
-      sessionStorage.removeItem('id');
-      this.router.navigate(['employees/create']);
-    }
+  addEmployee(): void {
+    sessionStorage.removeItem('id');
+    this.router.navigate(['employees/create']);
+  }
 
 }

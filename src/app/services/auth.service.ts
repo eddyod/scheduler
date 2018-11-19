@@ -32,6 +32,9 @@ export class AuthService {
   public errors: any = [];
   // var to show is logged interface
   public user: User = new User();
+  // title in panel headers
+  public title = 'Employee Time Scheduler';
+
 
   API_URL = environment.apiEndpoint;
 
@@ -46,7 +49,7 @@ export class AuthService {
         if (data && data['token']) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           this.updateData(data['token']);
-          this.getAndSetSite()
+          this.getAndSetSite();
           this.loggedIn.next(true);
         }
         return data;

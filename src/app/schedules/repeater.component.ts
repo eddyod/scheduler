@@ -52,6 +52,7 @@ export class RepeaterComponent implements OnInit {
     private apiService: APIService,
     private authService: AuthService,
     private formBuilder: FormBuilder) {
+      this.authService.title = 'Create Multiple Schedules';
   }
 
   ngOnInit() {
@@ -83,11 +84,11 @@ export class RepeaterComponent implements OnInit {
     }
 
     this.apiService.findLocations('', 'name', 100, 0).subscribe((results: Location[]) => {
-      this.locations = results['results']
+      this.locations = results['results'];
     });
 
     this.apiService.findEmployees('', 'name', 100, 0).subscribe((results: Employee[]) => {
-      this.employees = results['results']
+      this.employees = results['results'];
     });
 
   }

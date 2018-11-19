@@ -38,7 +38,6 @@ export class SiteDataSource implements DataSource<Site> {
   }
 
   connect(collectionViewer: CollectionViewer): Observable<Site[]> {
-    console.log('Connecting data source');
     return this.sitesSubject.asObservable();
   }
 

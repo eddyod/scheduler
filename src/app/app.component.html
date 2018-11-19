@@ -3,14 +3,13 @@
   <app-header></app-header>
 
   <div class="container">
-    <div class="jumbotron">
-      <a class="navbar-item">
-            <img alt="Premier English" src="assets/img/logo.png">
-          </a>
+
+    <div class="starter-template">
+      <h2>Time Scheduling Software</h2>
     </div>
 
     <div class="panel panel-primary">
-      <div class="panel-heading">Class Scheduler</div>
+      <div class="panel-heading">{{authService.title}}</div>
       <div class="panel-body">
         <alert></alert>
         <router-outlet></router-outlet>

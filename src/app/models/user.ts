@@ -6,6 +6,6 @@ export class User {
   public email: string;
   public main_site: string;
   public is_superuser: boolean;
-  
-  constructor() {}
+
+  constructor() { }
 }

@@ -25,6 +25,7 @@ export class EmployeeCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router
   ) {
+    this.authService.title = 'Create Employee';
 }
 
   ngOnInit() {

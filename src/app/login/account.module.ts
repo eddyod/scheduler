@@ -4,28 +4,29 @@ import { Routes, RouterModule } from '@angular/router';
 import { MaterialModule } from '../shared/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { LoginComponent } from './login.component';
+import { RegisterComponent } from './register.component';
+import { UserinfoComponent } from './userinfo.component';
 import { AuthGuard } from '../services/auth.guard';
-import { SitesComponent } from './sites.component';
-import { NewSiteDialogComponent } from './new-site-dialog.component';
 
 const routes: Routes = [
-  { path: '', component: SitesComponent, canActivate: [AuthGuard]},
-  { path: '**', redirectTo: '' }
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'info', component: UserinfoComponent, canActivate: [AuthGuard]  },
 ];
-
-
 
 @NgModule({
   imports: [
     CommonModule,
+    MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SitesComponent, NewSiteDialogComponent],
-  entryComponents: [
-    NewSiteDialogComponent
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    UserinfoComponent,
   ]
 })
-export class SitesModule { }
+export class AccountModule { }

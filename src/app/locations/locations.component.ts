@@ -1,13 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { MatPaginator, MatSort, } from '@angular/material';
 import { fromEvent } from 'rxjs';
+import { merge } from 'rxjs';
+import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
+import { AuthService } from '../services/auth.service';
 import { APIService } from '../services/api.service';
 import { LocationDataSource } from '../services/location.datasource';
 import { Location } from '../models/location';
-import { merge } from 'rxjs';
-import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
@@ -25,11 +26,15 @@ export class LocationsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
 
-  constructor(private apiService: APIService, private router: Router) { }
+  constructor(private apiService: APIService,
+    private authService: AuthService,
+    private router: Router) {
+    this.authService.title = 'List Locations';
+  }
 
   ngOnInit() {
     this.dataSource = new LocationDataSource(this.apiService);
-    this.dataSource.loadLocations('','name', 10, 0);
+    this.dataSource.loadLocations('', 'name', 10, 0);
   }
 
   ngAfterViewInit() {

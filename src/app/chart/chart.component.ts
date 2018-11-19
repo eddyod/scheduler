@@ -38,7 +38,9 @@ export class ChartComponent implements OnInit {
   constructor(
     private apiService: APIService,
     private authService: AuthService,
-  ) {}
+  ) {
+    this.authService.title = 'Display Completed and Missed Schedules';
+  }
 
 
   ngOnInit() {

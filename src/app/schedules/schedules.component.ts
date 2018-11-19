@@ -5,6 +5,7 @@ import { fromEvent } from 'rxjs';
 import { merge } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
+import { AuthService } from '../services/auth.service';
 import { APIService } from '../services/api.service';
 import { ClassDataSource } from '../services/class.datasource';
 import { ScheduleEvent } from '../models/scheduleEvent';
@@ -29,7 +30,10 @@ export class SchedulesComponent implements OnInit {
 
   constructor(private apiService: APIService,
     private router: Router,
-    private snackBar: MatSnackBar) { }
+    private authService: AuthService,
+    private snackBar: MatSnackBar) {
+    this.authService.title = 'List Schedules';
+  }
 
   ngOnInit() {
     this.dataSource = new ClassDataSource(this.apiService);
@@ -40,20 +44,20 @@ export class SchedulesComponent implements OnInit {
     // server-side search
     fromEvent(this.input.nativeElement, 'keyup')
       .pipe(
-      debounceTime(150),
-      distinctUntilChanged(),
-      tap(() => {
-        this.paginator.pageIndex = 0;
-        this.loadPage();
-      })
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.loadPage();
+        })
       )
       .subscribe();
 
     this.dataSource.counter$
       .pipe(
-      tap((count) => {
-        this.paginator.length = count;
-      })
+        tap((count) => {
+          this.paginator.length = count;
+        })
       ).subscribe();
 
     // reset the paginator after sorting
@@ -62,7 +66,7 @@ export class SchedulesComponent implements OnInit {
     // on sort or paginate events, load a new page
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
-      tap(() => this.loadPage())
+        tap(() => this.loadPage())
       )
       .subscribe();
 

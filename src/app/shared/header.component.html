@@ -1,7 +1,7 @@
 <mat-sidenav #sidenav (keydown.escape)="sidenav.close()" (click)="sidenav.close()">
   <mat-nav-list *ngIf="isLoggedIn$ | async">
 
-    <a mat-list-item routerLink="/userinfo" (click)="sidenav.close()">
+    <a mat-list-item routerLink="/account/info" (click)="sidenav.close()">
       <mat-icon>account_circle</mat-icon>Login Info</a>
     <a *ngIf="authService.user.is_superuser"  mat-list-item routerLink="/locations" (click)="sidenav.close()">
       <mat-icon>school</mat-icon>Schools</a>
@@ -26,7 +26,7 @@
   </mat-nav-list>
 
   <mat-nav-list *ngIf="!(isLoggedIn$ | async)">
-    <a mat-list-item routerLink="/login" (click)="sidenav.close()">
+    <a mat-list-item routerLink="/account/login" (click)="sidenav.close()">
       <mat-icon>account_circle</mat-icon>Login</a>
 
   </mat-nav-list>
