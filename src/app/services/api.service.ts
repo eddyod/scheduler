@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
+import { AuthService } from './auth.service';
 import { Employee } from '../models/employee';
 import { Location } from '../models/location';
 import { Site } from '../models/site';
@@ -17,12 +19,12 @@ import { environment } from '../../environments/environment';
 export class APIService {
 
   API_URL = environment.apiEndpoint;
-  private user: User;
 
   constructor(
-    private http: HttpClient) {
-      const fetchedObject  = sessionStorage.getItem('user');
-      this.user = JSON.parse(fetchedObject);
+    private http: HttpClient,
+    public authService: AuthService) {
+      //const fetchedObject  = sessionStorage.getItem('user');
+      // this.user = JSON.parse(fetchedObject);
   }
 
   // locations
@@ -44,7 +46,7 @@ export class APIService {
 
   findLocations(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.user.main_site )
+      .set('site_id', this.authService.user.main_site )
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -75,7 +77,7 @@ export class APIService {
 
   findEmployees(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.user.main_site)
+      .set('site_id', this.authService.user.main_site)
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -106,7 +108,7 @@ export class APIService {
 
   findClasses(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.user.main_site )
+      .set('site_id', this.authService.user.main_site )
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())

@@ -1,0 +1,7 @@
+a {
+  opacity: .6
+}
+
+a:hover {
+   opacity: 1;
+}

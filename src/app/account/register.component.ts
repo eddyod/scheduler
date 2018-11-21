@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
         data => {
           // this.alertService.success('Registration successful', true);
           this.openSnackBar('You have sucessfully registered. ', 'OK!');
-          this.router.navigate(['/login']);
+          this.router.navigate(['/account/login']);
         },
         error => {
           // this.alertService.error(error);

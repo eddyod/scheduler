@@ -3,7 +3,7 @@
 
     <a mat-list-item routerLink="/account/info" (click)="sidenav.close()">
       <mat-icon>account_circle</mat-icon>Login Info</a>
-    <a *ngIf="authService.user.is_superuser"  mat-list-item routerLink="/locations" (click)="sidenav.close()">
+    <a *ngIf="authService.user.is_superuser" mat-list-item routerLink="/locations" (click)="sidenav.close()">
       <mat-icon>school</mat-icon>Schools</a>
     <a *ngIf="authService.user.is_superuser" mat-list-item routerLink="/employees" (click)="sidenav.close()">
       <mat-icon>person</mat-icon>Teachers</a>
@@ -35,16 +35,31 @@
 
 
 
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="toolbar_styled">
   <span>
-  <button mat-icon-button (click)="sidenav.open('mouse')">
-          <mat-icon>menu</mat-icon>
-  </button>
-</span>
+    <button mat-icon-button (click)="sidenav.open('mouse')">
+            <mat-icon>menu</mat-icon>
+    </button>
+  </span>
+
+  <a mat-button routerLink="/account/home">Start Here</a>
 
   <span class="fill-remaining-space"></span>
+
   <div *ngIf="isLoggedIn$ | async">
-      <mat-icon>face</mat-icon>{{authService.username}}
+
+
+    <a routerLink="/account/business">
+      <span class="label">{{authService.site.name}}</span>
+    </a>
+
+
+
+    <mat-icon>face</mat-icon>{{authService.username}}
+  </div>
+
+  <div *ngIf="!(isLoggedIn$ | async)">
+    <a mat-button routerLink="/account/login">Sign In</a>
   </div>
 
 </mat-toolbar>

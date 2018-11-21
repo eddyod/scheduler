@@ -4,14 +4,18 @@ import { Routes, RouterModule } from '@angular/router';
 import { MaterialModule } from '../shared/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { AuthGuard } from '../services/auth.guard';
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { UserinfoComponent } from './userinfo.component';
-import { AuthGuard } from '../services/auth.guard';
+import { HomeComponent } from './home.component';
+import { BusinessComponent } from './business.component';
 
 const routes: Routes = [
+  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'business', component: BusinessComponent },
   { path: 'info', component: UserinfoComponent, canActivate: [AuthGuard]  },
 ];
 
@@ -27,6 +31,8 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     UserinfoComponent,
+    HomeComponent,
+    BusinessComponent
   ]
 })
 export class AccountModule { }

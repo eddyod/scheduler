@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'account/login', pathMatch: 'full' },
+  {path: '', redirectTo: 'account/home', pathMatch: 'full'},
   {
     path: 'account',
-    loadChildren: './login/account.module#AccountModule'
+    loadChildren: './account/account.module#AccountModule'
   },
   {
     path: 'mycal',
@@ -30,7 +30,9 @@ const routes: Routes = [
   {
     path: 'sites',
     loadChildren: './sites/sites.module#SitesModule',
-  }
+  },
+  // { path: '', component: HomeComponent }
+  { path: '**', redirectTo: 'home' } // this needs to be after other routes
 
 ];
 

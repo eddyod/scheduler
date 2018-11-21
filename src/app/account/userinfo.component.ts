@@ -15,14 +15,14 @@ export class UserinfoComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;                  // {1}
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private alertService: AlertService
   ) {
     this.authService.title = 'Account Information';
+    this.isLoggedIn$ = this.authService.isLoggedIn; // {2}
   }
 
   ngOnInit() {
-    this.isLoggedIn$ = this.authService.isLoggedIn; // {2}
     // console.log(sessionStorage.getItem('username'));
   }
 
