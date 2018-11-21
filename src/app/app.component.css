@@ -12,14 +12,14 @@ a:active {
   color: #FFFFFF;
 }
 
-a {
-  text-decoration: none;
-  color: white;
+.mat-button  {
+  color: #FF0000;
+  font-weight: bolder;
 }
 
-a:hover,
+.mat-button a:hover,
 a:active {
-  color: lightgray;
+  color: #FFFF00;
 }
 
 

@@ -125,7 +125,7 @@ export class RepeaterComponent implements OnInit {
         completed: '1',
         location_id: this.addForm.value.location_id,
         employee_id: this.addForm.value.employee_id,
-        site: this.authService.user.main_site,
+        site: this.authService.site.id,
       };
       this.scheduleForms.push(event);
     });

@@ -7,7 +7,6 @@ import { AuthService } from './auth.service';
 import { Employee } from '../models/employee';
 import { Location } from '../models/location';
 import { Site } from '../models/site';
-import { User } from '../models/user';
 import { ScheduleEvent } from '../models/scheduleEvent';
 import { environment } from '../../environments/environment';
 
@@ -23,8 +22,6 @@ export class APIService {
   constructor(
     private http: HttpClient,
     public authService: AuthService) {
-      //const fetchedObject  = sessionStorage.getItem('user');
-      // this.user = JSON.parse(fetchedObject);
   }
 
   // locations
@@ -46,7 +43,7 @@ export class APIService {
 
   findLocations(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.authService.user.main_site )
+      .set('site_id', this.authService.site.id )
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -77,7 +74,7 @@ export class APIService {
 
   findEmployees(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.authService.user.main_site)
+      .set('site_id', this.authService.site.id)
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -108,7 +105,7 @@ export class APIService {
 
   findClasses(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.authService.user.main_site )
+      .set('site_id', this.authService.site.id )
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())

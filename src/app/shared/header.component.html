@@ -35,31 +35,28 @@
 
 
 
-<mat-toolbar color="primary" class="toolbar_styled">
+<mat-toolbar color="accent">
   <span>
     <button mat-icon-button (click)="sidenav.open('mouse')">
             <mat-icon>menu</mat-icon>
     </button>
   </span>
 
-  <a mat-button routerLink="/account/home">Start Here</a>
+  <button mat-button routerLink="/account/home"  class="white-text">Start Here</button>
 
   <span class="fill-remaining-space"></span>
 
   <div *ngIf="isLoggedIn$ | async">
 
-
     <a routerLink="/account/business">
       <span class="label">{{authService.site.name}}</span>
     </a>
-
-
 
     <mat-icon>face</mat-icon>{{authService.username}}
   </div>
 
   <div *ngIf="!(isLoggedIn$ | async)">
-    <a mat-button routerLink="/account/login">Sign In</a>
+    <button mat-button routerLink="/account/login">Sign In</button>
   </div>
 
 </mat-toolbar>

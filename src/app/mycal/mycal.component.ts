@@ -74,7 +74,7 @@ export class MycalComponent implements OnInit {
       day: endOfDay
     }[this.view];
     const params = new HttpParams()
-      .set('site_id', this.authService.user.main_site)
+      .set('site_id', this.authService.site.id)
       .set('start_gte', format(getStart(this.viewDate), 'YYYY-MM-DD') )
       .set('start_lte', format(getEnd(this.viewDate), 'YYYY-MM-DD') );
 

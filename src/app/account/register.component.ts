@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material';
 
 import { AuthService } from '../services/auth.service';
-// import { AlertService } from '../services/alert.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({ templateUrl: 'register.component.html' })
 
@@ -18,7 +16,7 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private alertService: AlertService
   ) {
     this.authService.title = 'Registration';
   }
@@ -33,23 +31,15 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 2000,
-    });
-  }
-
   register() {
     this.authService.register(this.addForm.value)
       .subscribe(
         data => {
-          // this.alertService.success('Registration successful', true);
-          this.openSnackBar('You have sucessfully registered. ', 'OK!');
+          this.alertService.success('Registration successful', true);
           this.router.navigate(['/account/login']);
         },
         error => {
-          // this.alertService.error(error);
-          this.openSnackBar('There was an error with the registration. ', '');
+          this.alertService.error(error);
         });
   }
 }

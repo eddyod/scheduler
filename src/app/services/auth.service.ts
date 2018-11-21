@@ -129,4 +129,8 @@ export class AuthService {
     return this.http.post(this.API_URL + '/api/users', user);
   }
 
+  public registerSite(site: Site) {
+    return this.http.post(this.API_URL + '/sites', site);
+  }
+
 }

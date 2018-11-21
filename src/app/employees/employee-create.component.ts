@@ -52,7 +52,7 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   onSave() {
-    this.addForm.value.site = this.authService.user.main_site;
+    this.addForm.value.site = this.authService.site.id;
     this.apiService.createEmployee(this.addForm.value)
       .subscribe(data => {
         this.router.navigate(['employees']);
@@ -63,7 +63,7 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   onUpdate() {
-    this.addForm.value.site = this.authService.user.main_site;
+    this.addForm.value.site = this.authService.site.id;
     this.apiService.updateEmployee(this.addForm.value).subscribe(data => {
       this.router.navigate(['employees']);
     },
