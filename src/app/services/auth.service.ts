@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import { Site } from '../models/site';
@@ -125,8 +125,9 @@ export class AuthService {
     return !!sessionStorage.getItem('token');
   }
 
-  public register(user: User) {
-    return this.http.post(this.API_URL + '/api/users', user);
+  public register(user): Observable<any> {
+    console.log(user);
+    return this.http.post(this.API_URL + '/users', user);
   }
 
   public registerSite(site: Site) {
