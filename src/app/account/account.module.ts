@@ -33,6 +33,7 @@ const routes: Routes = [
     UserinfoComponent,
     HomeComponent,
     BusinessComponent
-  ]
+  ],
+  providers: [AuthGuard],
 })
 export class AccountModule { }
