@@ -40,11 +40,21 @@ export class BusinessComponent implements OnInit {
         data => {
           this.alertService.success('User Registration successful', true);
           this.displayForm1 = false;
+          this.buildForm2();
           this.displayForm2 = true;
         },
         error => {
           this.alertService.error(error.message);
         });
+  }
+
+  private buildForm2() {
+    this.form2 = this.formBuilder.group({
+      name: ['', Validators.required],
+      address1: ['', Validators.required],
+      city: ['', Validators.required]
+    });
+
   }
 
   public registerSite() {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import { Site } from '../models/site';
@@ -41,7 +41,7 @@ export class AuthService {
 
   API_URL = environment.apiEndpoint;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public login(username: string, password: string) {
     return this.http.post<any>(this.API_URL + '/api-token-auth/', { username: username, password: password })
@@ -75,16 +75,16 @@ export class AuthService {
     const params = new HttpParams()
       .set('user_id', this.user_id);
 
-    this.http.get(this.API_URL + '/user_sites', {params})
+    this.http.get(this.API_URL + '/user_sites', { params })
       .subscribe(data => {
         console.log(data[0]['user']);
         this.user = data[0]['user'];
         this.site = data[0]['site'];
         sessionStorage.setItem('user', JSON.stringify(data[0]['user']));
       },
-      err => {
-        this.errors = err['error'];
-      }
+        err => {
+          this.errors = err['error'];
+        }
       );
 
   }
@@ -125,9 +125,8 @@ export class AuthService {
     return !!sessionStorage.getItem('token');
   }
 
-  public register(user): Observable<any> {
-    console.log(user);
-    return this.http.post(this.API_URL + '/users', user);
+  public register(user) {
+    return this.http.post(this.API_URL + '/api/users', JSON.stringify(user), httpOptions);
   }
 
   public registerSite(site: Site) {

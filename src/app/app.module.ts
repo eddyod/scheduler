@@ -32,8 +32,8 @@ import { HeaderComponent } from './shared/header.component';
     MaterialModule,
     BrowserAnimationsModule,
   ],
-  providers: [InterceptService, { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true },
-    AlertService, AuthService, AuthGuard],
+  providers: [InterceptService, { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true }, AlertService, AuthService, AuthGuard],
+  // providers: [AlertService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
