@@ -69,6 +69,7 @@ export class BusinessComponent implements OnInit {
       this.apiService.registerSite(this.form2.value)
         .subscribe(
           data => {
+            console.log(data);
             this.siteId = data['id'];
             this.registerUserSite();
           },

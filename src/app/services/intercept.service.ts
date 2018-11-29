@@ -23,10 +23,11 @@ export class InterceptService implements HttpInterceptor {
 
     // modify request
 
-    if (new RegExp('api/users').test(request.url)) {
+    if (new RegExp('api/users|api/sites|api/user_sites').test(request.url)) {
       console.log(" matched");
-      const tokenInHeader = request.clone({ setHeaders: { 'version': '1LF' } });
-      return next.handle(request);
+      //const tokenInHeader = request.clone({ setHeaders: { 'version': '1LF' } });
+      //return next.handle(request);
+      // request = request.clone({ setHeaders: { 'Content-Type': 'application/json' } });
     } else {
       request = request.clone({ setHeaders: { Authorization: `JWT ${sessionStorage.getItem('token')}` } });
       console.log(request.url);
