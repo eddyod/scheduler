@@ -3,22 +3,22 @@
 
     <a mat-list-item routerLink="/account/info" (click)="sidenav.close()">
       <mat-icon>account_circle</mat-icon>Login Info</a>
-    <a *ngIf="authService.user.is_superuser" mat-list-item routerLink="/locations" (click)="sidenav.close()">
+    <a *ngIf="authService.user.is_staff" mat-list-item routerLink="/locations" (click)="sidenav.close()">
       <mat-icon>school</mat-icon>Schools</a>
-    <a *ngIf="authService.user.is_superuser" mat-list-item routerLink="/employees" (click)="sidenav.close()">
+    <a *ngIf="authService.user.is_staff" mat-list-item routerLink="/employees" (click)="sidenav.close()">
       <mat-icon>person</mat-icon>Teachers</a>
 
 
-    <a *ngIf="authService.user.is_superuser" mat-list-item routerLink="/schedules" (click)="sidenav.close()">
+    <a *ngIf="authService.user.is_staff" mat-list-item routerLink="/schedules" (click)="sidenav.close()">
       <mat-icon>class</mat-icon>Classes</a>
-    <a *ngIf="authService.user.is_superuser" mat-list-item routerLink="/schedules/create" (click)="sidenav.close()">
+    <a *ngIf="authService.user.is_staff" mat-list-item routerLink="/schedules/create" (click)="sidenav.close()">
       <mat-icon>event</mat-icon>Create Single Class</a>
-    <a *ngIf="authService.user.is_superuser" mat-list-item routerLink="/schedules/repeater" (click)="sidenav.close()">
+    <a *ngIf="authService.user.is_staff" mat-list-item routerLink="/schedules/repeater" (click)="sidenav.close()">
       <mat-icon>repeat</mat-icon>Create Repeating Classes</a>
 
-    <a *ngIf="authService.user.is_superuser" mat-list-item routerLink="/mycal" (click)="sidenav.close()">
+    <a *ngIf="authService.user.is_staff" mat-list-item routerLink="/mycal" (click)="sidenav.close()">
       <mat-icon>date_range</mat-icon>Calendar</a>
-    <a *ngIf="authService.user.is_superuser" mat-list-item routerLink="/chart" (click)="sidenav.close()">
+    <a *ngIf="authService.user.is_staff" mat-list-item routerLink="/chart" (click)="sidenav.close()">
       <mat-icon>bar_chart</mat-icon>Chart</a>
     <a *ngIf="authService.user.is_superuser" mat-list-item routerLink="/sites" (click)="sidenav.close()">
       <mat-icon>store_mall_directory</mat-icon>Sites</a>

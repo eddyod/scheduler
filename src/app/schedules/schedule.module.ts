@@ -7,13 +7,11 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { SchedulesComponent } from './schedules.component';
 import { ScheduleCreateComponent } from './schedule-create.component';
 import { ScheduleUpdateComponent } from './schedule-update.component';
 import { RepeaterComponent } from './repeater.component';
-import { InterceptService } from '../services/intercept.service';
 import { AuthGuard } from '../services/auth.guard';
 
 const routes: Routes = [
@@ -39,6 +37,5 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [SchedulesComponent, ScheduleCreateComponent, ScheduleUpdateComponent, RepeaterComponent],
-  providers: [InterceptService, { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true }, AuthGuard],
 })
 export class ScheduleModule { }

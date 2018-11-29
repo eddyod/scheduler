@@ -10,14 +10,19 @@
 
 <div *ngIf="!(isLoggedIn$ | async)" class="row">
 
-  <div class="col-sm-5">
-    <h3>Set up a new business</h3>
-    <a routerLink="/account/business"><img src="assets/img/change.png"></a>
+  <div class="col-sm-4">
+    <h4>Set up a new business.</h4>
+    <a routerLink="/account/business"><img src="assets/img/change.128.png"></a>
   </div>
 
-  <div class="col-sm-5">
-    <h3>Join an existing business</h3>
-    <a routerLink="/account/register"><img src="assets/img/network.png"></a>
+  <div class="col-sm-4">
+    <h4>Join an existing business.</h4>
+    <a routerLink="/account/register"><img src="assets/img/network.128.png"></a>
+  </div>
+
+  <div class="col-sm-4">
+    <h4>Already have an account? Sign in.</h4>
+    <a routerLink="/account/login"><img src="assets/img/login.128.png"></a>
   </div>
 
 </div>

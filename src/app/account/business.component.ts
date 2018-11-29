@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../services/auth.service';
+import { APIService } from '../services/api.service';
 import { AlertService } from '../services/alert.service';
-// import { User } from '../models/user';
-// import { Site } from '../models/site';
+import { UserSite } from '../models/userSite';
 
 @Component({ templateUrl: 'business.component.html' })
 
@@ -13,10 +13,14 @@ export class BusinessComponent implements OnInit {
   public form2: FormGroup;
   public displayForm1 = true;
   public displayForm2 = false;
+  public displayFinish = false;
+  private userId: number;
+  private siteId: number;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private apiService: APIService,
     private alertService: AlertService
   ) {
     this.authService.title = 'User registration for a new business.';
@@ -35,11 +39,13 @@ export class BusinessComponent implements OnInit {
   }
 
   public registerUser() {
+    this.form1.value.is_staff = 1;
     this.authService.register(this.form1.value)
       .subscribe(
         data => {
           this.alertService.success('User Registration successful', true);
           this.displayForm1 = false;
+          this.userId = data['id'];
           this.buildForm2();
           this.displayForm2 = true;
         },
@@ -52,22 +58,39 @@ export class BusinessComponent implements OnInit {
     this.form2 = this.formBuilder.group({
       name: ['', Validators.required],
       address1: ['', Validators.required],
-      city: ['', Validators.required]
     });
-
   }
 
-  public registerSite() {
-    this.authService.registerSite(this.form2.value)
-      .subscribe(
-        data => {
-          this.alertService.success('Business registration successful', true);
-          this.displayForm1 = false;
-          this.displayForm2 = false;
-        },
-        error => {
-          this.alertService.error(error);
-        });
-  }
+    public registerSite() {
+      console.log(this.userId);
+      this.form2.value.active = '1';
+      this.form2.value.owner = this.userId;
+      this.form2.value.created = new Date();
+      this.apiService.registerSite(this.form2.value)
+        .subscribe(
+          data => {
+            this.siteId = data['id'];
+            this.registerUserSite();
+          },
+          error => {
+            this.alertService.error(error);
+          });
+    }
+
+      private registerUserSite() {
+        let userSite = new UserSite(this.userId, this.siteId);
+        console.log(userSite);
+        this.apiService.registerUserSite(userSite)
+          .subscribe(
+            data => {
+              this.alertService.success('Business registration successful', true);
+              this.displayForm1 = false;
+              this.displayForm2 = false;
+              this.displayFinish = true;
+            },
+            error => {
+              this.alertService.error(error);
+            });
+      }
 
 }

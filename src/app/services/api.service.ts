@@ -11,7 +11,6 @@ import { ScheduleEvent } from '../models/scheduleEvent';
 import { environment } from '../../environments/environment';
 
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -43,7 +42,7 @@ export class APIService {
 
   findLocations(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.authService.site.id )
+      .set('site_id', this.authService.site.id)
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -105,7 +104,7 @@ export class APIService {
 
   findClasses(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.authService.site.id )
+      .set('site_id', this.authService.site.id)
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -130,6 +129,20 @@ export class APIService {
     return this.http.post(this.API_URL + '/sites', site)
       .pipe(
         catchError(this.handleError('createSite', []))
+      );
+  }
+
+  registerSite(site) {
+    return this.http.post(this.API_URL + '/api/sites', site)
+      .pipe(
+        catchError(this.handleError('registerSite', []))
+      );
+  }
+
+  registerUserSite(userSite) {
+    return this.http.post(this.API_URL + '/api/user_sites', userSite)
+      .pipe(
+        catchError(this.handleError('registerUserSite', []))
       );
   }
 

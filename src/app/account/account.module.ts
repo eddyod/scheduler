@@ -34,6 +34,5 @@ const routes: Routes = [
     HomeComponent,
     BusinessComponent
   ],
-  providers: [AuthGuard],
 })
 export class AccountModule { }

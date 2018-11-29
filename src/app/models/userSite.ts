@@ -4,11 +4,14 @@ import { User } from './user';
 export class UserSite {
 
   public id: number;
-  public auth_id: string;
+  public user_id: string;
   public site_id: string;
   public site: Site;
   public user: User;
 
 
-  constructor() { }
+  constructor(user_id, site_id) {
+    this.user_id = user_id;
+    this.site_id = site_id;
+  }
 }

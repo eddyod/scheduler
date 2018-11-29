@@ -21,11 +21,15 @@ export class InterceptService implements HttpInterceptor {
   // intercept request and add token
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const regex = '/account/business';
     // modify request
 
-    if (request.url.search(regex) === -1) {
+    if (new RegExp('api/users').test(request.url)) {
+      console.log(" matched");
+      const tokenInHeader = request.clone({ setHeaders: { 'version': '1LF' } });
+      return next.handle(request);
+    } else {
       request = request.clone({ setHeaders: { Authorization: `JWT ${sessionStorage.getItem('token')}` } });
+      console.log(request.url);
     }
 
     return next.handle(request)
@@ -42,6 +46,4 @@ export class InterceptService implements HttpInterceptor {
         })
       );
   }
-
-
 }
