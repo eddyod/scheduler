@@ -23,7 +23,7 @@ export class InterceptService implements HttpInterceptor {
 
     // modify request
 
-    if (new RegExp('api/users|api/sites|api/user_sites').test(request.url)) {
+    if (new RegExp('api/users|api/sites|api/user_sites|users/register').test(request.url)) {
       console.log(" matched");
       //const tokenInHeader = request.clone({ setHeaders: { 'version': '1LF' } });
       //return next.handle(request);

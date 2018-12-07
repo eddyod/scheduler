@@ -126,7 +126,7 @@ export class AuthService {
   }
 
   public register(user) {
-    return this.http.post(this.API_URL + '/api/users', JSON.stringify(user), httpOptions);
+    return this.http.post(this.API_URL + '/users/register', JSON.stringify(user), httpOptions);
   }
 
   public registerSite(site: Site) {

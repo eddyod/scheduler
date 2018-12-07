@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'http://rester.com:8000'
-  // apiEndpoint: 'http://127.0.0.1:8000'
+  // apiEndpoint: 'http://rester.com:8000'
+  apiEndpoint: 'http://10.195.4.147:8090'
   // apiEndpoint: 'http://www.mephistosoftware.com/rester'
 };
 
