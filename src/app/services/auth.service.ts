@@ -44,13 +44,15 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   public login(username: string, password: string) {
-    return this.http.post<any>(this.API_URL + '/api-token-auth/', { username: username, password: password })
+    return this.http.post<any>(this.API_URL + '/login', { username: username, password: password })
       .pipe(map(data => {
         // login successful if there's a jwt token in the response
         if (data && data['token']) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           this.updateData(data['token']);
           this.loggedIn.next(true);
+        } else {
+          console.log("No data returned from login.")
         }
         return data;
       }));
