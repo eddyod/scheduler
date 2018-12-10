@@ -44,8 +44,10 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   public login(username: string, password: string) {
-    return this.http.post<any>(this.API_URL + '/login', { username: username, password: password })
+    console.log(username);
+    return this.http.post<any>(this.API_URL + '/login', { username: username, password: password }, httpOptions)
       .pipe(map(data => {
+        console.log(data);
         // login successful if there's a jwt token in the response
         if (data && data['token']) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
