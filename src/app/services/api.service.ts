@@ -133,7 +133,7 @@ export class APIService {
   }
 
   registerSite(site) {
-    return this.http.post(this.API_URL + '/api/sites', site)
+    return this.http.post(this.API_URL + '/users/' + site.owner + '/sites', site)
       .pipe(
         catchError(this.handleError('registerSite', []))
       );

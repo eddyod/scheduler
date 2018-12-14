@@ -69,9 +69,10 @@ export class BusinessComponent implements OnInit {
       this.apiService.registerSite(this.form2.value)
         .subscribe(
           data => {
-            console.log(data);
-            this.siteId = data['id'];
-            this.registerUserSite();
+            this.alertService.success('Business registration successful', true);
+            this.displayForm1 = false;
+            this.displayForm2 = false;
+            this.displayFinish = true;
           },
           error => {
             this.alertService.error(error);

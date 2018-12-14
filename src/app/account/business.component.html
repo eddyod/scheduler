@@ -10,19 +10,19 @@
 
 <div class="col-md-6">
 <!-- step 1 of 2 forms -->
-    <form [formGroup]="form1" novalidate class="form" *ngIf="displayForm1">
+    <form id="idBusinessForm1" [formGroup]="form1" novalidate class="form" *ngIf="displayForm1">
 
     <div class="form-group" >
-      <label for="idFirstName">First name:</label>
-      <input formControlName="first_name" placeholder="First name" class="form-control" id="idFirstName" name="first_name">
+      <label for="idFirstname">First name:</label>
+      <input id="idFirstname" formControlName="first_name" placeholder="First name" class="form-control"  name="first_name">
       <div class="alert  alert-danger" *ngIf="form1.get('first_name').hasError('required') && form1.get('first_name').touched">
         First name is required.
       </div>
     </div>
 
     <div class="form-group">
-      <label for="idLastName">Last name:</label>
-      <input formControlName="last_name" placeholder="Last name" class="form-control" id="idLastName" name="last_name">
+      <label for="idLastname">Last name:</label>
+      <input id="idLastname" formControlName="last_name" placeholder="Last name" class="form-control" name="last_name">
       <div class="alert  alert-danger" *ngIf="form1.get('last_name').hasError('required') && form1.get('last_name').touched">
         Last name is required.
       </div>
@@ -31,7 +31,7 @@
 
     <div class="form-group">
       <label for="idUsername">Username:</label>
-      <input formControlName="username" placeholder="Username" class="form-control" id="idUsername" name="username">
+      <input id="idUsername" formControlName="username" placeholder="Username" class="form-control" name="username">
       <div class="alert  alert-danger" *ngIf="form1.get('username').hasError('required') && form1.get('username').touched">
         Username is required.
       </div>
@@ -39,7 +39,7 @@
 
     <div class="form-group">
       <label for="idEmail">Email:</label>
-      <input formControlName="email" placeholder="Email" class="form-control" id="idEmail" name="email">
+      <input id="idEmail"  formControlName="email" placeholder="Email" class="form-control" name="email">
       <div class="alert  alert-danger" *ngIf="form1.get('email').hasError('required') && form1.get('email').touched">
         Email is required.
       </div>
@@ -47,7 +47,7 @@
 
     <div class="form-group">
       <label for="idPassword">Password</label>
-      <input type="password" formControlName="password" class="form-control" id="idPassword" name="password"/>
+      <input id="idPassword"  type="password" formControlName="password" class="form-control" name="password"/>
       <div class="alert  alert-danger" *ngIf="form1.get('password').hasError('password') && form1.get('password').touched">
         Password is required and must be at least 6 characters.
       </div>

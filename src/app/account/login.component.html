@@ -1,4 +1,4 @@
-<form [formGroup]="addForm" novalidate class="form">
+<form id="idLoginForm" [formGroup]="addForm" novalidate class="form">
   <div class="row" *ngIf="!(isLoggedIn$ | async)">
     <div class="col-md-6">
       <h2>Log In</h2>

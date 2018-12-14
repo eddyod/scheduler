@@ -1,6 +1,5 @@
 <mat-sidenav #sidenav (keydown.escape)="sidenav.close()" (click)="sidenav.close()">
   <mat-nav-list *ngIf="isLoggedIn$ | async">
-
     <a mat-list-item routerLink="/account/info" (click)="sidenav.close()">
       <mat-icon>account_circle</mat-icon>Login Info</a>
     <a *ngIf="authService.user.is_staff" mat-list-item routerLink="/locations" (click)="sidenav.close()">
@@ -35,12 +34,13 @@
 
 
 
-<mat-toolbar color="accent">
+<mat-toolbar color="primary">
   <span>
     <button mat-icon-button (click)="sidenav.open('mouse')">
             <mat-icon>menu</mat-icon>
     </button>
   </span>
+  <h1>tempus vigilator</h1>
 
   <button mat-button routerLink="/account/home"  class="white-text">Start Here</button>
 
@@ -55,7 +55,8 @@
     <mat-icon>face</mat-icon>{{authService.username}}
   </div>
 
-  <div *ngIf="!(isLoggedIn$ | async)">
+  <div *ngIf="!(isLoggedIn$ | async)" >
+    <span class="same-line">Already have an account?</span>
     <button mat-button routerLink="/account/login">Sign In</button>
   </div>
 
