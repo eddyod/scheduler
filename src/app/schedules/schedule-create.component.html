@@ -4,15 +4,14 @@
 
     <div class="form-group">
       <label for="idStart">Start Date/Time:</label>
-      <input formControlName="start" placeholder="Start class time" name="start" class="form-control" id="idStart" [owlDateTimeTrigger]="start" [owlDateTime]="start">
-      <owl-date-time #start></owl-date-time>
+      <input type="datetime-local"  id="idStart" formControlName="start" class="form-control" required>
     </div>
 
     <div class="form-group">
       <label for="idEnd">End Date/Time:</label>
-      <input formControlName="end" placeholder="End class time" name="end" class="form-control" id="idEnd" [owlDateTimeTrigger]="end" [owlDateTime]="end">
-      <owl-date-time #end></owl-date-time>
+      <input type="datetime-local"  id="idEnd" formControlName="end" class="form-control" required>
     </div>
+
 
 
     <div class="form-group">

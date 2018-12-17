@@ -4,8 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { MaterialModule } from '../shared/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { FlatpickrModule } from 'angularx-flatpickr';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { SchedulesComponent } from './schedules.component';
@@ -27,13 +25,10 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    FlatpickrModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
     RouterModule.forChild(routes)
   ],
   declarations: [SchedulesComponent, ScheduleCreateComponent, ScheduleUpdateComponent, RepeaterComponent],

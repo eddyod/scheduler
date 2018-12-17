@@ -1,31 +1,37 @@
 <div class="row">
 
-  <div class="col-md-10">
-    <h2 class="text-center">{{scheduleFormLabel}}</h2>
-    <form [formGroup]="addForm" novalidate class="form">
+  <div class="col-md-6">
+    <p class="text-center">{{scheduleFormLabel}}</p>
+    <form [formGroup]="addForm" novalidate class="form" *ngIf="!displayStatus">
 
       <div class="form-group">
         <label for="idStart">Start Date/Time:</label>
-        <input formControlName="start" placeholder="Start class time" class="form-control" id="idStart" [owlDateTimeTrigger]="start" [owlDateTime]="start">
-        <owl-date-time #start></owl-date-time>
+        <input type="datetime-local"  id="idStart" formControlName="start" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+          <mat-form-field>
+              <input matInput [matDatepicker]="start" placeholder="Choose a date">
+              <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+              <mat-datepicker #start></mat-datepicker>
+          </mat-form-field>
       </div>
 
       <div class="form-group">
         <label for="idEnd">End Date:</label>
-        <input formControlName="end" placeholder="End class date" class="form-control" id="idEnd" [owlDateTimeTrigger]="end" [owlDateTime]="end">
-        <owl-date-time [pickerType]="'calendar'" #end></owl-date-time>
+        <input type="date" id="idEnd" formControlName="end" class="form-control" max="{{maxDate}}" required>
       </div>
 
       <div class="form-group">
         <label for="idDuration">Class Duration (in hours)</label>
-        <select formControlName="duration" class="form-control" id="idDuration" required>
-        <option [value]="1">1</option>
-        <option [value]="2">2</option>
-        <option [value]="3">3</option>
-        <option [value]="4">4</option>
-        <option [value]="5">5</option>
-      </select>
+        <mat-slider 
+          formControlName="duration" class="form-control" id="idDuration" required
+          [thumbLabel]="true"
+          min="1" max="12" step="0.5" value="1" tickInterval="1">
+        </mat-slider>
       </div>
+
+
 
 
       <div class="form-group">
@@ -55,45 +61,13 @@
       </select>
       </div>
 
-      <button class="btn btn-sm btn-success" [disabled]='addForm.invalid' (click)="checkTime()">Check</button>
+      <button class="btn btn-sm btn-success" [disabled]='addForm.invalid' (click)="checkAndSave()">Submit</button>
     </form>
 
   </div>
 </div>
 
-<div *ngIf="displayCheck" class="row">
-  <div class="col-md-10">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Start</th>
-          <th>End</th>
-          <th>School ID</th>
-          <th>Teacher ID</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let schedule of scheduleForms">
-          <td>{{schedule.start}}</td>
-          <td>{{schedule.end}}</td>
-          <td>{{schedule.location_id}}</td>
-          <td>{{schedule.employee_id}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
 
-
-<div *ngIf="displayCheck" class="row">
-  <div class="col-md-10">
-    <form>
-      <button class="btn btn-sm btn-primary" (click)="onSave()">Submit</button>
-      <button class="btn btn-sm btn-info" (click)="onReset(); addForm.reset()" style="margin-left:25px;">Reset</button>
-    </form>
-
-  </div>
-</div>
 <div *ngIf="displayStatus" class="row">
   <div class="col-md-10">
     <h2>Inserted {{insertCount}} classes</h2>

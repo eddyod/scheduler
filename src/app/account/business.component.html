@@ -1,15 +1,17 @@
 <div class="row">
 
-  <div class="col-md-8">
+  <div class="col-md-4">
     <img src="assets/img/step1of2.png" *ngIf="displayForm1">
     <img src="assets/img/step2of2.png" *ngIf="displayForm2">
   </div>
 
 </div>
 
+<div class="row">
 
-<div class="col-md-6">
-<!-- step 1 of 2 forms -->
+
+<div class="col-md-4">
+    <!-- step 1 of 2 forms -->
     <form id="idBusinessForm1" [formGroup]="form1" novalidate class="form" *ngIf="displayForm1">
 
     <div class="form-group" >
@@ -82,6 +84,23 @@
     </form>
 
   </div>
+
+
+  <div class="col-md-4" *ngIf="displayForm1">
+      <p>Enter your information on this page. After hitting the 'Register' button below, another screen will appear
+        where you can enter information for your business. You will then be ready to add employees, locations and schedules.
+      </p>
+  
+  </div>
+
+  <div class="col-md-4" *ngIf="displayForm2">
+      <p>Enter your company information on this page.  You will then be ready to add employees, locations and schedules.
+      </p>
+  
+  </div>
+
+
+</div>
 
     <div class="container col-md-8" *ngIf="displayFinish">
       <h4>You have successfully created a business with you as the administrator. You can now use the menu items from the top left to:</h4>

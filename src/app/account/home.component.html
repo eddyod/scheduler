@@ -1,8 +1,11 @@
+
+<div style="text-align: center;">
 <h2>Get started here.</h2>
+</div>
 
 <div *ngIf="isLoggedIn$ | async" class="row">
 
-  <div class="col-md-8">
+  <div class="col-6">
     <p>Put instructions on how to use the site here.</p>
   </div>
 
@@ -10,17 +13,18 @@
 
 <div *ngIf="!(isLoggedIn$ | async)" class="row">
 
-  <div class="col-sm-4">
+  <div class="col col-sm-6" style="text-align: center;">
     <h4>Set up a new business.</h4>
     <a routerLink="/account/business"><img src="assets/img/change.128.png"></a>
   </div>
 
+  <!--
   <div class="col-sm-4">
     <h4>Join an existing business.</h4>
     <a routerLink="/account/register"><img src="assets/img/network.128.png"></a>
   </div>
-
-  <div class="col-sm-4">
+-->
+  <div class="col col-sm-6" style="text-align: center;">
     <h4>Already have an account? Sign in.</h4>
     <a routerLink="/account/login"><img src="assets/img/login.128.png"></a>
   </div>

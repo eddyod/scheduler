@@ -14,6 +14,7 @@ import { AlertService } from '../services/alert.service';
 
 @Injectable()
 
+
 export class InterceptService implements HttpInterceptor {
 
   constructor(private alertService: AlertService) { }
@@ -23,10 +24,10 @@ export class InterceptService implements HttpInterceptor {
 
     // modify request
 
-    if (new RegExp('api/v1/users/\\d+/sites|api/v1/user_sites|api/v1/users/register|/login').test(request.url)) {
-      console.log(" matched");
-      //const tokenInHeader = request.clone({ setHeaders: { 'version': '1LF' } });
-      //return next.handle(request);
+    if (new RegExp('users/\\d+/sites|user_sites|users/register|/login').test(request.url)) {
+      console.log('matched');
+      // const tokenInHeader = request.clone({ setHeaders: { 'version': '1LF' } });
+      // return next.handle(request);
       // request = request.clone({ setHeaders: { 'Content-Type': 'application/json' } });
     } else {
       request = request.clone({ setHeaders: { Authorization: `JWT ${sessionStorage.getItem('token')}` } });

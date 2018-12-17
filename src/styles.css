@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
-@import "~ng-pick-datetime/assets/style/picker.min.css";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .top-buffer {
   margin: 20px;
@@ -31,4 +30,20 @@ a.disabled {
 
 .fill-remaining-space {
   flex: 1 1 auto;
+}
+
+
+.customWidthClass{
+  width: 25px;
+}
+
+.mat-column-actions {
+  flex: 0 0 50px;
+}
+.mat-column-active {
+  flex: 0 0 50px;
+}
+
+.mat-column-completed {
+  flex: 0 0 80px;
 }

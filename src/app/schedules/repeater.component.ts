@@ -25,7 +25,6 @@ const timezoneOffsetString = `${direction}${hoursOffset}${minutesOffset}`;
 })
 export class RepeaterComponent implements OnInit {
 
-  displayCheck = false;
   displayStatus = false;
   insertCount = 0;
   addForm: FormGroup;
@@ -40,13 +39,14 @@ export class RepeaterComponent implements OnInit {
   ];
 
   public scheduleForms: Array<Schedule> = [];
-  scheduleFormLabel = 'Create Classes';
+  scheduleFormLabel = 'Create repeating schedules for a single employee at one location for the current month';
   private startDate: Date;
   private endDate: Date;
   private startString: string;
   // drop downs
   public employees: Array<Object> = [];
   public locations: Array<Location> = [];
+  public maxDate: string;
 
   constructor(
     private apiService: APIService,
@@ -55,7 +55,14 @@ export class RepeaterComponent implements OnInit {
       this.authService.title = 'Create Multiple Schedules';
   }
 
+  private getMaxDate(): string {
+    const mDate = new Date();
+    mDate.setMonth(mDate.getMonth() + 1);
+    return moment(mDate).format('YYYY-MM-DD');
+  }
+
   ngOnInit() {
+    this.maxDate = this.getMaxDate();
     // controls[2].setValue(true);
     const controls = this.byweekdays.map(c => new FormControl(false));
     this.addForm = this.formBuilder.group({
@@ -93,16 +100,20 @@ export class RepeaterComponent implements OnInit {
 
   }
 
+  checkAndSave() {
+    this.checkTime();
+    this.onSave();
+  }
+
 
   checkTime() {
-    this.displayCheck = true;
-    this.displayStatus = false;
     const selectedOrderIds = this.addForm.value.byweekdays
       .map((v, i) => v ? this.byweekdays[i].id : null)
       .filter(v => v !== null);
     this.scheduleForms = [];
     this.startDate = new Date(this.addForm.value.start + timezoneOffsetString);
-    this.endDate = new Date(this.addForm.value.end + timezoneOffsetString);
+    this.endDate = new Date(this.addForm.value.end + 'GMT' + timezoneOffsetString);
+    
     const rule =
       new RRule({
         freq: RRule.WEEKLY,
@@ -129,6 +140,7 @@ export class RepeaterComponent implements OnInit {
       };
       this.scheduleForms.push(event);
     });
+    
   }
 
   onSave() {
@@ -143,14 +155,14 @@ export class RepeaterComponent implements OnInit {
         });
     });
     this.displayStatus = true;
-    this.displayCheck = false;
+    this.scheduleFormLabel = 'Click the reset button below to add more schedules.';
   }
 
   onReset() {
-    this.displayCheck = false;
     this.displayStatus = false;
     this.scheduleForms = [];
     this.insertCount = 0;
+    this.scheduleFormLabel = 'Add more schedules to a single employee at a single location for the current month.';
   }
 
 
