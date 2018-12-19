@@ -40,7 +40,10 @@
             <mat-icon>menu</mat-icon>
     </button>
   </span>
-  <h1>tempus vigilator</h1>
+  
+  <button mat-button routerLink="/account/home">
+    <span class="same-line">time keeper</span>
+  </button>
 
 
   <span class="fill-remaining-space"></span>
@@ -48,7 +51,7 @@
   <div *ngIf="isLoggedIn$ | async">
 
     <a routerLink="/account/business">
-      <span class="label">{{authService.site.name}}</span>
+      <span class="label">{{authService.user.site.name}}</span>
     </a>
 
     <mat-icon>face</mat-icon>{{authService.username}}

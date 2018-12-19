@@ -113,7 +113,7 @@ export class RepeaterComponent implements OnInit {
     this.scheduleForms = [];
     this.startDate = new Date(this.addForm.value.start + timezoneOffsetString);
     this.endDate = new Date(this.addForm.value.end + 'GMT' + timezoneOffsetString);
-    
+
     const rule =
       new RRule({
         freq: RRule.WEEKLY,
@@ -136,11 +136,11 @@ export class RepeaterComponent implements OnInit {
         completed: '1',
         location_id: this.addForm.value.location_id,
         employee_id: this.addForm.value.employee_id,
-        site: this.authService.site.id,
+        site: this.authService.user.site.id,
       };
       this.scheduleForms.push(event);
     });
-    
+
   }
 
   onSave() {

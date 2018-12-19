@@ -42,7 +42,7 @@ export class APIService {
 
   findLocations(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.authService.site.id)
+      .set('site_id', this.authService.user.site.id)
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -73,7 +73,7 @@ export class APIService {
 
   findEmployees(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.authService.site.id)
+      .set('site_id', this.authService.user.site.id)
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -104,7 +104,7 @@ export class APIService {
 
   findClasses(filter = '', ordering = '', limit = 20, offset = 0) {
     const params = new HttpParams()
-      .set('site_id', this.authService.site.id)
+      .set('site_id', this.authService.user.site.id)
       .set('search', filter)
       .set('ordering', ordering)
       .set('limit', limit.toString())
@@ -136,13 +136,6 @@ export class APIService {
     return this.http.post(this.API_URL + '/users/' + site.owner + '/sites', site)
       .pipe(
         catchError(this.handleError('registerSite', []))
-      );
-  }
-
-  registerUserSite(userSite) {
-    return this.http.post(this.API_URL + '/api/user_sites', userSite)
-      .pipe(
-        catchError(this.handleError('registerUserSite', []))
       );
   }
 

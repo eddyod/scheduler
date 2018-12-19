@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -34,7 +34,6 @@ export class AuthService {
   public errors: any = [];
   // var to show is logged interface
   public user: User = new User();
-  public site: Site = new Site();
   // title in panel headers
   public title = 'Employee Time Scheduler';
 
@@ -44,10 +43,8 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   public login(username: string, password: string) {
-    console.log(username);
     return this.http.post<any>(this.API_URL + '/login', { username: username, password: password }, httpOptions)
       .pipe(map(data => {
-        console.log(data);
         // login successful if there's a jwt token in the response
         if (data && data['token']) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -75,23 +72,19 @@ export class AuthService {
     this.getAndSetSite();
   }
 
-  private getAndSetSite() {
-    const params = new HttpParams()
-      .set('user_id', this.user_id);
 
-    this.http.get(this.API_URL + '/user_sites', { params })
-      .subscribe(data => {
-        console.log(data[0]['user']);
-        this.user = data[0]['user'];
-        this.site = data[0]['site'];
-        sessionStorage.setItem('user', JSON.stringify(data[0]['user']));
-      },
-        err => {
-          this.errors = err['error'];
-        }
-      );
+    private getAndSetSite() {
+      this.http.get<User>(this.API_URL + '/users/currentuser')
+        .subscribe(data => {
+          this.user = data;
+          sessionStorage.setItem('user', JSON.stringify(data));
+        },
+          err => {
+            this.errors = err['error'];
+          }
+        );
 
-  }
+    }
 
   // Refreshes the JWT token, to extend the time the user is logged in
   public refreshToken() {

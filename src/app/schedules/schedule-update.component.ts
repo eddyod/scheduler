@@ -67,7 +67,7 @@ export class ScheduleUpdateComponent implements OnInit {
   }
 
   onUpdate() {
-    this.addForm.value.site = this.authService.site.id;
+    this.addForm.value.site = this.authService.user.site.id;
     this.addForm.value.start = moment(this.addForm.value.start).format('YYYY-MM-DD[T]HH:mm');
     this.addForm.value.end = moment(this.addForm.value.end).format('YYYY-MM-DD[T]HH:mm');
     this.apiService.updateSchedule(this.addForm.value).subscribe(data => {

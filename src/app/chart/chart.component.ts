@@ -49,7 +49,7 @@ export class ChartComponent implements OnInit {
 
     this.monthDisplay = this.convertMonth(this.month);
     const params = new HttpParams()
-      .set('site_id', this.authService.site.id)
+      .set('site_id', this.authService.user.site.id)
       .set('m', this.month.toString())
       .set('y', this.year.toString());
     this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]); });
@@ -58,7 +58,7 @@ export class ChartComponent implements OnInit {
 
   refreshChart(m, year) {
     const params = new HttpParams()
-      .set('site_id', this.authService.site.id)
+      .set('site_id', this.authService.user.site.id)
       .set('m', m)
       .set('y', year);
     this.apiService.getAttendance(params).subscribe(data => { this.buildChart(data as object[]); });

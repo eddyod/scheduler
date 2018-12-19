@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { APIService } from '../services/api.service';
 import { AlertService } from '../services/alert.service';
-import { UserSite } from '../models/userSite';
 
 @Component({ templateUrl: 'business.component.html' })
 
@@ -79,20 +78,5 @@ export class BusinessComponent implements OnInit {
           });
     }
 
-      private registerUserSite() {
-        let userSite = new UserSite(this.userId, this.siteId);
-        console.log(userSite);
-        this.apiService.registerUserSite(userSite)
-          .subscribe(
-            data => {
-              this.alertService.success('Business registration successful', true);
-              this.displayForm1 = false;
-              this.displayForm2 = false;
-              this.displayFinish = true;
-            },
-            error => {
-              this.alertService.error(error);
-            });
-      }
 
 }
