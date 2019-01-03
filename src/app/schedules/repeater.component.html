@@ -5,17 +5,13 @@
     <form [formGroup]="addForm" novalidate class="form" *ngIf="!displayStatus">
 
       <div class="form-group">
-        <label for="idStart">Start Date/Time:</label>
-        <input type="datetime-local"  id="idStart" formControlName="start" class="form-control" required>
+        <label for="idStart">Start Date/Time:
+ {{addForm.value.start | date:'fullDate' }} {{addForm.value.start | date:'shortTime' }}
+        </label>
+        <dl-date-time-picker id="idStart" formControlName="start" startView="day" maxView="year" minView="hour" minuteStep="30" required>
+        </dl-date-time-picker>
       </div>
 
-      <div class="form-group">
-          <mat-form-field>
-              <input matInput [matDatepicker]="start" placeholder="Choose a date">
-              <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-              <mat-datepicker #start></mat-datepicker>
-          </mat-form-field>
-      </div>
 
       <div class="form-group">
         <label for="idEnd">End Date:</label>
@@ -24,10 +20,7 @@
 
       <div class="form-group">
         <label for="idDuration">Class Duration (in hours)</label>
-        <mat-slider 
-          formControlName="duration" class="form-control" id="idDuration" required
-          [thumbLabel]="true"
-          min="1" max="12" step="0.5" value="1" tickInterval="1">
+        <mat-slider formControlName="duration" class="form-control" id="idDuration" required [thumbLabel]="true" min="1" max="12" step="0.5" value="1" tickInterval="1">
         </mat-slider>
       </div>
 
@@ -42,7 +35,7 @@
       <div class="form-group">
         <label class="checkbox-inline" formArrayName="byweekdays" *ngFor="let byweekday of addForm.controls['byweekdays']['controls']; let i = index">
           <input type="checkbox" [formControlName]="i">
-            {{byweekdays[i].name}}
+          {{byweekdays[i].name}}
         </label>
       </div>
 
@@ -50,15 +43,15 @@
       <div class="form-group">
         <label for="idLocation">School</label>
         <select formControlName="location_id" class="form-control" id="idLocation" name="location_id" required>
-            <option *ngFor="let location of locations" [value]="location.id">{{location.name}}</option>
-      </select>
+          <option *ngFor="let location of locations" [value]="location.id">{{location.name}}</option>
+        </select>
       </div>
 
       <div class="form-group">
         <label for="idEmployee">Teacher</label>
         <select formControlName="employee_id" class="form-control" id="idEmployee" name="employee_id" required>
-                <option *ngFor="let employee of employees" [value]="employee.id">{{employee.name}}</option>
-      </select>
+          <option *ngFor="let employee of employees" [value]="employee.id">{{employee.name}}</option>
+        </select>
       </div>
 
       <button class="btn btn-sm btn-success" [disabled]='addForm.invalid' (click)="checkAndSave()">Submit</button>

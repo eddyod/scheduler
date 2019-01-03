@@ -2,12 +2,20 @@
 
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+/* @import '~bootstrap/dist/css/bootstrap.min.css'; */
+@import '~open-iconic/font/css/open-iconic-bootstrap.css';
+
 .top-buffer {
   margin: 20px;
 }
 
+.mat-toolbar.mat-primary {
+    margin-bottom:10px !important; /*add this*/
+}
+
 .jumbotron {
-  margin: 0;
+  margin-bottom: 20px;
   padding: 10px;
 }
 
@@ -46,4 +54,17 @@ a.disabled {
 
 .mat-column-completed {
   flex: 0 0 80px;
+}
+
+.same-line {
+  color: #FFFFFF;
+  font-size: smaller !important;
+  padding: 5px;
+}
+
+.same-line-header {
+  color: #FFFFFF;
+  font-weight: bolder !important;
+  font-size: larger !important;
+  padding: 5px;
 }

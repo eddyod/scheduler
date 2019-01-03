@@ -5,6 +5,7 @@ import { MaterialModule } from '../shared/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 
 import { SchedulesComponent } from './schedules.component';
 import { ScheduleCreateComponent } from './schedule-create.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
+     DlDateTimePickerDateModule,
     RouterModule.forChild(routes)
   ],
   declarations: [SchedulesComponent, ScheduleCreateComponent, ScheduleUpdateComponent, RepeaterComponent],

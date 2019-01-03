@@ -18,6 +18,7 @@ const minutesOffset = String(Math.abs(timezoneOffset % 60)).padEnd(2, '0');
 const direction = timezoneOffset > 0 ? '-' : '+';
 const timezoneOffsetString = `${direction}${hoursOffset}${minutesOffset}`;
 
+
 @Component({
   selector: 'app-repeater',
   templateUrl: './repeater.component.html',
@@ -61,13 +62,15 @@ export class RepeaterComponent implements OnInit {
     return moment(mDate).format('YYYY-MM-DD');
   }
 
+
+
   ngOnInit() {
     this.maxDate = this.getMaxDate();
     // controls[2].setValue(true);
     const controls = this.byweekdays.map(c => new FormControl(false));
     this.addForm = this.formBuilder.group({
-      start: ['', Validators.required],
-      end: ['', Validators.required],
+      start: ['', Validators.required ],
+      end: ['', Validators.required ],
       duration: ['', Validators.required],
       location_id: ['', Validators.required],
       employee_id: ['', Validators.required],
