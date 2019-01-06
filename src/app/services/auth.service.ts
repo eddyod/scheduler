@@ -17,8 +17,6 @@ const httpOptions = {
 })
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(this.tokenAvailable());
-  // http options used for making API calls
-  // private httpOptions: any;
 
   // the actual JWT token
   public token: string;
@@ -28,12 +26,10 @@ export class AuthService {
 
   // the username of the logged in user
   public username: string;
-  private user_id: string;
+  public user: User = new User();
 
   // error messages received from the login attempt
   public errors: any = [];
-  // var to show is logged interface
-  public user: User = new User();
   // title in panel headers
   public title = 'Employee Time Scheduler';
 
@@ -67,8 +63,6 @@ export class AuthService {
     this.username = token_decoded.username;
     sessionStorage.setItem('token', token);
     sessionStorage.setItem('username', this.username);
-    this.user_id = token_decoded.user_id;
-    sessionStorage.setItem('user_id', this.user_id);
     this.getAndSetSite();
   }
 
@@ -106,7 +100,6 @@ export class AuthService {
     sessionStorage.removeItem('expires_at');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('username');
-    sessionStorage.removeItem('user_id');
   }
 
   get isLoggedIn() {
@@ -119,6 +112,7 @@ export class AuthService {
 
   private tokenAvailable(): boolean {
     this.username = sessionStorage.getItem('username');
+    this.user = JSON.parse(sessionStorage.getItem('user'));
     return !!sessionStorage.getItem('token');
   }
 
