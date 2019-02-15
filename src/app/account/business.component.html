@@ -16,16 +16,16 @@
 
     <div class="form-group" >
       <label for="idFirstname">First name:</label>
-      <input id="idFirstname" formControlName="first_name" placeholder="First name" class="form-control"  name="first_name">
-      <div class="alert  alert-danger" *ngIf="form1.get('first_name').hasError('required') && form1.get('first_name').touched">
+      <input id="idFirstname" formControlName="firstName" placeholder="First name" class="form-control"  name="firstName">
+      <div class="alert  alert-danger" *ngIf="form1.get('firstName').hasError('required') && form1.get('firstName').touched">
         First name is required.
       </div>
     </div>
 
     <div class="form-group">
       <label for="idLastname">Last name:</label>
-      <input id="idLastname" formControlName="last_name" placeholder="Last name" class="form-control" name="last_name">
-      <div class="alert  alert-danger" *ngIf="form1.get('last_name').hasError('required') && form1.get('last_name').touched">
+      <input id="idLastname" formControlName="lastName" placeholder="Last name" class="form-control" name="lastName">
+      <div class="alert  alert-danger" *ngIf="form1.get('lastName').hasError('required') && form1.get('lastName').touched">
         Last name is required.
       </div>
     </div>
@@ -90,13 +90,13 @@
       <p>Enter your information on this page. After hitting the 'Register' button below, another screen will appear
         where you can enter information for your business. You will then be ready to add employees, locations and schedules.
       </p>
-  
+
   </div>
 
   <div class="col-md-4" *ngIf="displayForm2">
       <p>Enter your company information on this page.  You will then be ready to add employees, locations and schedules.
       </p>
-  
+
   </div>
 
 

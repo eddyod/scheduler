@@ -28,8 +28,8 @@ export class BusinessComponent implements OnInit {
   ngOnInit() {
     // part for user and part for site
     this.form1 = this.formBuilder.group({
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       username: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -62,7 +62,6 @@ export class BusinessComponent implements OnInit {
 
     public registerSite() {
       console.log(this.userId);
-      this.form2.value.active = '1';
       this.form2.value.owner = this.userId;
       this.form2.value.created = new Date();
       this.apiService.registerSite(this.form2.value)
