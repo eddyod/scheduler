@@ -16,28 +16,20 @@
 
     <div class="form-group" >
       <label for="idFirstname">First name:</label>
-      <input id="idFirstname" formControlName="firstName" placeholder="First name" class="form-control"  name="firstName">
-      <div class="alert  alert-danger" *ngIf="form1.get('firstName').hasError('required') && form1.get('firstName').touched">
+      <input id="idFirstname" formControlName="first_name" placeholder="First name" class="form-control"  name="first_name">
+      <div class="alert  alert-danger" *ngIf="form1.get('first_name').hasError('required') && form1.get('first_name').touched">
         First name is required.
       </div>
     </div>
 
     <div class="form-group">
       <label for="idLastname">Last name:</label>
-      <input id="idLastname" formControlName="lastName" placeholder="Last name" class="form-control" name="lastName">
-      <div class="alert  alert-danger" *ngIf="form1.get('lastName').hasError('required') && form1.get('lastName').touched">
+      <input id="idLastname" formControlName="last_name" placeholder="Last name" class="form-control" name="last_name">
+      <div class="alert  alert-danger" *ngIf="form1.get('last_name').hasError('required') && form1.get('last_name').touched">
         Last name is required.
       </div>
     </div>
 
-
-    <div class="form-group">
-      <label for="idUsername">Username:</label>
-      <input id="idUsername" formControlName="username" placeholder="Username" class="form-control" name="username">
-      <div class="alert  alert-danger" *ngIf="form1.get('username').hasError('required') && form1.get('username').touched">
-        Username is required.
-      </div>
-    </div>
 
     <div class="form-group">
       <label for="idEmail">Email:</label>

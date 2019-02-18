@@ -3,9 +3,8 @@ import { Site } from './site';
 export class User {
 
   public id: number;
-  public firstName: string;
-  public lastName: string;
-  public username: string;
+  public first_name: string;
+  public last_name: string;
   public email: string;
   public is_staff: boolean;
   public is_superuser: boolean;

@@ -14,7 +14,6 @@ export class BusinessComponent implements OnInit {
   public displayForm2 = false;
   public displayFinish = false;
   private userId: number;
-  private siteId: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,9 +27,8 @@ export class BusinessComponent implements OnInit {
   ngOnInit() {
     // part for user and part for site
     this.form1 = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      username: ['', Validators.required],
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });

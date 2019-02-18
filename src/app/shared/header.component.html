@@ -54,7 +54,7 @@
       <span class="same-line" *ngIf="authService.user.site?.name">{{authService.user.site.name}}</span>
     </a>
 
-    <mat-icon>face</mat-icon>{{authService.username}}
+    <mat-icon>face</mat-icon>{{authService.email}}
   </div>
 
   <div *ngIf="!(isLoggedIn$ | async)" >

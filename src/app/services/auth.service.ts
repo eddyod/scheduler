@@ -24,8 +24,8 @@ export class AuthService {
   // the token expiration date
   public token_expires: Date;
 
-  // the username of the logged in user
-  public username: string;
+  // the email of the logged in user
+  public email: string;
   public user: User = new User();
 
   // error messages received from the login attempt
@@ -38,8 +38,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  public login(username: string, password: string) {
-    return this.http.post<any>(this.API_URL + '/login', { username: username, password: password }, httpOptions)
+  public login(email: string, password: string) {
+    return this.http.post<any>(this.API_URL + '/login', { email: email, password: password }, httpOptions)
       .pipe(map(data => {
         // login successful if there's a jwt token in the response
         if (data && data['token']) {
@@ -56,13 +56,13 @@ export class AuthService {
   private updateData(token) {
     this.token = token;
     this.errors = [];
-    // decode the token to read the username and expiration timestamp
+    // decode the token to read the email and expiration timestamp
     const token_parts = this.token.split(/\./);
     const token_decoded = JSON.parse(window.atob(token_parts[1]));
     this.token_expires = new Date(token_decoded.exp * 1000);
-    this.username = token_decoded.username;
+    this.email = token_decoded.email;
     sessionStorage.setItem('token', token);
-    sessionStorage.setItem('username', this.username);
+    sessionStorage.setItem('email', this.email);
     this.getAndSetSite();
   }
 
@@ -99,7 +99,7 @@ export class AuthService {
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('expires_at');
     sessionStorage.removeItem('token');
-    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('email');
   }
 
   get isLoggedIn() {
@@ -111,7 +111,7 @@ export class AuthService {
   }
 
   private tokenAvailable(): boolean {
-    this.username = sessionStorage.getItem('username');
+    this.email = sessionStorage.getItem('email');
     this.user = JSON.parse(sessionStorage.getItem('user'));
     return !!sessionStorage.getItem('token');
   }

@@ -3,7 +3,7 @@
   <div class="col-md-8">
 
     <div class="form-group">
-      <p>You are logged in as {{ authService.username }}.</p>
+      <p>You are logged in as {{ authService.email }}.</p>
       <p>Your login will expire at: {{ authService.token_expires }}</p>
       <p>Use the menu icon at the top left to navigate the site.</p>
       <button (click)="refreshToken()" class="btn btn-primary">Refresh session</button>
