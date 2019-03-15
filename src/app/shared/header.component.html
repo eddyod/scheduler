@@ -1,5 +1,5 @@
 <mat-sidenav #sidenav (keydown.escape)="sidenav.close()" (click)="sidenav.close()">
-  <mat-nav-list *ngIf="isLoggedIn$ | async">
+  <mat-nav-list *ngIf="authService.isLoggedIn | async">
     <a mat-list-item routerLink="/account/info" (click)="sidenav.close()">
       <mat-icon>account_circle</mat-icon>Login Info</a>
     <a *ngIf="authService.user.is_staff" mat-list-item routerLink="/locations" (click)="sidenav.close()">
@@ -24,7 +24,7 @@
 
   </mat-nav-list>
 
-  <mat-nav-list *ngIf="!(isLoggedIn$ | async)">
+  <mat-nav-list *ngIf="!(authService.isLoggedIn | async)">
     <a mat-list-item routerLink="/account/login" (click)="sidenav.close()">
       <mat-icon>account_circle</mat-icon>Login</a>
 
@@ -48,7 +48,7 @@
 
   <span class="fill-remaining-space"></span>
 
-  <div *ngIf="isLoggedIn$ | async">
+  <div *ngIf="authService.isLoggedIn | async">
 
     <a routerLink="/account/business">
       <span class="same-line" *ngIf="authService.user.site?.name">{{authService.user.site.name}}</span>
@@ -58,7 +58,7 @@
     <span class="same-line" *ngIf="authService.user?.first_name">{{authService.user.first_name}}</span>
   </div>
 
-  <div *ngIf="!(isLoggedIn$ | async)" >
+  <div *ngIf="!(authService.isLoggedIn | async)" >
     <span class="same-line">Already have an account?</span>
     <button mat-button routerLink="/account/login">Sign In</button>
   </div>

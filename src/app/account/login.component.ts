@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
 import { AlertService } from '../services/alert.service';
@@ -18,8 +17,6 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
-  isLoggedIn$: Observable<boolean>;                  // {1}
-
 
   constructor(public authService: AuthService,
     private formBuilder: FormBuilder,
@@ -38,12 +35,8 @@ export class LoginComponent implements OnInit {
 
     // reset login status
     this.authService.logout();
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/info';
-    this.isLoggedIn$ = this.authService.isLoggedIn; // {2}
-  }
-
-  get isLoggedIn() {
-    return this.authService.isLoggedIn;
+    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/info';
+    this.returnUrl = '/account/info';
   }
 
 
@@ -59,6 +52,7 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          // this.authService.loggedIn.next(true);
           this.router.navigate([this.returnUrl]);
           this.alertService.success('You have successfully logged in.');
         },

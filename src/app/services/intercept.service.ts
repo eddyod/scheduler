@@ -9,6 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AlertService } from '../services/alert.service';
+import { AuthService } from './auth.service';
 
 
 
@@ -17,7 +18,7 @@ import { AlertService } from '../services/alert.service';
 
 export class InterceptService implements HttpInterceptor {
 
-  constructor(private alertService: AlertService) { }
+  constructor(private alertService: AlertService, private authService: AuthService) { }
 
   // intercept request and add token
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -26,25 +27,22 @@ export class InterceptService implements HttpInterceptor {
 
     if (new RegExp('users/\\d+/sites|users/register|/login').test(request.url)) {
       console.log('matched');
-      // const tokenInHeader = request.clone({ setHeaders: { 'version': '1LF' } });
-      // return next.handle(request);
-      // request = request.clone({ setHeaders: { 'Content-Type': 'application/json' } });
     } else {
       request = request.clone({ setHeaders: { Authorization: `JWT ${sessionStorage.getItem('token')}` } });
     }
 
-    return next.handle(request)
-      .pipe(
-        tap(event => {
-          if (event instanceof HttpResponse) { }
-        }, error => {
-          // http response status code
-          this.alertService.error(error.message);
+    return next.handle(request).pipe(
+      tap(event => {
+        if (event instanceof HttpResponse) { }
+      }, error => {
+        // http response status code
+        this.alertService.error(error.message);
+        if (error.status === 401) {
+          this.authService.logout();
+          this.alertService.error('Your session has expired.');
+        }
 
-          // console.error(error.status);
-          // console.error(error.message);
-
-        })
-      );
+      })
+    );
   }
 }

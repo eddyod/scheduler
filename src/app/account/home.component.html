@@ -3,7 +3,7 @@
 <h2>Get started here.</h2>
 </div>
 
-<div *ngIf="isLoggedIn$ | async" class="row">
+<div *ngIf="authService.isLoggedIn | async" class="row">
 
   <div class="col-6">
     <p>Put instructions on how to use the site here.</p>
@@ -11,7 +11,7 @@
 
 </div>
 
-<div *ngIf="!(isLoggedIn$ | async)" class="row">
+<div *ngIf="!(authService.isLoggedIn | async)" class="row">
 
   <div class="col col-sm-6" style="text-align: center;">
     <h4>Set up a new business.</h4>

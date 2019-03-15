@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   // apiEndpoint: 'http://192.168.1.12:8090'
-  // apiEndpoint: 'http://10.195.4.147:8090'
-  apiEndpoint: 'http://www.mephistosoftware.com/rester'
+  apiEndpoint: 'http://10.195.4.147:8090'
+  // apiEndpoint: 'http://www.mephistosoftware.com/rester'
 };
 
 /*

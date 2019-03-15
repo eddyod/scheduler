@@ -1,26 +1,35 @@
-
-<div class="row" *ngIf="isLoggedIn$ | async">
+<div class="row" *ngIf="authService.isLoggedIn | async">
   <div class="col-md-8">
 
     <table class="table">
       <tr>
-        <th scope="col">Key</th><th scope="col">Value</th>
+        <th scope="col">Key</th>
+        <th scope="col">Value</th>
       </tr>
       <tr>
-        <th scope="col">Email </th><td>{{ authService.user.email }}</td>
+        <th scope="col">Email </th>
+        <td>{{ authService.user.email }}</td>
       </tr>
       <tr>
-        <th scope="col">First name </th><td>{{ authService.user.first_name }}</td>
+        <th scope="col">First name </th>
+        <td>{{ authService.user.first_name }}</td>
       </tr>
       <tr>
-        <th scope="col">Last name </th><td>{{ authService.user.last_name }}</td>
+        <th scope="col">Last name </th>
+        <td>{{ authService.user.last_name }}</td>
       </tr>
       <tr>
-        <th scope="col">Company </th><td>{{ authService.user.site.name }}</td>
+        <th scope="col">Company </th>
+        <td>{{ authService.user.site.name }}</td>
       </tr>
     </table>
 
+    <p *ngIf="authService?.getExpiration()">Your session will expire at: {{authService.getExpiration()}}</p>
+
+
     <div class="form-group">
+      <p>Use the menu icon at the top left to navigate the site.</p>
+      <button (click)="refreshToken()" class="btn btn-primary">Refresh session</button>
       <button (click)="logout()" class="btn btn-danger" style="margin-left:10px;">Log Out</button>
     </div>
 

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
 
@@ -10,12 +9,9 @@ import { AuthService } from '../services/auth.service';
 })
 export class HomeComponent implements OnInit {
 
-  public isLoggedIn$: Observable<boolean>;
-
 
   constructor(public authService: AuthService) {
     this.authService.title = 'Home';
-    this.isLoggedIn$ = this.authService.isLoggedIn; // {2}
   }
 
   ngOnInit() {

@@ -14,6 +14,7 @@ export class AuthGuard implements CanActivate {
     this.user = JSON.parse(sessionStorage.getItem('user'));
     if (sessionStorage.getItem('user')) {
       this.authService.user = this.user;
+      this.setExpiration();
       return true;
     }
 
@@ -21,6 +22,15 @@ export class AuthGuard implements CanActivate {
     this.router.navigate(['/account/login'], { queryParams: { returnUrl: state.url } });
     return false;
   }
+
+  private setExpiration() {
+    let token = sessionStorage.getItem('token');
+    const token_parts = token.split(/\./);
+    const token_decoded = JSON.parse(window.atob(token_parts[1]));
+    const token_expires = new Date(token_decoded.exp * 1000);
+    this.authService.token_expires = token_expires;
+  }
+
 
 
 }
