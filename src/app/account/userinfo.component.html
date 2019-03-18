@@ -1,3 +1,9 @@
+<div class="row" *ngIf="!(authService.isLoggedIn | async)">
+  <div class="col-md-8">
+    <p>You are not logged in</p>
+  </div>
+</div>
+
 <div class="row" *ngIf="authService.isLoggedIn | async">
   <div class="col-md-8">
 

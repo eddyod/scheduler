@@ -1,6 +1,6 @@
 <mat-sidenav #sidenav (keydown.escape)="sidenav.close()" (click)="sidenav.close()">
   <mat-nav-list *ngIf="authService.isLoggedIn | async">
-    <a mat-list-item routerLink="/account/info" (click)="sidenav.close()">
+    <a mat-list-item routerLink="/account/userinfo" (click)="sidenav.close()">
       <mat-icon>account_circle</mat-icon>Login Info</a>
     <a *ngIf="authService.user.is_staff" mat-list-item routerLink="/locations" (click)="sidenav.close()">
       <mat-icon>school</mat-icon>Schools</a>

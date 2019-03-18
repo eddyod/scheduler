@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
     // reset login status
     this.authService.logout();
     // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/info';
-    this.returnUrl = '/account/info';
   }
 
 
@@ -53,8 +52,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           // this.authService.loggedIn.next(true);
-          this.router.navigate([this.returnUrl]);
-          this.alertService.success('You have successfully logged in.');
+          this.router.navigate(['/account/userinfo']);
         },
         error => {
           this.alertService.error('The email and/or password were incorrect.');
