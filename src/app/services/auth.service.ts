@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 
+import { AlertService } from '../services/alert.service';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import { Site } from '../models/site';
@@ -31,7 +32,9 @@ export class AuthService {
   // url for rest data
   API_URL = environment.apiEndpoint;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private alertService: AlertService,
+    private http: HttpClient,
+    private router: Router) { }
 
   public login(email: string, password: string) {
     return this.http.post<any>(this.API_URL + '/login', { email: email, password: password }, httpOptions)
@@ -55,7 +58,12 @@ export class AuthService {
     this.http.get<User>(this.API_URL + '/users/currentuser')
       .subscribe(data => {
         this.user = data;
-        sessionStorage.setItem('user', JSON.stringify(data));
+        if (this.user.site) {
+          sessionStorage.setItem('user', JSON.stringify(data));
+        } else {
+          this.user = null;
+          this.alertService.error('Your are not associated with any business.');
+        }
       },
         err => {
           this.errors = err['error'];
