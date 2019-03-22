@@ -18,7 +18,6 @@
 
       <div class="form-group">
         <button class="btn btn-success" [disabled]='addForm.invalid'  (click)="login()">Login</button>
-        <a [routerLink]="['/account/register']" class="btn btn-link">Register</a>
 
       </div>
 
@@ -26,7 +25,12 @@
         <span *ngFor="let error of authService.errors.non_field_errors">{{ error }}<br /></span>
       </div>
     </div>
-  </div>
+    <div class="col-md-6">
+      <p>Use this username/password to demo the site:</p>
+      <p>joe@user.com</p>
+      <p>joe12345</p>
+    </div>
 
+  </div>
 
 </form>

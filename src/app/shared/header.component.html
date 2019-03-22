@@ -60,7 +60,12 @@
 
   <div *ngIf="!(authService.isLoggedIn | async)" >
     <span class="same-line">Already have an account?</span>
-    <button mat-button routerLink="/account/login">Sign In</button>
+    <button mat-button routerLink="/account/login">
+      <span class="same-line-header">Sign In</span>
+    </button>
+
+
+
   </div>
 
 </mat-toolbar>
