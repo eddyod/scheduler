@@ -30,7 +30,7 @@
     "angular-mat-datepicker": "0.0.2",
     "angular-utc-datepicker": "^2.1.0",
     "angularx-flatpickr": "^6.1.0",
-    "bootstrap": "^4.2.1",
+    "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "date-fns": "^1.29.0",
     "flatpickr": "^4.5.2",
