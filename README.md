@@ -9,7 +9,7 @@ out there that do the same thing, but of course they all cost
 something or they don't have the specific functionality.
 
 There is a live demo of this project at:
-http://www.mephistosoftware.com/scheduler/
+https://www.mephistosoftware.com/scheduler/
 
-It is buggy and the data gets wiped out often, so don't put anything
+The data gets wiped out often, so don't put anything
 serious in it.
